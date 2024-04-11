@@ -1,0 +1,7 @@
+---Backend Laravel 10 et Frontend VueJs 3---
+Installation laravel, vue, vitejs/plugin-vue
+Configuration
+    - redirection des routes vers '/' dans web.php
+    - rendu erreur 404 pour l'API si la route n'existe pas (api.php)
+    - mise en place de l'index Frontend (app.vue , app.blade.php, app.js, ...)
+    - config tailwindcss

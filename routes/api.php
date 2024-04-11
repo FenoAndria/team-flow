@@ -1,6 +1,7 @@
 <?php
 
 use Illuminate\Http\Request;
+use Illuminate\Http\Response;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -17,3 +18,14 @@ use Illuminate\Support\Facades\Route;
 Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
     return $request->user();
 });
+
+Route::get('/', function () {
+    return response()->json(['message' => 'Bienvenue !']);
+});
+
+
+
+// Si la route n'existe pas
+Route::middleware('api')->any('{any}', function (Request $request) {
+    return response()->json(['message' => 'Route not found'], Response::HTTP_NOT_FOUND);
+})->where('any', '.*');
