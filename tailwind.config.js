@@ -13,7 +13,8 @@ module.exports = {
             colors: {
                 dark: '#262626',
                 danger: colors.rose,
-                primary: colors.blue,
+                primary: '#141452',
+                secondary: '#ff1a1a',
                 success: colors.green,
                 warning: colors.yellow,
             },
