@@ -13,8 +13,8 @@ class TodoController extends Controller
      */
     public function index()
     {
-        $todos = Todo::all();
-        return response()->json(['todos' => $todos,]);
+        $todo = Todo::all();
+        return response()->json($todo);
     }
 
     /**
@@ -33,7 +33,7 @@ class TodoController extends Controller
      */
     public function show(Todo $todo)
     {
-        return response()->json(['data' => $todo]);
+        return response()->json($todo);
     }
 
     /**
@@ -45,10 +45,7 @@ class TodoController extends Controller
             'title' => $request->title ?? $todo->title,
             'done' => $request->done ?? $todo->done,
         ]);
-        return response()->json([
-            'message' => 'Modifié avec succès',
-            'todo' => $todo,
-        ]);
+        return response()->json($todo);
     }
 
     /**

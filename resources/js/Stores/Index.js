@@ -1,6 +1,7 @@
 import Vuex from 'vuex'
 import { VuexPersistence } from 'vuex-persist'
-
+import Todo from './Todo';
+import ValidationError from './ValidationError';
 const vuexLocal = new VuexPersistence({
     key: 'vuex',
     storage: window.localStorage,
@@ -15,7 +16,8 @@ const vuexLocal = new VuexPersistence({
 })
 const store = new Vuex.Store({
     modules: {
-        
+        Todo,
+        ValidationError
     },
     plugins: [vuexLocal.plugin]
 })

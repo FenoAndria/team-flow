@@ -2,6 +2,7 @@ import { createRouter, createWebHistory } from "vue-router";
 
 import NotFound from './../Views/NotFound.vue'
 import AppIndex from "./../Views/Index.vue"
+import TodoIndex from "./../Views/Todo/Index.vue"
 
 const router = createRouter({
     history: createWebHistory(),
@@ -22,6 +23,23 @@ const router = createRouter({
             meta: {
                 // middleware: 'Guest'
             }
+        },
+        {
+            path: '/todo/',
+            name: "Todo",
+            meta: {
+                // middleware: 'Guest'
+            },
+            children: [
+                {
+                    path: '',
+                    name: "TodoIndex",
+                    component: TodoIndex,
+                    meta: {
+                        // middleware: 'Guest'
+                    }
+                },
+            ]
         },
     ]
 })
