@@ -25,7 +25,7 @@ Route::get('/', function () {
     return response()->json(['message' => 'Bienvenue !']);
 });
 
-Route::apiResource('todo', TodoController::class);
+Route::middleware('auth:sanctum')->apiResource('todo', TodoController::class);
 
 // Authentication
 Route::post('/auth/login', [AuthController::class, 'login'])->name('app-login');

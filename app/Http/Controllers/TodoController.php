@@ -2,9 +2,11 @@
 
 namespace App\Http\Controllers;
 
+use App\Exceptions\CustomForbiddenException;
 use App\Models\Todo;
 use App\Http\Requests\StoreTodoRequest;
 use App\Http\Requests\UpdateTodoRequest;
+use Illuminate\Support\Facades\Auth;
 
 class TodoController extends Controller
 {
@@ -13,7 +15,8 @@ class TodoController extends Controller
      */
     public function index()
     {
-        $todo = Todo::all();
+        $user = Auth::user();
+        $todo = Todo::where('user_id', $user->id)->get();
         return response()->json($todo);
     }
 
@@ -24,6 +27,7 @@ class TodoController extends Controller
     {
         $todo = new Todo;
         $todo->fill($request->validated());
+        $todo->fill(['user_id' => $request->user()->id]);
         $todo->save();
         return $todo;
     }
@@ -33,6 +37,10 @@ class TodoController extends Controller
      */
     public function show(Todo $todo)
     {
+        $user = Auth::user();
+        if ($todo->user_id !== $user->id) {
+            throw new CustomForbiddenException();
+        }
         return response()->json($todo);
     }
 
@@ -41,6 +49,10 @@ class TodoController extends Controller
      */
     public function update(UpdateTodoRequest $request, Todo $todo)
     {
+        $user = Auth::user();
+        if ($todo->user_id !== $user->id) {
+            throw new CustomForbiddenException();
+        }
         $todo->update([
             'title' => $request->title ?? $todo->title,
             'done' => $request->done ?? $todo->done,
@@ -53,6 +65,10 @@ class TodoController extends Controller
      */
     public function destroy(Todo $todo)
     {
+        $user = Auth::user();
+        if ($todo->user_id !== $user->id) {
+            throw new CustomForbiddenException();
+        }
         $todo->delete();
         return response()->json(['message' => 'Supprimé avec succès']);
     }
