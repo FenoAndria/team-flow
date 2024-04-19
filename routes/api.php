@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\TodoController;
+use App\Http\Controllers\AuthController;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 use Illuminate\Support\Facades\Route;
@@ -26,7 +27,9 @@ Route::get('/', function () {
 
 Route::apiResource('todo', TodoController::class);
 
-
+// Authentication
+Route::post('/auth/login', [AuthController::class, 'login'])->name('app-login');
+Route::post('/auth/register', [AuthController::class, 'register'])->name('app-register');
 
 // Si la route n'existe pas
 Route::middleware('api')->any('{any}', function (Request $request) {

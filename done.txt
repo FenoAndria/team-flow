@@ -5,3 +5,7 @@ Configuration
     - rendu erreur 404 pour l'API si la route n'existe pas (api.php)
     - mise en place de l'index Frontend (app.vue , app.blade.php, app.js, ...)
     - config tailwindcss
+
+    - Auth : Login (LoginRequest), Register (RegisterRequest)
+    - Auth sanctum middleware
+    - Custom forbidden exception
