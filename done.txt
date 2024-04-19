@@ -9,3 +9,5 @@ Configuration
     - Auth : Login (LoginRequest), Register (RegisterRequest)
     - Auth sanctum middleware
     - Custom forbidden exception
+    - Authorization
+    - Resource
