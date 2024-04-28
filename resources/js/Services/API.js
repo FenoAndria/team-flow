@@ -1,4 +1,5 @@
 import axios from 'axios'
+import UserToken from './UserToken'
 
 const API = axios.create({
   baseURL: `http://localhost:8000/api`,
@@ -7,7 +8,7 @@ const API = axios.create({
     "Access-Control-Allow-Origin": "*",
     "Access-Control-Allow-Headers": "*",
     "X-Requested-With": "XMLHttpRequest",
-    // "Authorization": 'Bearer ' + userToken
+    "Authorization": 'Bearer ' + UserToken
   }
 })
 

@@ -2,22 +2,22 @@ import Vuex from 'vuex'
 import { VuexPersistence } from 'vuex-persist'
 import Todo from './Todo';
 import ValidationError from './ValidationError';
+import Auth from './Auth';
+
 const vuexLocal = new VuexPersistence({
     key: 'vuex',
     storage: window.localStorage,
     reducer: (state) => {
-        // const { loadingComments, ...commentState } = state.Comment;
         return {
-            // comment: commentState,
-            // Auth: state.Auth,
-            // ...state.Actor,
+            Auth: state.Auth,
         };
     }
 })
 const store = new Vuex.Store({
     modules: {
         Todo,
-        ValidationError
+        ValidationError,
+        Auth
     },
     plugins: [vuexLocal.plugin]
 })

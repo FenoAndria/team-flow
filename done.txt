@@ -6,7 +6,7 @@ Configuration
     - mise en place de l'index Frontend (app.vue , app.blade.php, app.js, ...)
     - config tailwindcss
 
-    - Auth : Login (LoginRequest), Register (RegisterRequest)
+    - Auth : Login (LoginRequest), Register (RegisterRequest) / Front
     - Auth sanctum middleware
     - Custom forbidden exception
     - Authorization
