@@ -43,7 +43,18 @@ class AuthController extends Controller
                 'password' => Hash::make($request->password),
             ]);
             $user->save();
-            return response()->json($user);
+            if (Auth::attempt(['email' => $request['email'], 'password' => $request['password']])) {
+                /** @var \App\Models\User $user  */
+                $user = Auth::user();
+                $authData['token'] = $user->createToken('LaravelSanctumAuth')->plainTextToken;
+                $authData['email'] = $user->email;
+                $authData['name'] = $user->name;
+                return response()->json($authData);
+            } else {
+                return response()->json([
+                    'error' => 'User unauthenticated',
+                ], 401);
+            }
         } catch (\Throwable $e) {
             return response()->json([
                 'error' => $e->getMessage(),

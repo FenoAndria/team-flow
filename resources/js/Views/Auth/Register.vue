@@ -37,9 +37,9 @@ export default {
       await store
         .dispatch("REGISTER", state.user)
         .then((result) => {
-          router.push({ name: "Login" });
-          // store.commit("SET_USER_DATA", result.data.token);
-          // location.reload()
+          store.commit("SET_USER_TOKEN", result.data.token);
+          store.commit("SET_USERNAME", result.data.name);
+          location.reload()
         })
         .catch((err) => {
           console.log(err);

@@ -2,13 +2,16 @@ import API from '../services/API'
 
 const state = {
     // userData: localStorage.getItem('vuex') ? JSON.parse(localStorage.getItem('vuex')).Auth.userData : ''
-    userData: ''
+    username: '',
+    userToken: '',
 }
 const getters = {
-    USER_DATA: (state) => state.userData
+    USERNAME: (state) => state.username,
+    USER_TOKEN: (state) => state.userToken,
 }
 const mutations = {
-    SET_USER_DATA: (state, userData) => state.userData = userData,
+    SET_USERNAME: (state, username) => state.username = username,
+    SET_USER_TOKEN: (state, userToken) => state.userToken = userToken,
 }
 const actions = {
     LOGIN: async ({ commit }, user) => {

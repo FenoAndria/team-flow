@@ -30,7 +30,8 @@ export default {
       store
         .dispatch("LOGIN", state.user)
         .then((result) => {
-          store.commit("SET_USER_DATA", result.data.token);
+          store.commit("SET_USER_TOKEN", result.data.token);
+          store.commit("SET_USERNAME", result.data.name);
           location.reload()
         })
         .catch((err) => {
