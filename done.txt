@@ -12,3 +12,4 @@ Configuration
     - Authorization
     - FormRequest
     - Resource
+    - Service
