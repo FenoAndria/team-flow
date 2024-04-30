@@ -37,10 +37,7 @@ class TodoController extends Controller
      */
     public function show(Todo $todo)
     {
-        $user = Auth::user();
-        if ($todo->user_id !== $user->id) {
-            throw new CustomForbiddenException();
-        }
+        $this->authorize('view', $todo);
         return response()->json($todo);
     }
 
@@ -49,10 +46,7 @@ class TodoController extends Controller
      */
     public function update(UpdateTodoRequest $request, Todo $todo)
     {
-        $user = Auth::user();
-        if ($todo->user_id !== $user->id) {
-            throw new CustomForbiddenException();
-        }
+        $this->authorize('update', $todo);
         $todo->update([
             'title' => $request->title ?? $todo->title,
             'done' => $request->done ?? $todo->done,
@@ -65,10 +59,7 @@ class TodoController extends Controller
      */
     public function destroy(Todo $todo)
     {
-        $user = Auth::user();
-        if ($todo->user_id !== $user->id) {
-            throw new CustomForbiddenException();
-        }
+        $this->authorize('delete', $todo);
         $todo->delete();
         return response()->json(['message' => 'Supprimé avec succès']);
     }

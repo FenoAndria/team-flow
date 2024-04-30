@@ -13,3 +13,4 @@ Configuration
     - FormRequest
     - Resource
     - Service
+    - Policy
