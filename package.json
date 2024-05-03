@@ -15,6 +15,7 @@
         "@vitejs/plugin-vue": "^4.6.2",
         "autoprefixer": "^10.4.19",
         "daisyui": "^4.10.1",
+        "dayjs": "^1.11.11",
         "postcss": "^8.4.38",
         "vue-router": "^4.3.0",
         "vuex": "^4.1.0",

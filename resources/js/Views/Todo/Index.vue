@@ -26,13 +26,20 @@
               <ul v-if="todoOp(todoTab, false).length" class="list-container">
                 <li v-for="todo in todoOp(todoTab, false)" class="list-content">
                   <span> {{ todo.title }}</span>
-                  <div class="space-x-2">
-                    <span class="btn bg-red-300 text-red-500" @click="handleDelete(todo)">Delete</span>
-                    <span
-                      class="btn-done text-white font-semibold"
-                      @click="handleDone(todo)"
-                      >Done</span
-                    >
+                  <div class="flex flex-col">
+                    <span class="text-right">{{ dayjs(todo.created_at).format('DD-MM-YYYY HH:mm') }}</span>
+                    <div class="space-x-2">
+                      <span
+                        class="btn bg-red-300 text-red-500"
+                        @click="handleDelete(todo)"
+                        >Delete</span
+                      >
+                      <span
+                        class="btn-done text-white font-semibold"
+                        @click="handleDone(todo)"
+                        >Done</span
+                      >
+                    </div>
                   </div>
                 </li>
               </ul>
@@ -45,13 +52,20 @@
               <ul v-if="todoOp(todoTab, true).length" class="list-container">
                 <li v-for="todo in todoOp(todoTab, true)" class="list-content">
                   <span> {{ todo.title }}</span>
-                  <div class="space-x-2">
-                    <span class="btn bg-red-300 text-red-500" @click="handleDelete(todo)">Delete</span>
-                    <span
-                      class="btn-todo text-white font-semibold"
-                      @click="handleDone(todo)"
-                      >To do</span
-                    >
+                  <div class="flex flex-col">
+                    <span class="text-right">{{ dayjs(todo.updated_at).format('DD-MM-YYYY HH:mm') }}</span>
+                    <div class="space-x-2">
+                      <span
+                        class="btn bg-red-300 text-red-500"
+                        @click="handleDelete(todo)"
+                        >Delete</span
+                      >
+                      <span
+                        class="btn-todo text-white font-semibold"
+                        @click="handleDone(todo)"
+                        >To do</span
+                      >
+                    </div>
                   </div>
                 </li>
               </ul>
@@ -67,8 +81,14 @@
 <script>
 import { computed, onMounted, reactive, toRefs } from "@vue/runtime-core";
 import { useStore } from "vuex";
-import { getTodoTab, updateTodo, storeTodo, deleteTodo } from "../../Services/TodoServices";
+import {
+  getTodoTab,
+  updateTodo,
+  storeTodo,
+  deleteTodo,
+} from "../../Services/TodoServices";
 import ValidationError from "../../Components/ValidationError.vue";
+import dayjs from 'dayjs'
 export default {
   components: { ValidationError },
   setup(props) {
@@ -83,8 +103,8 @@ export default {
     const todoTab = computed(() => store.getters.todoTab);
     const loadingTodoTab = computed(() => store.getters.loadingTodoTab);
     const todoOp = (tab, statut) => tab.filter((item) => item.done == statut);
-    const handleDone = (todo) => {
-      updateTodo(todo);
+    const handleDone = async(todo) => {
+      await updateTodo(todo);
       getTodoTab();
     };
     const handleStoreTodo = async (e) => {
@@ -97,10 +117,10 @@ export default {
         state.newTodo = "";
       }
     };
-    const handleDelete =async (todo)=>{
-      await deleteTodo(todo)
+    const handleDelete = async (todo) => {
+      await deleteTodo(todo);
       getTodoTab();
-    }
+    };
     return {
       ...toRefs(state),
       todoTab,
@@ -110,6 +130,7 @@ export default {
       handleStoreTodo,
       handleDelete,
       validationError,
+      dayjs
     };
   },
 };
@@ -119,6 +140,6 @@ export default {
   @apply space-y-1;
 }
 .list-content {
-  @apply py-1 px-2 bg-gray-300 rounded flex justify-between items-center font-semibold;
+  @apply py-1 px-2 bg-gray-300 rounded flex justify-between  font-semibold;
 }
 </style>
