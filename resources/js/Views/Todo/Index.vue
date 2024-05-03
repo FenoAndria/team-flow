@@ -97,6 +97,7 @@ export default {
       newTodo: "",
     });
     onMounted(async () => {
+      store.commit('setValidationError','')
       await getTodoTab();
     });
     const validationError = computed(() => store.getters.validationError);
@@ -104,6 +105,7 @@ export default {
     const loadingTodoTab = computed(() => store.getters.loadingTodoTab);
     const todoOp = (tab, statut) => tab.filter((item) => item.done == statut);
     const handleDone = async(todo) => {
+      store.commit('setValidationError','')
       await updateTodo(todo);
       getTodoTab();
     };
@@ -118,6 +120,7 @@ export default {
       }
     };
     const handleDelete = async (todo) => {
+      store.commit('setValidationError','')
       await deleteTodo(todo);
       getTodoTab();
     };

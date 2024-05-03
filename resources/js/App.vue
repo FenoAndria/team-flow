@@ -19,6 +19,7 @@
           </router-link>
           <router-link :to="{ name: 'TodoIndex' }">
             <span class="">Todo</span>
+            <Badge/>
           </router-link>
           <router-link :to="{ name: 'UserIndex' }">
             <span class="">Profile</span>
@@ -37,7 +38,9 @@
 import { useRoute } from "vue-router";
 import UserToken from "./Services/UserToken";
 import store from "./Stores/Index";
+import Badge from "./Components/Badge.vue";
 export default {
+  components: { Badge },
   setup(props) {
     const route = useRoute();
     const username = store.getters.USERNAME;

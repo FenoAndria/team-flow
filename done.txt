@@ -16,3 +16,4 @@ Configuration
     - Policy
     - Profil (Show, Edit)
     - Todo delete
+    - Notifications : unfinished
