@@ -3,6 +3,8 @@ import { createRouter, createWebHistory } from "vue-router";
 import NotFound from './../Views/NotFound.vue'
 import AppIndex from "./../Views/Index.vue"
 import TodoIndex from "./../Views/Todo/Index.vue"
+import UserIndex from "./../Views/User/Index.vue"
+import UserEdit from "./../Views/User/Edit.vue"
 import Login from "./../Views/Auth/Login.vue"
 import Register from "./../Views/Auth/Register.vue"
 
@@ -37,6 +39,31 @@ const router = createRouter({
                     path: '',
                     name: "TodoIndex",
                     component: TodoIndex,
+                    meta: {
+
+                    }
+                },
+            ]
+        },
+        {
+            path: '/user/',
+            name: "User",
+            meta: {
+                requiresAuth: true
+            },
+            children: [
+                {
+                    path: '',
+                    name: "UserIndex",
+                    component: UserIndex,
+                    meta: {
+
+                    }
+                },
+                {
+                    path: 'edit',
+                    name: "UserEdit",
+                    component: UserEdit,
                     meta: {
 
                     }

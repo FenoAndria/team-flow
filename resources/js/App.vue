@@ -12,9 +12,22 @@
           <button class="btn bg-blue-200">Register</button>
         </router-link>
       </div>
-      <div v-else>
-        <span>{{username}}</span>
-        <button class="btn bg-red-200" @click="logout">Logout</button>
+      <div class="flex justify-between" v-else>
+        <div class="flex space-x-4">
+          <router-link :to="{ name: 'AppIndex' }">
+            <span class="">Home</span>
+          </router-link>
+          <router-link :to="{ name: 'TodoIndex' }">
+            <span class="">Todo</span>
+          </router-link>
+          <router-link :to="{ name: 'UserIndex' }">
+            <span class="">Profile</span>
+          </router-link>
+        </div>
+        <div class="">
+          <span>{{ username }}</span>
+          <button class="btn bg-red-200" @click="logout">Logout</button>
+        </div>
       </div>
     </div>
     <router-view></router-view>

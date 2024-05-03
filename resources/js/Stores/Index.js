@@ -3,6 +3,7 @@ import { VuexPersistence } from 'vuex-persist'
 import Todo from './Todo';
 import ValidationError from './ValidationError';
 import Auth from './Auth';
+import User from './User';
 
 const vuexLocal = new VuexPersistence({
     key: 'vuex',
@@ -17,7 +18,8 @@ const store = new Vuex.Store({
     modules: {
         Todo,
         ValidationError,
-        Auth
+        Auth,
+        User
     },
     plugins: [vuexLocal.plugin]
 })

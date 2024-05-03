@@ -14,3 +14,4 @@ Configuration
     - Resource
     - Service
     - Policy
+    - Profil (Show, Edit)

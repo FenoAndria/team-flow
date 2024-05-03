@@ -1,6 +1,5 @@
 <template>
   <div>
-    Accueil
-    <p><router-link :to="{ name: 'TodoIndex' }">TODO</router-link></p>
+    HOME
   </div>
 </template>
