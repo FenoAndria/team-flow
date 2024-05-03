@@ -27,11 +27,22 @@ export const updateTodo = async (todo) => {
 export const storeTodo = async (todo) => {
     await store.dispatch('storeTodo', todo)
         .then((result) => {
-            console.log(result);
+            
         }).catch((err) => {
             console.log(err.response);
             if (err && err.response.status == 422) {
                 store.commit('setValidationError', err.response.data)
             }
+        });
+}
+
+export const deleteTodo = async (todo) => {
+    store.commit('setLoadingTodoTab', true)
+    await store.dispatch('deleteTodo', todo)
+        .then((result) => {
+            store.commit('setLoadingTodoTab', false)
+        }).catch((err) => {
+            console.log(err);
+
         });
 }

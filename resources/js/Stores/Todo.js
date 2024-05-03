@@ -19,6 +19,7 @@ const actions = {
     getTodoTab: async ({ commit }) => await API().get('/todo'),
     storeTodo: async ({ commit }, todo) => await API().post('/todo', todo),
     updateTodo: async ({ commit }, todo) => await API().put('/todo/' + todo.id, todo),
+    deleteTodo: async ({ commit }, todo) => await API().delete('/todo/' + todo.id),
 }
 
 export default {

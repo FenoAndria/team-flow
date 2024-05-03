@@ -1,6 +1,8 @@
 <template>
   <div class="flex justify-center items-center min-h-screen bg-gray-200">
-    <div class="w-1/2 space-y-2 px-4 py-2 rounded-lg shadow min-h-screen bg-white">
+    <div
+      class="w-1/2 space-y-2 px-4 py-2 rounded-lg shadow min-h-screen bg-white"
+    >
       <div class="">
         <p class="font-bold">Nouveau</p>
         <form @submit="handleStoreTodo" class="flex items-center space-x-2">
@@ -24,7 +26,14 @@
               <ul v-if="todoOp(todoTab, false).length" class="list-container">
                 <li v-for="todo in todoOp(todoTab, false)" class="list-content">
                   <span> {{ todo.title }}</span>
-                  <span class="btn-done text-white font-semibold" @click="handleDone(todo)">Done</span>
+                  <div class="space-x-2">
+                    <span class="btn bg-red-300 text-red-500" @click="handleDelete(todo)">Delete</span>
+                    <span
+                      class="btn-done text-white font-semibold"
+                      @click="handleDone(todo)"
+                      >Done</span
+                    >
+                  </div>
                 </li>
               </ul>
               <p v-else>VIDE</p>
@@ -36,7 +45,14 @@
               <ul v-if="todoOp(todoTab, true).length" class="list-container">
                 <li v-for="todo in todoOp(todoTab, true)" class="list-content">
                   <span> {{ todo.title }}</span>
-                  <span class="btn-todo text-white font-semibold" @click="handleDone(todo)">To do</span>
+                  <div class="space-x-2">
+                    <span class="btn bg-red-300 text-red-500" @click="handleDelete(todo)">Delete</span>
+                    <span
+                      class="btn-todo text-white font-semibold"
+                      @click="handleDone(todo)"
+                      >To do</span
+                    >
+                  </div>
                 </li>
               </ul>
               <p v-else>VIDE</p>
@@ -51,7 +67,7 @@
 <script>
 import { computed, onMounted, reactive, toRefs } from "@vue/runtime-core";
 import { useStore } from "vuex";
-import { getTodoTab, updateTodo, storeTodo } from "../../Services/TodoServices";
+import { getTodoTab, updateTodo, storeTodo, deleteTodo } from "../../Services/TodoServices";
 import ValidationError from "../../Components/ValidationError.vue";
 export default {
   components: { ValidationError },
@@ -81,6 +97,10 @@ export default {
         state.newTodo = "";
       }
     };
+    const handleDelete =async (todo)=>{
+      await deleteTodo(todo)
+      getTodoTab();
+    }
     return {
       ...toRefs(state),
       todoTab,
@@ -88,6 +108,7 @@ export default {
       todoOp,
       handleDone,
       handleStoreTodo,
+      handleDelete,
       validationError,
     };
   },
