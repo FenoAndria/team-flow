@@ -22,6 +22,7 @@ class User extends Authenticatable
         // 'name',
         'email',
         'password',
+        'role_id',
     ];
 
     /**
@@ -46,5 +47,10 @@ class User extends Authenticatable
     public function Profil(): HasOne
     {
         return $this->hasOne(Profil::class);
+    }
+
+    public function Role(): HasOne
+    {
+        return $this->hasOne(Role::class, 'id', 'role_id');
     }
 }

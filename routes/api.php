@@ -19,19 +19,24 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::middleware('auth:sanctum')->get('/user', [UserController::class, 'show'])->name('user-show');
 
 Route::get('/', function () {
     return response()->json(['message' => 'Bienvenue !']);
 });
 
-Route::middleware('auth:sanctum')->apiResource('todo', TodoController::class);
+Route::middleware('auth:sanctum')->group(function () {
+    Route::get('/user', [UserController::class, 'show'])->name('user-show');
+    // User middleware
+    Route::middleware('isUser')->group(function () {
+        Route::apiResource('todo', TodoController::class);
+        Route::put('/profil', [ProfilController::class, 'update'])->name('profil-update');
+    });
+});
 
 // Authentication
 Route::post('/auth/login', [AuthController::class, 'login'])->name('app-login');
 Route::post('/auth/register', [AuthController::class, 'register'])->name('app-register');
 
-Route::middleware('auth:sanctum')->put('/profil', [ProfilController::class, 'update'])->name('profil-update');
 
 // Si la route n'existe pas
 Route::middleware('api')->any('{any}', function (Request $request) {

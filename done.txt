@@ -17,3 +17,4 @@ Configuration
     - Profil (Show, Edit)
     - Todo delete
     - Notifications : unfinished
+    - User roles (Admin, User)
