@@ -1,5 +1,5 @@
 import { createRouter, createWebHistory } from "vue-router";
-
+import UserToken from "../services/UserToken";
 import NotFound from './../Views/NotFound.vue'
 import AppIndex from "./../Views/Index.vue"
 import TodoIndex from "./../Views/Todo/Index.vue"
@@ -90,26 +90,21 @@ const router = createRouter({
 })
 
 router.beforeEach((to, from, next) => {
-    const vuexLocalStorage = localStorage.getItem('vuex') ? JSON.parse(localStorage.getItem('vuex') || '{}') : '';
+    // const vuexLocalStorage = localStorage.getItem('vuex') ? JSON.parse(localStorage.getItem('vuex') || '{}') : '';
 
     if (!to.meta.requiresAuth) {
-        if ((to.name == 'Login' || to.name == 'Register') && vuexLocalStorage) {
+        if ((to.name == 'Login' || to.name == 'Register') && UserToken) {
             next({ name: 'AppIndex' })
-        } else if (to.name == 'NotFound' && !vuexLocalStorage) {
+        } else if (to.name == 'NotFound' && !UserToken) {
             next({ name: 'Login' })
         } else {
             next()
         }
     } else {
-        if (!vuexLocalStorage) {
+        if (!UserToken) {
             next({ name: 'Login' })
         } else {
-            if (!vuexLocalStorage.Auth) {
-                localStorage.setItem('vuex', '')
-                next({ name: 'Login' })
-            } else {
-                next()
-            }
+            next()
         }
     }
 })

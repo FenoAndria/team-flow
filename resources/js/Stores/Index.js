@@ -9,9 +9,12 @@ const vuexLocal = new VuexPersistence({
     key: 'vuex',
     storage: window.localStorage,
     reducer: (state) => {
-        return {
-            Auth: state.Auth,
-        };
+        if (state.Auth.isAuthenticated) {
+            return {
+                Auth: state.Auth
+            };
+        }
+        return {}
     }
 })
 const store = new Vuex.Store({
