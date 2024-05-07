@@ -3,6 +3,7 @@
 namespace App\Services;
 
 use App\Models\Profil;
+use App\Models\Role;
 use App\Models\User;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
@@ -17,6 +18,7 @@ class AuthService
             $authData['token'] = $user->createToken('LaravelSanctumAuth')->plainTextToken;
             $authData['email'] = $user->email;
             $authData['name'] = $user->profil->name;
+            $authData['role'] = $user->role->name;
             return $authData;
         }
         return false;
@@ -24,10 +26,12 @@ class AuthService
 
     public function register(array $request)
     {
+        $roleUser = Role::where('name','User')->first();
         $user = new User();
         $user->fill([
             'email' => $request['email'],
             'password' => Hash::make($request['password']),
+            'role_id' => $roleUser->id,
         ]);
         $user->save();
         $profil = new Profil();

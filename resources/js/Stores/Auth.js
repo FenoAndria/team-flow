@@ -3,17 +3,14 @@ import API from '../services/API'
 const state = {
     // userData: localStorage.getItem('vuex') ? JSON.parse(localStorage.getItem('vuex')).Auth.userData : ''
     isAuthenticated: false,
-    username: '',
-    userToken: '',
+    userData: '',
 }
 const getters = {
-    USERNAME: (state) => state.username,
-    USER_TOKEN: (state) => state.userToken,
+    USERDATA: (state) => state.userData
 }
 const mutations = {
     SET_IS_AUTHENTICATED: (state, isAuthenticated) => state.isAuthenticated = isAuthenticated,
-    SET_USERNAME: (state, username) => state.username = username,
-    SET_USER_TOKEN: (state, userToken) => state.userToken = userToken,
+    SET_USERDATA: (state, userData) => state.userData = userData,
 }
 const actions = {
     LOGIN: async ({ commit }, user) => {

@@ -1,7 +1,7 @@
 <template>
   <div class="">
     <div>
-      <div v-if="UserToken == ''">
+      <div v-if="!UserData ">
         <router-link :to="{ name: 'Login' }" v-if="route.name !== 'Login'">
           <button class="btn bg-blue-200">Login</button>
         </router-link>
@@ -12,43 +12,27 @@
           <button class="btn bg-blue-200">Register</button>
         </router-link>
       </div>
-      <div class="flex justify-between" v-else>
-        <div class="flex space-x-4">
-          <router-link :to="{ name: 'AppIndex' }">
-            <span class="">Home</span>
-          </router-link>
-          <router-link :to="{ name: 'TodoIndex' }">
-            <span class="">Todo</span>
-            <Badge/>
-          </router-link>
-          <router-link :to="{ name: 'UserIndex' }">
-            <span class="">Profile</span>
-          </router-link>
-        </div>
-        <div class="">
-          <span>{{ username }}</span>
-          <button class="btn bg-red-200" @click="logout">Logout</button>
-        </div>
-      </div>
     </div>
-    <router-view></router-view>
+    <MainLayout>
+      <router-view></router-view>
+    </MainLayout>
   </div>
 </template>
 <script>
 import { useRoute } from "vue-router";
-import UserToken from "./Services/UserToken";
-import store from "./Stores/Index";
+import UserData from "./Services/UserData";
 import Badge from "./Components/Badge.vue";
+import MainLayout from "./Components/Layouts/MainLayout.vue";
+
 export default {
-  components: { Badge },
+  components: { Badge, MainLayout },
   setup(props) {
     const route = useRoute();
-    const username = store.getters.USERNAME;
     const logout = () => {
       localStorage.setItem("vuex", "");
       location.reload();
     };
-    return { UserToken, username, route, logout };
+    return { UserData, route, logout };
   },
 };
 </script>

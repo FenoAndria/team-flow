@@ -1,12 +1,10 @@
 import store from '../Stores/Index'
-
 export const login = async (user) => {
     await store
         .dispatch("LOGIN", user)
         .then((result) => {
             store.commit("SET_IS_AUTHENTICATED", true);
-            store.commit("SET_USER_TOKEN", result.data.token);
-            store.commit("SET_USERNAME", result.data.name);
+            store.commit("SET_USERDATA", result.data);
             location.reload()
         })
         .catch((err) => {
@@ -22,8 +20,7 @@ export const register = async (user) => {
         .dispatch("REGISTER", user)
         .then((result) => {
             store.commit("SET_IS_AUTHENTICATED", true);
-            store.commit("SET_USER_TOKEN", result.data.token);
-            store.commit("SET_USERNAME", result.data.name);
+            store.commit("SET_USERDATA", result.data);
             location.reload()
         })
         .catch((err) => {

@@ -1,5 +1,5 @@
 import { createRouter, createWebHistory } from "vue-router";
-import UserToken from "../services/UserToken";
+import UserData from "../services/UserData";
 import NotFound from './../Views/NotFound.vue'
 import AppIndex from "./../Views/Index.vue"
 import TodoIndex from "./../Views/Todo/Index.vue"
@@ -8,6 +8,9 @@ import UserEdit from "./../Views/User/Edit.vue"
 import Login from "./../Views/Auth/Login.vue"
 import Register from "./../Views/Auth/Register.vue"
 
+import AdminIndex from '../Components/Layouts/AdminIndex.vue'
+import UserIndexPage from '../Components/Layouts/UserIndex.vue'
+import RoleValidation from "../Middleware/RoleValidation";
 const router = createRouter({
     history: createWebHistory(),
     routes: [
@@ -23,7 +26,7 @@ const router = createRouter({
         {
             path: '',
             name: "AppIndex",
-            component: AppIndex,
+            component: UserData ? (UserData.role == 'User' ? UserIndexPage : AdminIndex) : AppIndex,
             meta: {
                 requiresAuth: false
             }
@@ -43,7 +46,8 @@ const router = createRouter({
 
                     }
                 },
-            ]
+            ],
+            beforeEnter: RoleValidation('User')
         },
         {
             path: '/user/',
@@ -93,15 +97,15 @@ router.beforeEach((to, from, next) => {
     // const vuexLocalStorage = localStorage.getItem('vuex') ? JSON.parse(localStorage.getItem('vuex') || '{}') : '';
 
     if (!to.meta.requiresAuth) {
-        if ((to.name == 'Login' || to.name == 'Register') && UserToken) {
+        if ((to.name == 'Login' || to.name == 'Register') && UserData.token) {
             next({ name: 'AppIndex' })
-        } else if (to.name == 'NotFound' && !UserToken) {
+        } else if (to.name == 'NotFound' && !UserData.token) {
             next({ name: 'Login' })
         } else {
             next()
         }
     } else {
-        if (!UserToken) {
+        if (!UserData.token) {
             next({ name: 'Login' })
         } else {
             next()

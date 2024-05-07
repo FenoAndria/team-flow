@@ -18,3 +18,4 @@ Configuration
     - Todo delete
     - Notifications : unfinished
     - User roles (Admin, User)
+    - Front Layout : Admin / User 
