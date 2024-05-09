@@ -3,6 +3,8 @@
 namespace App\Services;
 
 use App\Models\Team;
+use App\Models\TeamInvitation;
+use App\Models\TeamMember;
 
 class TeamService
 {
@@ -15,4 +17,23 @@ class TeamService
         return $team;
     }
 
+    public function invite(array $request)
+    {
+        $isMember = TeamMember::where([
+            'team_id' => $request['team_id'],
+            'user_id' => $request['user_id'],
+        ])->first();
+        $isInvited = TeamInvitation::where([
+            'team_id' => $request['team_id'],
+            'user_id' => $request['user_id'],
+        ])->first();
+        if (!$isMember && !$isInvited) {
+            $teamInvitation = TeamInvitation::create([
+                'team_id' => $request['team_id'],
+                'user_id' => $request['user_id'],
+            ]);
+            return $teamInvitation;
+        }
+        return false;
+    }
 }

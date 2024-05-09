@@ -34,12 +34,12 @@ Route::middleware('auth:sanctum')->group(function () {
         Route::put('/profil', [ProfilController::class, 'update'])->name('profil-update');
     });
 
-    Route::middleware('isAdmin')->group(function(){
+    Route::middleware('isAdmin')->group(function () {
         Route::post('/team', [TeamController::class, 'store'])->name('team-store');
         Route::post('/task', [TaskController::class, 'store'])->name('task-store');
-
     });
 
+    Route::post('/team-invitation', [TeamController::class, 'invite'])->name('team-invitation');
 });
 
 // Authentication
