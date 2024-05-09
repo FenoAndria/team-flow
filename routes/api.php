@@ -39,7 +39,10 @@ Route::middleware('auth:sanctum')->group(function () {
         Route::post('/task', [TaskController::class, 'store'])->name('task-store');
     });
 
-    Route::post('/team-invitation', [TeamController::class, 'invite'])->name('team-invitation');
+    Route::middleware('isLead')->group(function () {
+        Route::get('/team-invitation', [TeamController::class, 'show'])->name('show-team-invitation');
+        Route::post('/team-invitation', [TeamController::class, 'invite'])->name('send-team-invitation');
+    });
 });
 
 // Authentication

@@ -17,7 +17,7 @@ class TeamInvitationRequest extends LayoutRequest
     public function rules(): array
     {
         return [
-            'team_id' => 'required|exists:teams,id',
+            'team_id' => 'exists:teams,id',
             'user_id' => 'required|exists:users,id',
             'status' => 'in:Pending,Accepted,Declined',
         ];

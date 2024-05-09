@@ -38,7 +38,7 @@ class TeamController extends Controller
         try {
             $teamInvitation = $this->teamService->invite($request->validated());
             if (!$teamInvitation) {
-                throw new Exception("An invitation with the same team, user already exists.", 1);
+                throw new Exception("There are some errors in the invitation.", 1);
             }
             return response()->json($teamInvitation);
         } catch (\Throwable $e) {
@@ -46,6 +46,12 @@ class TeamController extends Controller
                 'error' => $e->getMessage(),
             ], 500);
         }
+    }
+
+    public function show()
+    {
+        $invitations = $this->teamService->show();
+        return response()->json($invitations);
     }
 
 }
