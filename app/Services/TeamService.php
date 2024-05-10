@@ -4,11 +4,12 @@ namespace App\Services;
 
 use App\Models\Team;
 use App\Models\TeamInvitation;
-use App\Models\TeamMember;
-use Illuminate\Support\Facades\Auth;
+use App\Traits\TeamTrait;
 
 class TeamService
 {
+    use TeamTrait;
+
     public function store(array $request)
     {
         $team = Team::create([
@@ -40,30 +41,4 @@ class TeamService
         return TeamInvitation::where('team_id', $team->id)->get();
     }
 
-    private function isMember($teamId, $userId)
-    {
-        return TeamMember::where([
-            'team_id' => $teamId,
-            'user_id' => $userId,
-        ])->first();
-    }
-
-    private function isInvited($teamId, $userId)
-    {
-        return TeamInvitation::where([
-            'team_id' => $teamId,
-            'user_id' => $userId,
-        ])->first();
-    }
-
-    private function isLead($userId)
-    {
-        return Team::where('lead_id', $userId)->first();
-    }
-
-    private function getTeam()
-    {
-        $user = Auth::user();
-        return $this->isLead($user->id);
-    }
 }
