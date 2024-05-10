@@ -40,7 +40,9 @@ Route::middleware('auth:sanctum')->group(function () {
     });
 
     Route::middleware('isLead')->group(function () {
-        Route::get('/team-invitation', [TeamController::class, 'show'])->name('show-team-invitation');
+        Route::get('/team-member', [TeamController::class, 'showMember'])->name('show-team-member');
+        Route::get('/team-task', [TeamController::class, 'showTask'])->name('show-team-task');
+        Route::get('/team-invitation', [TeamController::class, 'showInvitation'])->name('show-team-invitation');
         Route::post('/team-invitation', [TeamController::class, 'invite'])->name('send-team-invitation');
     });
 });

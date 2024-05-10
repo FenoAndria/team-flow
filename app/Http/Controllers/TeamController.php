@@ -2,15 +2,10 @@
 
 namespace App\Http\Controllers;
 
-use App\Exceptions\CustomForbiddenException;
 use App\Http\Requests\TeamInvitationRequest;
 use App\Http\Requests\TeamRequest;
-use App\Http\Requests\UpdateRoleRequest;
-use App\Models\Role;
-use App\Models\User;
 use App\Services\TeamService;
 use Exception;
-use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 
 class TeamController extends Controller
@@ -48,10 +43,23 @@ class TeamController extends Controller
         }
     }
 
-    public function show()
+    public function showInvitation()
     {
-        $invitations = $this->teamService->show();
+        $invitations = $this->teamService->showInvitation();
         return response()->json($invitations);
     }
+
+    public function showTask()
+    {
+        $tasks = $this->teamService->showTask();
+        return response()->json($tasks);
+    }
+
+    public function showMember()
+    {
+        $tasks = $this->teamService->showMember();
+        return response()->json($tasks);
+    }
+
 
 }
