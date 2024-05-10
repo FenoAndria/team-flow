@@ -2,7 +2,7 @@
 
 namespace App\Http\Requests;
 
-class TaskRequest extends LayoutRequest
+class SubtaskRequest extends LayoutRequest
 {
 
     /**
@@ -17,7 +17,7 @@ class TaskRequest extends LayoutRequest
             'description' => 'required',
             'status' => 'in:Todo,In Progress,Completed,Cancelled',
             'deadline' => 'nullable|date',
-            'team_id' => 'required|exists:teams,id',
+            'assigned_to' => 'exists:users,id',
         ];
     }
 }

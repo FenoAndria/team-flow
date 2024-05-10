@@ -3,6 +3,7 @@
 use App\Http\Controllers\TodoController;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\ProfilController;
+use App\Http\Controllers\SubtaskController;
 use App\Http\Controllers\TaskController;
 use App\Http\Controllers\TeamController;
 use App\Http\Controllers\UserController;
@@ -44,6 +45,9 @@ Route::middleware('auth:sanctum')->group(function () {
         Route::get('/team-task', [TeamController::class, 'showTask'])->name('show-team-task');
         Route::get('/team-invitation', [TeamController::class, 'showInvitation'])->name('show-team-invitation');
         Route::post('/team-invitation', [TeamController::class, 'invite'])->name('send-team-invitation');
+
+        Route::post('/subtask/{task}', [SubtaskController::class, 'store'])->name('store-subtask');
+        Route::post('/assign-user-subtask/{subtask}', [SubtaskController::class, 'assignUser'])->name('assignUser-subtask');
     });
 });
 

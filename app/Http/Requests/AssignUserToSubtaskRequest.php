@@ -2,7 +2,7 @@
 
 namespace App\Http\Requests;
 
-class TaskRequest extends LayoutRequest
+class AssignUserToSubtaskRequest extends LayoutRequest
 {
 
     /**
@@ -13,11 +13,7 @@ class TaskRequest extends LayoutRequest
     public function rules(): array
     {
         return [
-            'title' => 'required',
-            'description' => 'required',
-            'status' => 'in:Todo,In Progress,Completed,Cancelled',
-            'deadline' => 'nullable|date',
-            'team_id' => 'required|exists:teams,id',
+            'user_id' => 'required|exists:users,id',
         ];
     }
 }

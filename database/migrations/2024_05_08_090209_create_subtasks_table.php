@@ -16,11 +16,12 @@ return new class extends Migration
             $table->foreignId('task_id')->constrained()->cascadeOnDelete();
             $table->string('title');
             $table->text('description');
-            $table->enum('status', ['Todo', 'In Progress', 'Completed', 'Cancelled']);
-            $table->foreignId('assigned_to')->constrained('users', 'id')->cascadeOnDelete();
-            $table->date('deadline');
+            $table->enum('status', ['Todo', 'In Progress', 'Completed', 'Cancelled'])->default('Todo');
+            $table->unsignedBigInteger('assigned_to')->nullable();
+            $table->date('deadline')->nullable();
+            $table->foreign('assigned_to')->references('id')->on('users')->onDelete('set null');
             $table->timestamps();
-            //
+            // 
         });
     }
 

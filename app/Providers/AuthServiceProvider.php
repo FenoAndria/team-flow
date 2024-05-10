@@ -4,7 +4,11 @@ namespace App\Providers;
 
 // use Illuminate\Support\Facades\Gate;
 
+use App\Models\Subtask;
+use App\Models\Task;
 use App\Models\Todo;
+use App\Policies\SubtaskPolicy;
+use App\Policies\TaskPolicy;
 use App\Policies\TodoPolicy;
 use Illuminate\Foundation\Support\Providers\AuthServiceProvider as ServiceProvider;
 
@@ -17,7 +21,9 @@ class AuthServiceProvider extends ServiceProvider
      */
     protected $policies = [
         // 'App\Models\Model' => 'App\Policies\ModelPolicy',
-        Todo::class => TodoPolicy::class
+        Todo::class => TodoPolicy::class,
+        Task::class => TaskPolicy::class,
+        Subtask::class => SubtaskPolicy::class,
     ];
 
     /**
