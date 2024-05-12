@@ -6,7 +6,9 @@ namespace App\Providers;
 
 use App\Models\Subtask;
 use App\Models\Task;
+use App\Models\TeamInvitation;
 use App\Models\Todo;
+use App\Policies\MemberInvitationPolicy;
 use App\Policies\SubtaskPolicy;
 use App\Policies\TaskPolicy;
 use App\Policies\TodoPolicy;
@@ -24,6 +26,7 @@ class AuthServiceProvider extends ServiceProvider
         Todo::class => TodoPolicy::class,
         Task::class => TaskPolicy::class,
         Subtask::class => SubtaskPolicy::class,
+        TeamInvitation::class => MemberInvitationPolicy::class,
     ];
 
     /**

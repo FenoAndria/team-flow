@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\TodoController;
 use App\Http\Controllers\AuthController;
+use App\Http\Controllers\InvitationController;
 use App\Http\Controllers\ProfilController;
 use App\Http\Controllers\SubtaskController;
 use App\Http\Controllers\TaskController;
@@ -48,6 +49,11 @@ Route::middleware('auth:sanctum')->group(function () {
 
         Route::post('/subtask/{task}', [SubtaskController::class, 'store'])->name('store-subtask');
         Route::post('/assign-user-subtask/{subtask}', [SubtaskController::class, 'assignUser'])->name('assignUser-subtask');
+    });
+
+    Route::middleware('isMember')->group(function () {
+        Route::get('/invitation', [InvitationController::class, 'show'])->name('show-member-invitation');
+        Route::put('/invitation/{team_invitation}', [InvitationController::class, 'update'])->name('update-member-invitation');
     });
 });
 
