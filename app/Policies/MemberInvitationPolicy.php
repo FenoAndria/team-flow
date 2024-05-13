@@ -11,6 +11,6 @@ class MemberInvitationPolicy
 {
     public function update(User $user, TeamInvitation $teamInvitation): Response
     {
-        return $user->id === $teamInvitation->user_id?Response::allow():throw new CustomForbiddenException();
+        return ($user->id === $teamInvitation->user_id && $teamInvitation->status == 'Pending') ? Response::allow() : throw new CustomForbiddenException();
     }
 }
