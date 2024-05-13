@@ -4,8 +4,10 @@ namespace App\Services;
 
 use App\Models\Subtask;
 use App\Models\Task;
+use App\Models\Team;
 use App\Traits\TeamTrait;
 use Exception;
+use Illuminate\Support\Facades\Auth;
 
 class SubtaskService
 {
@@ -31,5 +33,16 @@ class SubtaskService
         $subtask->assigned_to = $request['user_id'];
         $subtask->save();
         return $subtask;
+    }
+
+    public function unassignUser(Team $team)
+    {
+        $user = Auth::user();
+        $tasks = Task::where('team_id', $team->id)->pluck('id');
+        $subtasks = Subtask::whereIn('task_id', $tasks)->where('assigned_to', $user->id)->get();
+        foreach ($subtasks as $subtask) {
+            $subtask->assigned_to = null;
+            $subtask->save();
+        }
     }
 }

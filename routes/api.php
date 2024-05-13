@@ -55,6 +55,7 @@ Route::middleware('auth:sanctum')->group(function () {
     Route::middleware('isMember')->group(function () {
         Route::get('/invitation', [InvitationController::class, 'show'])->name('show-member-invitation');
         Route::put('/invitation/{team_invitation}', [InvitationController::class, 'update'])->name('update-member-invitation');
+        Route::post('/leave-team/{team}', [TeamController::class, 'leave'])->name('member-leave-team');
 
         Route::get('/subtask',[MemberSubtaskController::class,'index'])->name('show-member-subtask');
     });

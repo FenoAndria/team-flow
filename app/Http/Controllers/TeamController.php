@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Http\Requests\TeamInvitationRequest;
 use App\Http\Requests\TeamRequest;
+use App\Models\Team;
 use App\Services\TeamService;
 use Exception;
 use Illuminate\Http\Request;
@@ -43,6 +44,19 @@ class TeamController extends Controller
         }
     }
 
+    public function leave(Team $team)
+    {
+        $this->authorize('leaveTeam', $team);
+        try {
+            $teamLeave = $this->teamService->leave($team);
+            return response()->json(['message' => 'OK!']);
+        } catch (\Throwable $e) {
+            return response()->json([
+                'error' => $e->getMessage(),
+            ], 500);
+        }
+    }
+
     public function showInvitation()
     {
         $invitations = $this->teamService->showInvitation();
@@ -60,6 +74,4 @@ class TeamController extends Controller
         $tasks = $this->teamService->showMember();
         return response()->json($tasks);
     }
-
-
 }

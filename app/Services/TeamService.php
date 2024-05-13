@@ -5,12 +5,18 @@ namespace App\Services;
 use App\Models\Task;
 use App\Models\Team;
 use App\Models\TeamInvitation;
+use App\Models\TeamMember;
 use App\Traits\TeamTrait;
+use Illuminate\Support\Facades\Auth;
 
 class TeamService
 {
     use TeamTrait;
-
+    protected $subtaskService;
+    public function __construct(SubtaskService $subtaskService)
+    {
+        $this->subtaskService = $subtaskService;
+    }
     public function store(array $request)
     {
         $team = Team::create([
@@ -33,6 +39,17 @@ class TeamService
             return $teamInvitation;
         }
         return false;
+    }
+
+    public function leave(Team $team)
+    {
+        $user = Auth::user();
+        $delete = TeamMember::where([
+            'team_id' => $team->id,
+            'user_id' => $user->id,
+        ])->delete();
+        $this->subtaskService->unassignUser($team);
+        return $delete;
     }
 
     public function showInvitation()
