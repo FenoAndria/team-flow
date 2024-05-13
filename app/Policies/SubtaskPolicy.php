@@ -16,4 +16,9 @@ class SubtaskPolicy
     {
         return $subtask->task->team_id == $this->getTeam()->id ? Response::allow() : throw new CustomForbiddenException();
     }
+
+    public function updateStatus(User $user, Subtask $subtask): Response
+    {
+        return $subtask->assigned_to == $user->id ? Response::allow() : throw new CustomForbiddenException();
+    }
 }

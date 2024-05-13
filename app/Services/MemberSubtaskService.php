@@ -12,4 +12,11 @@ class MemberSubtaskService
         $user = Auth::user();
         return Subtask::where('assigned_to', $user->id)->get();
     }
+
+    public function update(Subtask $subtask, array $request)
+    {
+        $subtask->status = $request['status'];
+        $subtask->save();
+        return $subtask;
+    }
 }
