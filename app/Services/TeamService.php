@@ -7,6 +7,7 @@ use App\Models\Team;
 use App\Models\TeamInvitation;
 use App\Models\TeamMember;
 use App\Traits\TeamTrait;
+use Exception;
 use Illuminate\Support\Facades\Auth;
 
 class TeamService
@@ -19,6 +20,10 @@ class TeamService
     }
     public function store(array $request)
     {
+        $isTeamMember = TeamMember::where('user_id', $request['lead_id'])->first();
+        if ($isTeamMember) {
+            throw new Exception('User already member of a team!');
+        }
         $team = Team::create([
             'name' => $request['name'],
             'lead_id' => $request['lead_id'],
