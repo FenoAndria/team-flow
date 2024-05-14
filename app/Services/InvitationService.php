@@ -4,10 +4,13 @@ namespace App\Services;
 
 use App\Models\TeamInvitation;
 use App\Models\TeamMember;
+use App\Traits\TeamTrait;
 use Illuminate\Support\Facades\Auth;
 
 class InvitationService
 {
+    use TeamTrait;
+
     public function show()
     {
         $user = Auth::user();
@@ -16,10 +19,12 @@ class InvitationService
 
     public function update(TeamInvitation $teamInvitation, array $request)
     {
-        $teamInvitation->status = $request['status'];
-        $teamInvitation->save();
-        if ($request['status'] == 'Accepted') {
-            $this->accept($teamInvitation);
+        if ($request && $request['status']) {
+            $teamInvitation->status = $request['status'];
+            $teamInvitation->save();
+            if ($request['status'] == 'Accepted' && !$this->isMember($teamInvitation->team_id, $teamInvitation->user_id)) {
+                $this->accept($teamInvitation);
+            }
         }
         return $teamInvitation;
     }

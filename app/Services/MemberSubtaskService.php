@@ -15,8 +15,10 @@ class MemberSubtaskService
 
     public function update(Subtask $subtask, array $request)
     {
-        $subtask->status = $request['status'];
-        $subtask->save();
+        if ($request && $request['status']) {
+            $subtask->status = $request['status'];
+            $subtask->save();
+        }
         return $subtask;
     }
 }
