@@ -33,9 +33,6 @@ class TeamController extends Controller
     {
         try {
             $teamInvitation = $this->teamService->invite($request->validated());
-            if (!$teamInvitation) {
-                throw new Exception("There are some errors in the invitation.", 1);
-            }
             return response()->json($teamInvitation);
         } catch (\Throwable $e) {
             return response()->json([

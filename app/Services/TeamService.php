@@ -33,17 +33,11 @@ class TeamService
 
     public function invite(array $request)
     {
-        $isMember = $this->isMember($this->getTeam()->id, $request['user_id']);
-        $isInvited = $this->isInvited($this->getTeam()->id, $request['user_id']);
-        $isLead = $this->isLead($request['user_id']);
-        if (!$isMember && !$isInvited && !$isLead) {
-            $teamInvitation = TeamInvitation::create([
-                'team_id' => $this->getTeam()->id,
-                'user_id' => $request['user_id'],
-            ]);
-            return $teamInvitation;
-        }
-        return false;
+        $teamInvitation = TeamInvitation::create([
+            'team_id' => $this->getTeam()->id,
+            'user_id' => $request['user_id'],
+        ]); 
+        return $teamInvitation;
     }
 
     public function leave(Team $team)
