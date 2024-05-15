@@ -16,7 +16,6 @@ class SubtaskRequest extends LayoutRequest
             'title' => 'required',
             'description' => 'required',
             'deadline' => 'nullable|date',
-            'assigned_to' => 'exists:users,id',
         ];
     }
 }

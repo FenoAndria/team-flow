@@ -19,7 +19,6 @@ class SubtaskService
             'task_id' => $task->id,
             'title' => $request['title'],
             'description' => $request['description'],
-            'assigned_to' => $request['assigned_to'],
             'deadline' => $request['deadline'] ?? null,
         ]);
         return $subtask;

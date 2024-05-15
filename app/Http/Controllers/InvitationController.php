@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Http\Requests\UpdateMemberInvitationRequest;
+use App\Http\Resources\TeamInvitationResource;
 use App\Models\TeamInvitation;
 use App\Services\InvitationService;
 use Illuminate\Http\Request;
@@ -17,7 +18,7 @@ class InvitationController extends Controller
     public function show()
     {
         $invitation = $this->invitationService->show();
-        return response()->json($invitation);
+        return response()->json(TeamInvitationResource::collection($invitation)); 
     }
 
     public function update(UpdateMemberInvitationRequest $request, TeamInvitation $teamInvitation)

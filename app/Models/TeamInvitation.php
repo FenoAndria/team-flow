@@ -10,4 +10,9 @@ class TeamInvitation extends Model
     use HasFactory;
     protected $table = 'team_invitations';
     protected $fillable = ['team_id', 'user_id', 'status'];
+
+    public function team()
+    {
+        return $this->belongsTo(Team::class);
+    }
 }
