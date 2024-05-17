@@ -8,5 +8,12 @@ export const getMemberInvitations = async () => {
     }).catch((err) => {
         console.log(err.response);
     });
+}
 
+export const updateMemberInvitations = async (invitation) => {
+    await store.dispatch('updateMemberInvitations', invitation).then((result) => {
+
+    }).catch((err) => {
+        console.log(err);
+    });
 }

@@ -44,8 +44,18 @@
                   </p>
                 </div>
                 <div v-else class="flex">
-                  <button class="btn bg-green-500">Accept</button>
-                  <button class="btn bg-red-600">Declin</button>
+                  <button
+                    class="btn bg-green-500"
+                    @click="replyInvitation(memberInvitation.id, 'Accepted')"
+                  >
+                    Accept
+                  </button>
+                  <button
+                    class="btn bg-red-600"
+                    @click="replyInvitation(memberInvitation.id, 'Declined')"
+                  >
+                    Decline
+                  </button>
                 </div>
               </div>
             </div>
@@ -60,7 +70,10 @@
 import { computed, onMounted } from "@vue/runtime-core";
 import { useStore } from "vuex";
 import UserLayout from "../../../Components/Layouts/UserLayout.vue";
-import { getMemberInvitations } from "../../../Services/Member/MemberInvitationService";
+import {
+  getMemberInvitations,
+  updateMemberInvitations,
+} from "../../../Services/Member/MemberInvitationService";
 import dayjs from "dayjs";
 export default {
   components: { UserLayout },
@@ -70,12 +83,17 @@ export default {
     const loadingMemberInvitations = computed(
       () => store.getters.loadingMemberInvitations
     );
+    const replyInvitation = async (id, status) => {
+      await updateMemberInvitations({ id, status });
+      getMemberInvitations();
+    };
     onMounted(async () => {
       await getMemberInvitations();
     });
     return {
       memberInvitations,
       loadingMemberInvitations,
+      replyInvitation,
       dayjs,
     };
   },

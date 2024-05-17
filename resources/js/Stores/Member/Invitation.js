@@ -18,7 +18,12 @@ const mutations = {
 const actions = {
     getMemberInvitations: async ({ commit }) => {
         return await API().get('invitation')
-    }
+    },
+    updateMemberInvitations: async ({ commit }, invitation) => {
+        return await API().put('invitation/' + invitation.id, { status: invitation.status })
+        // return await API().put('invitation/' + invitation.id, { status: invitation.status })
+    },
+
 }
 
 export default {
