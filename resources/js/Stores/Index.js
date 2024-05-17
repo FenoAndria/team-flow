@@ -5,6 +5,8 @@ import ValidationError from './ValidationError';
 import Auth from './Auth';
 import User from './User';
 
+import Member from './Member/Index'
+
 const vuexLocal = new VuexPersistence({
     key: 'vuex',
     storage: window.localStorage,
@@ -22,7 +24,8 @@ const store = new Vuex.Store({
         Todo,
         ValidationError,
         Auth,
-        User
+        User,
+        ...Member
     },
     plugins: [vuexLocal.plugin]
 })

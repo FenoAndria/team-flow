@@ -11,6 +11,7 @@ import Register from "./../Views/Auth/Register.vue"
 import AdminIndex from '../Components/Layouts/AdminIndex.vue'
 import UserIndexPage from '../Components/Layouts/UserIndex.vue'
 import RoleValidation from "../Middleware/RoleValidation";
+import MemberRoutes from "./MemberRoutes";
 const router = createRouter({
     history: createWebHistory(),
     routes: [
@@ -30,6 +31,13 @@ const router = createRouter({
             meta: {
                 requiresAuth: false
             }
+        },
+        {
+            path: '/member',
+            name: 'Member',
+            children: [
+                ...MemberRoutes
+            ]
         },
         {
             path: '/todo/',

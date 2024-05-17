@@ -1,6 +1,6 @@
 <template>
   <div>
-    <Navbar role="User"/>
+    <Navbar role="User" :links="links"/>
     <slot></slot>
   </div>
 </template>
@@ -8,5 +8,18 @@
 import Navbar from "../Layouts/Navbar.vue";
 export default {
   components: { Navbar },
+  setup(props) {
+    const links = [
+      {
+        name: "AppIndex",
+        tag: "Home",
+      },
+      {
+        name: "MemberInvitationIndex",
+        tag: "Invitations",
+      },
+    ];
+    return { links };
+  },
 };
 </script>

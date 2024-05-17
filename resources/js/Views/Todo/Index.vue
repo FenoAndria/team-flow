@@ -161,10 +161,5 @@ export default {
 };
 </script>
 <style lang="postcss">
-.list-container {
-  @apply space-y-1;
-}
-.list-content {
-  @apply py-1 px-2 bg-gray-300 rounded flex justify-between  font-semibold;
-}
+
 </style>

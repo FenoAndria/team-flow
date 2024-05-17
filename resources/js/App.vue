@@ -13,19 +13,16 @@
         </router-link>
       </div>
     </div>
-    <MainLayout>
       <router-view></router-view>
-    </MainLayout>
   </div>
 </template>
 <script>
 import { useRoute } from "vue-router";
 import UserData from "./Services/UserData";
 import Badge from "./Components/Badge.vue";
-import MainLayout from "./Components/Layouts/MainLayout.vue";
 
 export default {
-  components: { Badge, MainLayout },
+  components: { Badge },
   setup(props) {
     const route = useRoute();
     const logout = () => {
