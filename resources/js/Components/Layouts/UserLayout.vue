@@ -18,6 +18,10 @@ export default {
         name: "MemberInvitationIndex",
         tag: "Invitations",
       },
+      {
+        name: "TeamIndex",
+        tag: "Team",
+      },
     ];
     return { links };
   },

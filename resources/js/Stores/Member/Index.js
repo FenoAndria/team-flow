@@ -1,5 +1,7 @@
 import Invitation from "./Invitation";
+import Team from "./Team";
 
 export default {
-    MemberInvitation: Invitation
+    MemberInvitation: Invitation,
+    MemberTeam: Team
 }
