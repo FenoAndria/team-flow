@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Http\Requests\UpdateMemberSubtaskRequest;
+use App\Http\Resources\Member\GetMemberSubtaskResource;
 use App\Models\Subtask;
 use App\Services\MemberSubtaskService;
 use Illuminate\Http\Request;
@@ -18,7 +19,7 @@ class MemberSubtaskController extends Controller
     public function index()
     {
         $memberSubtasks = $this->memberSubtaskService->all();
-        return response()->json($memberSubtasks);
+        return response()->json(GetMemberSubtaskResource::collection($memberSubtasks));
     }
 
     public function update(UpdateMemberSubtaskRequest $request, Subtask $subtask)

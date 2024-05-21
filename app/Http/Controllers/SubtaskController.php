@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Http\Requests\AssignUserToSubtaskRequest;
 use App\Http\Requests\SubtaskRequest;
+use App\Http\Resources\SubtaskResource;
 use App\Models\Subtask;
 use App\Models\Task;
 use App\Services\SubtaskService;
@@ -34,7 +35,7 @@ class SubtaskController extends Controller
         $this->authorize('assignUser', $subtask);
         try {
             $assigned = $this->subtaskService->assignUser($subtask, $request->validated());
-            return response()->json($assigned);
+            return response()->json(new SubtaskResource($assigned)); 
         } catch (\Throwable $e) {
             return response()->json([
                 'error' => $e->getMessage(),

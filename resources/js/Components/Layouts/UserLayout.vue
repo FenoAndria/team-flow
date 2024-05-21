@@ -22,6 +22,10 @@ export default {
         name: "TeamIndex",
         tag: "Team",
       },
+      {
+        name: "TaskIndex",
+        tag: "Task",
+      },
     ];
     return { links };
   },

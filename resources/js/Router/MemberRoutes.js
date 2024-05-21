@@ -1,5 +1,6 @@
 import MemberInvitation from '../Views/Member/Invitation/Index.vue'
 import TeamIndex from '../Views/Member/Team/Index.vue'
+import TaskIndex from '../Views/Member/Task/Index.vue'
 export default [
     {
         path: '/invitation/',
@@ -12,6 +13,24 @@ export default [
                 path: '',
                 name: "MemberInvitationIndex",
                 component: MemberInvitation,
+                meta: {
+
+                }
+            },
+        ],
+        // beforeEnter: RoleValidation('User')
+    },
+    {
+        path: '/task/',
+        name: "Task",
+        meta: {
+            requiresAuth: true
+        },
+        children: [
+            {
+                path: '',
+                name: "TaskIndex",
+                component: TaskIndex,
                 meta: {
 
                 }
