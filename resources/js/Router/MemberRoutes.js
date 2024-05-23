@@ -1,6 +1,7 @@
 import MemberInvitation from '../Views/Member/Invitation/Index.vue'
-import TeamIndex from '../Views/Member/Team/Index.vue'
 import TaskIndex from '../Views/Member/Task/Index.vue'
+import TeamIndex from '../Views/Member/Team/Index.vue'
+import TeamShow from '../Views/Member/Team/Show.vue'
 export default [
     {
         path: '/invitation/',
@@ -49,6 +50,14 @@ export default [
                 path: '',
                 name: "TeamIndex",
                 component: TeamIndex,
+                meta: {
+
+                }
+            },
+            {
+                path: ':team',
+                name: "TeamShow",
+                component: TeamShow,
                 meta: {
 
                 }

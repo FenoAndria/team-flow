@@ -9,3 +9,13 @@ export const getTeams = async () => {
         console.log(err.response);
     });
 }
+
+export const showTeam = async (team) => {
+    store.commit('setLoadingShowTeam', true)
+    await store.dispatch('showTeam', team).then((result) => {
+        store.commit('setShowTeam', result.data)
+        store.commit('setLoadingShowTeam', false)
+    }).catch((err) => {
+        console.log(err.response);
+    });
+}

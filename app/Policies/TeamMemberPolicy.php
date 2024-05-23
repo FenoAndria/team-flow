@@ -16,4 +16,11 @@ class TeamMemberPolicy
     {
         return $this->isMember($team->id, $user->id) ? Response::allow() : throw new CustomForbiddenException();
     }
+    
+    public function showTeam(User $user, Team $team): Response
+    {
+        return $this->isMember($team->id, $user->id) ? Response::allow() : throw new CustomForbiddenException();
+    }
+
 }
+ 

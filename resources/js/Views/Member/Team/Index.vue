@@ -23,6 +23,10 @@
                 <p class="text-xs">
                   Member since {{ dayjs(item.created_at).format("DD-MM-YYYY") }}
                 </p>
+                <router-link
+                  :to="{ name: 'TeamShow', params: { team: item.team.id } }"
+                  >Details</router-link
+                >
               </div>
             </div>
           </div>
