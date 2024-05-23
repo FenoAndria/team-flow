@@ -29,6 +29,11 @@ class InvitationService
         return $teamInvitation;
     }
 
+    public function delete(TeamInvitation $teamInvitation)
+    {
+        return $teamInvitation->delete();
+    }
+
     private function accept(TeamInvitation $teamInvitation)
     {
         $teamMember = TeamMember::create([

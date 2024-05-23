@@ -14,9 +14,11 @@ class TeamService
 {
     use TeamTrait;
     protected $subtaskService;
-    public function __construct(SubtaskService $subtaskService)
+    protected $invitationService;
+    public function __construct(SubtaskService $subtaskService, InvitationService $invitationService)
     {
         $this->subtaskService = $subtaskService;
+        $this->invitationService = $invitationService;
     }
     public function store(array $request)
     {
@@ -36,18 +38,21 @@ class TeamService
         $teamInvitation = TeamInvitation::create([
             'team_id' => $this->getTeam()->id,
             'user_id' => $request['user_id'],
-        ]); 
+        ]);
         return $teamInvitation;
     }
 
     public function leave(Team $team)
     {
         $user = Auth::user();
-        $delete = TeamMember::where([
+        $whereClause = [
             'team_id' => $team->id,
             'user_id' => $user->id,
-        ])->delete();
+        ];
+        $teamInvitation = TeamInvitation::where($whereClause)->first();
+        $delete = TeamMember::where($whereClause)->delete();
         $this->subtaskService->unassignUser($team);
+        $this->invitationService->delete($teamInvitation);
         return $delete;
     }
 

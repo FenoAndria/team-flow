@@ -1,14 +1,22 @@
 <template>
   <UserLayout>
-    <div>Team Index</div>
     <div>
       <div v-if="loadingShowTeam">
         <span class="loading"></span>
       </div>
       <div v-else>
         <div v-if="team">
-          <p>Name : {{ team.name }}</p>
-          <p>Lead : {{ team.lead.name + " | " + team.lead.email }}</p>
+          <div class="flex justify-between">
+            <div>
+              <p>Name : {{ team.name }}</p>
+              <p>Lead : {{ team.lead.name + " | " + team.lead.email }}</p>
+            </div>
+            <div>
+              <button class="btn btn-error" @click="leave(team.id)">
+                Leave
+              </button>
+            </div>
+          </div>
           <div class="flex">
             <div class="w-1/2">
               <p>Tasks</p>
@@ -59,9 +67,13 @@
 import { computed, onMounted } from "@vue/runtime-core";
 import { useStore } from "vuex";
 import UserLayout from "../../../Components/Layouts/UserLayout.vue";
-import { showTeam } from "../../../Services/Member/MemberTeamService";
+import {
+  leaveTeam,
+  showTeam,
+} from "../../../Services/Member/MemberTeamService";
 import dayjs from "dayjs";
 import { useRoute } from "vue-router";
+import router from '../../../Router/Index';
 export default {
   components: { UserLayout },
   setup(props) {
@@ -88,6 +100,10 @@ export default {
           break;
       }
     };
+    const leave = async (teamId) => {
+      await leaveTeam(teamId);
+      router.push({ name: "TeamIndex" });
+    };
     onMounted(async () => {
       await showTeam(route.params.team);
     });
@@ -96,6 +112,7 @@ export default {
       loadingShowTeam,
       dayjs,
       statusColor,
+      leave,
     };
   },
 };

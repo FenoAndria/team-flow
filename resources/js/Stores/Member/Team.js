@@ -28,6 +28,9 @@ const actions = {
     showTeam: async ({ commit }, teamId) => {
         return await API().get('team/' + teamId)
     },
+    leaveTeam: async ({ commit }, teamId) => {
+        return await API().post('leave-team/' + teamId)
+    },
 
 }
 

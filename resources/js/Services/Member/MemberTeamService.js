@@ -19,3 +19,10 @@ export const showTeam = async (team) => {
         console.log(err.response);
     });
 }
+export const leaveTeam = async (teamId) => {
+    await store.dispatch('leaveTeam', teamId).then((result) => {
+        // console.log(result);
+    }).catch((err) => {
+        console.log(err.response);
+    });
+}
