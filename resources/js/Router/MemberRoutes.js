@@ -4,7 +4,7 @@ import TeamIndex from '../Views/Member/Team/Index.vue'
 import TeamShow from '../Views/Member/Team/Show.vue'
 export default [
     {
-        path: '/invitation/',
+        path: 'invitation/',
         name: "Invitation",
         meta: {
             requiresAuth: true
@@ -22,7 +22,7 @@ export default [
         // beforeEnter: RoleValidation('User')
     },
     {
-        path: '/task/',
+        path: 'task/',
         name: "Task",
         meta: {
             requiresAuth: true
@@ -40,7 +40,7 @@ export default [
         // beforeEnter: RoleValidation('User')
     },
     {
-        path: '/team/',
+        path: 'team/',
         name: "Team",
         meta: {
             requiresAuth: true

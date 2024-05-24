@@ -18,7 +18,7 @@ import { useRoute } from "vue-router";
 import UserData from "../../Services/UserData";
 import Badge from "../Badge.vue";
 export default {
-  props: ["role", "links"],
+  props: ["links"],
   components: { Badge },
   setup(props) {
     const route = useRoute();

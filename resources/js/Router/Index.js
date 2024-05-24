@@ -8,10 +8,28 @@ import UserEdit from "./../Views/User/Edit.vue"
 import Login from "./../Views/Auth/Login.vue"
 import Register from "./../Views/Auth/Register.vue"
 
-import AdminIndex from '../Components/Layouts/AdminIndex.vue'
+import AdminIndexPage from '../Components/Layouts/AdminIndex.vue'
 import UserIndexPage from '../Components/Layouts/UserIndex.vue'
+import LeadIndexPage from '../Components/Layouts/LeadIndex.vue'
+
 import RoleValidation from "../Middleware/RoleValidation";
 import MemberRoutes from "./MemberRoutes";
+import LeadRoutes from "./LeadRoutes";
+
+const setIndexPage = (indexPage) => {
+    switch (indexPage) {
+        case 'Admin':
+            return AdminIndexPage
+            break;
+        case 'Lead':
+            return LeadIndexPage
+            break;
+        case 'User':
+            return UserIndexPage
+            break;
+    }
+}
+
 const router = createRouter({
     history: createWebHistory(),
     routes: [
@@ -27,17 +45,29 @@ const router = createRouter({
         {
             path: '',
             name: "AppIndex",
-            component: UserData ? (UserData.role == 'User' ? UserIndexPage : AdminIndex) : AppIndex,
+            component: UserData.role ? setIndexPage(UserData.role) : AppIndex,
             meta: {
                 requiresAuth: false
             }
         },
         {
-            path: '/member',
+            path: '/member/',
             name: 'Member',
             children: [
                 ...MemberRoutes
-            ]
+            ],
+            beforeEnter: RoleValidation('User')
+        },
+        {
+            path: '/lead/',
+            name: 'Lead',
+            children: [
+                ...LeadRoutes
+            ],
+            meta: {
+                requiresAuth: true
+            },
+            beforeEnter: RoleValidation('Lead')
         },
         {
             path: '/todo/',

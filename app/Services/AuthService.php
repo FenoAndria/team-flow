@@ -5,11 +5,13 @@ namespace App\Services;
 use App\Models\Profil;
 use App\Models\Role;
 use App\Models\User;
+use App\Traits\TeamTrait;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 
 class AuthService
 {
+    use TeamTrait;
     public function login(array $request)
     {
         if (Auth::attempt(['email' => $request['email'], 'password' => $request['password']])) {
@@ -18,7 +20,7 @@ class AuthService
             $authData['token'] = $user->createToken('LaravelSanctumAuth')->plainTextToken;
             $authData['email'] = $user->email;
             $authData['name'] = $user->profil->name;
-            $authData['role'] = $user->role->name;
+            $authData['role'] = $user->role->name == 'Admin' ? $user->role->name : ($this->isLead($user->id) ? 'Lead' : 'User');
             return $authData;
         }
         return false;
@@ -26,7 +28,7 @@ class AuthService
 
     public function register(array $request)
     {
-        $roleUser = Role::where('name','User')->first();
+        $roleUser = Role::where('name', 'User')->first();
         $user = new User();
         $user->fill([
             'email' => $request['email'],
