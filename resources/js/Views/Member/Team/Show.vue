@@ -74,6 +74,7 @@ import {
 import dayjs from "dayjs";
 import { useRoute } from "vue-router";
 import router from '../../../Router/Index';
+import statusColor from "../../../Services/statusColor";
 export default {
   components: { UserLayout },
   setup(props) {
@@ -81,25 +82,7 @@ export default {
     const route = useRoute();
     const team = computed(() => store.getters.showTeam);
     const loadingShowTeam = computed(() => store.getters.loadingShowTeam);
-    const statusColor = (status) => {
-      switch (status) {
-        case "Todo":
-          return "text-blue-500";
-          break;
-        case "In Progress":
-          return "text-orange-500";
-          break;
-        case "Completed":
-          return "text-green-500";
-          break;
-        case "Cancelled":
-          return "text-red-500";
-          break;
-
-        default:
-          break;
-      }
-    };
+   
     const leave = async (teamId) => {
       await leaveTeam(teamId);
       router.push({ name: "TeamIndex" });

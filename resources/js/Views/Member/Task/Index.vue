@@ -84,6 +84,7 @@ import {
   updateMemberSubtask,
 } from "../../../Services/Member/MemberSubtaskService";
 import dayjs from "dayjs";
+import statusColor from "../../../Services/statusColor";
 export default {
   components: { UserLayout },
   setup(props) {
@@ -92,25 +93,7 @@ export default {
     const loadingMemberSubtasks = computed(
       () => store.getters.loadingMemberSubtasks
     );
-    const statusColor = (status) => {
-      switch (status) {
-        case "Todo":
-          return "text-blue-500";
-          break;
-        case "In Progress":
-          return "text-orange-500";
-          break;
-        case "Completed":
-          return "text-green-500";
-          break;
-        case "Cancelled":
-          return "text-red-500";
-          break;
-
-        default:
-          break;
-      }
-    };
+   
     const changeStatus = async (subtaskId, status) => {
       await updateMemberSubtask({ id: subtaskId, status });
       getMemberSubtasks();

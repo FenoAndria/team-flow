@@ -19,4 +19,11 @@ class TaskPolicy
     {
         return $task->team_id == $this->getTeam()->id ? Response::allow() : throw new CustomForbiddenException();
     }
+
+    public function show(User $user, Task $task): Response
+    {
+        return $task->team_id == $this->getTeam()->id ? Response::allow() : throw new CustomForbiddenException();
+    }
+
+    
 }
