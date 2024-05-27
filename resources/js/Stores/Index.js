@@ -6,6 +6,7 @@ import Auth from './Auth';
 import User from './User';
 
 import Member from './Member/Index'
+import Lead from './Lead/Index'
 
 const vuexLocal = new VuexPersistence({
     key: 'vuex',
@@ -25,7 +26,8 @@ const store = new Vuex.Store({
         ValidationError,
         Auth,
         User,
-        ...Member
+        ...Member,
+        ...Lead,
     },
     plugins: [vuexLocal.plugin]
 })
