@@ -28,6 +28,9 @@ const actions = {
     showTeamTask: async ({ commit }, taskId) => {
         return await API().get('team-task/' + taskId)
     },
+    storeSubtask: async ({ commit }, data) => { 
+        return await API().post('subtask/' + data.taskId, { ...data.subtask })
+    },
 }
 
 export default {

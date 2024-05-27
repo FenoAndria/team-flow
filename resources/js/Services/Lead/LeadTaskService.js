@@ -1,4 +1,5 @@
 import store from "../../Stores/Index";
+import router from '../../Router/Index'
 
 export const getTeamTasks = async () => {
     store.commit('setLoadingTeamTasks', true)
@@ -15,7 +16,16 @@ export const showTeamTask = async (taskId) => {
     await store.dispatch('showTeamTask', taskId).then((result) => {
         store.commit('setTeamTask', result.data)
         store.commit('setLoadingTeamTask', false)
-    }).catch((err) => { 
+    }).catch((err) => {
+        console.log(err.response);
+    });
+}
+
+export const storeSubtask = async (data) => {
+    await store.dispatch('storeSubtask', data).then((result) => {
+        console.log(result.data);
+        router.push({ name: 'LeadTaskShow', params: { task: data.taskId } })
+    }).catch((err) => {
         console.log(err.response);
     });
 }

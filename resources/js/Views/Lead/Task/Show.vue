@@ -36,6 +36,14 @@
             <hr />
             <div class="text-sm">
               <p class="font-semibold underline">Subtasks :</p>
+              <router-link
+                :to="{
+                  name: 'LeadCreateSubtask',
+                  params: { task: teamTask.id },
+                }"
+              >
+                <button class="btn bg-primary text-white">New subtask</button>
+              </router-link>
               <div v-if="teamTask.subtasks">
                 <div v-for="subtask in teamTask.subtasks">
                   <div class="flex justify-between">
