@@ -54,14 +54,19 @@
                   </div>
                   <div class="text-xs">
                     <p>Deadline : {{ subtask.deadline }}</p>
-                    <p>
+                    <div v-if="subtask.assigned_to">
                       Assigned to :
-                      {{
-                        subtask.assigned_to
-                          ? subtask.assigned_to.profil.name
-                          : "none"
-                      }}
-                    </p>
+                      {{ subtask.assigned_to.profil.name }}
+                    </div>
+                    <div v-else>
+                      <button
+                        class="cursor-pointer"
+                        for="assignToUserModal"
+                        @click="openModal(subtask)"
+                      >
+                        Assign to a user
+                      </button>
+                    </div>
                     <p>-----</p>
                   </div>
                 </div>
@@ -71,30 +76,56 @@
         </div>
       </div>
     </div>
+    <Modal
+      modalId="assignToUserModal"
+      :isOpen="isModalOpen"
+      :content="modalContent"
+      @close="closeModal"
+      @reloadShowTeamTask="reloadShowTeamTask"
+    />
   </LeadLayout>
 </template>
 <script>
-import { computed, onMounted } from "@vue/runtime-core";
+import { computed, onMounted, reactive, toRefs } from "@vue/runtime-core";
 import LeadLayout from "../../../Components/Layouts/LeadLayout.vue";
+import Modal from "../../../Components/Layouts/Modal.vue";
 import { showTeamTask } from "../../../Services/Lead/LeadTaskService";
 import { useStore } from "vuex";
 import { useRoute } from "vue-router";
 import statusColor from "../../../Services/statusColor";
 export default {
-  components: { LeadLayout },
+  components: { LeadLayout, Modal },
   setup(props) {
     const route = useRoute();
     const store = useStore();
+    const state = reactive({
+      isModalOpen: false,
+      modalContent: {},
+    });
     const teamTask = computed(() => store.getters.teamTask);
     const loadingTeamTask = computed(() => store.getters.loadingTeamTask);
-
+    const openModal = (subtask) => {
+      state.modalContent = subtask;
+      state.isModalOpen = true;
+    };
+    const closeModal = () => {
+      state.modalContent = {};
+      state.isModalOpen = false;
+    };
+    const reloadShowTeamTask = async () => {
+      await showTeamTask(route.params.task);
+    };
     onMounted(async () => {
       await showTeamTask(route.params.task);
     });
     return {
+      ...toRefs(state),
       teamTask,
       loadingTeamTask,
       statusColor,
+      closeModal,
+      openModal,
+      reloadShowTeamTask,
     };
   },
 };

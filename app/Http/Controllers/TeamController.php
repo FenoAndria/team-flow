@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Http\Requests\TeamInvitationRequest;
 use App\Http\Requests\TeamRequest;
+use App\Http\Resources\Member\MemberResource;
 use App\Http\Resources\TaskResource;
 use App\Models\Task;
 use App\Models\Team;
@@ -75,7 +76,7 @@ class TeamController extends Controller
 
     public function showMember()
     {
-        $tasks = $this->teamService->showMember();
-        return response()->json($tasks);
+        $member = $this->teamService->showMember();
+        return response()->json(MemberResource::collection($member));
     }
 }

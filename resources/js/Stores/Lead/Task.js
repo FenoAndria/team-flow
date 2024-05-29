@@ -28,8 +28,11 @@ const actions = {
     showTeamTask: async ({ commit }, taskId) => {
         return await API().get('team-task/' + taskId)
     },
-    storeSubtask: async ({ commit }, data) => { 
+    storeSubtask: async ({ commit }, data) => {
         return await API().post('subtask/' + data.taskId, { ...data.subtask })
+    },
+    assignUser: async ({ commit }, data) => {
+        return await API().post('assign-user-subtask/' + data.subtaskId, { user_id: data.user_id })
     },
 }
 

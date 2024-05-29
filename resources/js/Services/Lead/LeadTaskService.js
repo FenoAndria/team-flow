@@ -29,3 +29,11 @@ export const storeSubtask = async (data) => {
         console.log(err.response);
     });
 }
+
+export const assignUserSubtask = async (data) => {
+    await store.dispatch('assignUser', data).then((result) => {
+        console.log(result.data);
+    }).catch((err) => {
+        console.log(err.response);
+    });
+}
