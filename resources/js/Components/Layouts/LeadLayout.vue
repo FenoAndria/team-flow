@@ -22,6 +22,10 @@ export default {
         name: "LeadTeamMember",
         tag: "Member",
       },
+      {
+        name: "LeadInvitationIndex",
+        tag: "Invitation",
+      },
     ];
     return { links };
   },

@@ -1,51 +1,51 @@
-import LeadTaskIndex from '../Views/Lead/Task/Index.vue'
-import LeadTaskShow from '../Views/Lead/Task/Show.vue'
-import LeadCreateSubtask from '../Views/Lead/Task/CreateSubtask.vue'
-import LeadTeamMember from '../Views/Lead/TeamMember/Index.vue'
-
-export default [
+import LeadTaskIndex from './../Views/Lead/Task/Index.vue'
+import LeadTaskShow from './../Views/Lead/Task/Show.vue'
+import LeadCreateSubtask from './../Views/Lead/Task/CreateSubtask.vue'
+import LeadTeamMember from './../Views/Lead/TeamMember/Index.vue'
+import LeadInvitationIndex from './../Views/Lead/Invitation/Index.vue'
+const routes = [
     {
         path: 'task/',
         name: "LeadTask",
         children: [
             {
                 path: '',
-                name: "LeadTaskIndex",
                 component: LeadTaskIndex,
-                meta: {
-
-                }
+                name: "LeadTaskIndex",
             },
             {
                 path: ':task',
                 name: "LeadTaskShow",
                 component: LeadTaskShow,
-                meta: {
-
-                }
             },
             {
                 path: ':task/create-subtask',
                 name: "LeadCreateSubtask",
                 component: LeadCreateSubtask,
-                meta: {
-
-                }
             },
         ],
     },
     {
         path: 'team/',
         name: "LeadTeam",
-        children:[
+        children: [
             {
                 path: 'member',
                 name: "LeadTeamMember",
                 component: LeadTeamMember,
-                meta: {
-
-                }
             },
         ]
-    }
+    },
+    {
+        path: 'invitation/',
+        name: "LeadInvitation",
+        children: [
+            {
+                path: '',
+                name: "LeadInvitationIndex",
+                component: LeadInvitationIndex,
+            },
+        ]
+    },
 ]
+export default routes

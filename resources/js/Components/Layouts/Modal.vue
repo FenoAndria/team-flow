@@ -3,16 +3,21 @@
   <div class="modal" :class="{ 'modal-open': isOpen }">
     <div class="modal-box">
       <div v-if="content">Subtask title : {{ content.title }}</div>
-      <form @submit="assignUser">
-        <label for="">Members :</label>
-        <div v-for="item in teamMember">
-          <label for="" class=""
-            >{{ item.profil.name }}
-            <input type="radio" v-model="user" :value="item.id" class="radio"
-          /></label>
-        </div>
-        <button class="btn btn-primary text-white">Assign</button>
-      </form>
+      <div v-if="this.loadingTeamMember">
+        <span class="loading"></span>
+      </div>
+      <div v-else>
+        <form @submit="assignUser" v-if="this.teamMember">
+          <label for="">Members :</label>
+          <div v-for="item in teamMember">
+            <label for="" class=""
+              >{{ item.profil.name }}
+              <input type="radio" v-model="user" :value="item.id" class="radio"
+            /></label>
+          </div>
+          <button class="btn btn-primary text-white">Assign</button>
+        </form>
+      </div>
       <div class="modal-action">
         <button
           class="btn btn-sm btn-circle btn-ghost absolute right-2 top-2"
@@ -52,8 +57,8 @@ export default {
       this.$emit("reloadShowTeamTask");
     },
   },
-  mounted() {
-    getTeamMember();
+  async mounted() {
+    await getTeamMember();
   },
 };
 </script>
