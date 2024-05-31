@@ -15,7 +15,6 @@
       </form>
       <div class="modal-action">
         <button
-          :for="modalId"
           class="btn btn-sm btn-circle btn-ghost absolute right-2 top-2"
           @click="closeModal"
         >
@@ -30,7 +29,7 @@ import { mapGetters } from "vuex";
 import { assignUserSubtask } from "../../Services/Lead/LeadTaskService";
 import { getTeamMember } from "../../Services/Lead/LeadTeamService";
 export default {
-  props: ["modalId", "isOpen", "content"],
+  props: ["isOpen", "content"],
   data() {
     return {
       user: "",

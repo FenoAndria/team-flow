@@ -61,7 +61,6 @@
                     <div v-else>
                       <button
                         class="cursor-pointer"
-                        for="assignToUserModal"
                         @click="openModal(subtask)"
                       >
                         Assign to a user
@@ -77,7 +76,6 @@
       </div>
     </div>
     <Modal
-      modalId="assignToUserModal"
       :isOpen="isModalOpen"
       :content="modalContent"
       @close="closeModal"

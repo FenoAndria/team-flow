@@ -18,6 +18,10 @@ export default {
         name: "LeadTaskIndex",
         tag: "Task",
       },
+      {
+        name: "LeadTeamMember",
+        tag: "Member",
+      },
     ];
     return { links };
   },

@@ -1,11 +1,12 @@
 import LeadTaskIndex from '../Views/Lead/Task/Index.vue'
 import LeadTaskShow from '../Views/Lead/Task/Show.vue'
 import LeadCreateSubtask from '../Views/Lead/Task/CreateSubtask.vue'
+import LeadTeamMember from '../Views/Lead/TeamMember/Index.vue'
 
 export default [
     {
         path: 'task/',
-        name: "LeadInvitation",
+        name: "LeadTask",
         children: [
             {
                 path: '',
@@ -33,5 +34,18 @@ export default [
             },
         ],
     },
-    
+    {
+        path: 'team/',
+        name: "LeadTeam",
+        children:[
+            {
+                path: 'member',
+                name: "LeadTeamMember",
+                component: LeadTeamMember,
+                meta: {
+
+                }
+            },
+        ]
+    }
 ]
