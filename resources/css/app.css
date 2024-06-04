@@ -3,10 +3,10 @@
 @tailwind utilities;
 
 button{
-    @apply px-3 py-2 rounded text-white font-semibold
+    @apply px-3 py-2 rounded text-white font-semibold 
 }
 input{
-    @apply border border-primary rounded px-2 py-1 block w-full
+    @apply border border-primary rounded px-2 py-1 block w-full text-dark
 }
 .btn {
     @apply px-2  rounded cursor-pointer ;
@@ -37,4 +37,8 @@ input{
 }
 .avatar-navbar{
     @apply h-8 rounded-full border-2 border-neutral
+}
+
+#main{
+    @apply px-4 
 }

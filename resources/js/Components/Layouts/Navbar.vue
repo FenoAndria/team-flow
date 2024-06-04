@@ -1,5 +1,5 @@
 <template>
-  <div class="flex justify-between items-center px-4 py-2 shadow">
+  <div class="flex justify-between items-center px-4 py-2 shadow-md">
     <div class="flex space-x-8">
       <div v-for="link in links">
         <router-link :to="{ name: link.name }">

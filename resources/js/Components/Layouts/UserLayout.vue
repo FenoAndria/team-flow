@@ -1,7 +1,9 @@
 <template>
   <div>
     <Navbar role="User" :links="links" />
-    <slot></slot>
+    <div id="main">
+      <slot></slot>
+    </div>
   </div>
 </template>
 <script>

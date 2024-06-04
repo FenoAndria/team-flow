@@ -1,7 +1,9 @@
 <template>
   <div>
-    <Navbar :links="links"/>
-    <slot></slot>
+    <Navbar :links="links" />
+    <div id="main">
+      <slot></slot>
+    </div>
   </div>
 </template>
 <script>
@@ -13,32 +15,22 @@ export default {
       {
         name: "AppIndex",
         tag: "Home",
-        activeClass: [
-            "AppIndex",
-        ],
+        activeClass: ["AppIndex"],
       },
       {
         name: "LeadTaskIndex",
         tag: "Task",
-        activeClass: [
-            "LeadTaskIndex",
-            "LeadTaskShow",
-            "LeadCreateSubtask",
-        ],
+        activeClass: ["LeadTaskIndex", "LeadTaskShow", "LeadCreateSubtask"],
       },
       {
         name: "LeadTeamMember",
         tag: "Member",
-        activeClass: [
-            "LeadTeamMember",
-        ],
+        activeClass: ["LeadTeamMember"],
       },
       {
         name: "LeadInvitationIndex",
         tag: "Invitation",
-        activeClass: [
-            "LeadInvitationIndex",
-        ],
+        activeClass: ["LeadInvitationIndex"],
       },
     ];
     return { links };
