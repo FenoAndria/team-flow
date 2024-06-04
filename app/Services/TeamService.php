@@ -2,7 +2,6 @@
 
 namespace App\Services;
 
-use App\Models\Task;
 use App\Models\Team;
 use App\Models\TeamInvitation;
 use App\Models\TeamMember;
@@ -69,5 +68,10 @@ class TeamService
     public function showMember()
     {
         return $this->getTeam()->member;
+    }
+
+    public function showUsersInvitable()
+    {
+        return $this->getUsersInvitable();
     }
 }

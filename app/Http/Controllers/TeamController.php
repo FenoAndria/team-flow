@@ -7,6 +7,7 @@ use App\Http\Requests\TeamRequest;
 use App\Http\Resources\Lead\InvitationResource;
 use App\Http\Resources\Member\MemberResource;
 use App\Http\Resources\TaskResource;
+use App\Http\Resources\UserResource;
 use App\Models\Task;
 use App\Models\Team;
 use App\Services\TeamService;
@@ -67,6 +68,12 @@ class TeamController extends Controller
     {
         $tasks = $this->teamService->showTask();
         return response()->json(TaskResource::collection($tasks));
+    }
+
+    public function showUsersInvitable()
+    {
+        $users = $this->teamService->showUsersInvitable();
+        return response()->json(UserResource::collection($users));
     }
 
     public function showTask(Task $task)

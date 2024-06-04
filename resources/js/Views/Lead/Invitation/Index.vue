@@ -2,6 +2,10 @@
   <LeadLayout>
     <div>Lead - invitation index</div>
     <div>
+        <label for="inviteModal"  class="btn bg-blue-300">
+          Invite
+        </label>
+        <InviteModal modalId="inviteModal"/>
       <div v-if="loadingTeamInvitation">
         <span class="loading"></span>
       </div>
@@ -17,7 +21,7 @@
                   </p>
                 </div>
                 <div>
-                  <p :class="statusColor(item.status)">{{ item.status }} </p>
+                  <p :class="statusColor(item.status)">{{ item.status }}</p>
                 </div>
               </div>
             </div>
@@ -35,8 +39,9 @@ import { useStore } from "vuex";
 import dayjs from "dayjs";
 import statusColor from "../../../Services/StatusColor";
 import { getTeamInvitation } from "../../../Services/Lead/TeamInvitationService";
+import InviteModal from "../../../Components/Layouts/InviteModal.vue";
 export default {
-  components: { LeadLayout },
+  components: { LeadLayout, InviteModal },
   setup(props) {
     const store = useStore();
     const teamInvitation = computed(() => store.getters.teamInvitation);
