@@ -1,6 +1,6 @@
 <template>
   <div>
-    <Navbar role="User" :links="links"/>
+    <Navbar role="User" :links="links" />
     <slot></slot>
   </div>
 </template>
@@ -13,18 +13,22 @@ export default {
       {
         name: "AppIndex",
         tag: "Home",
+        activeClass: ["AppIndex"],
       },
       {
         name: "MemberInvitationIndex",
         tag: "Invitations",
+        activeClass: ["MemberInvitationIndex"],
       },
       {
         name: "TeamIndex",
         tag: "Team",
+        activeClass: ["TeamIndex", "TeamShow"],
       },
       {
         name: "TaskIndex",
         tag: "Task",
+        activeClass: ["TaskIndex"],
       },
     ];
     return { links };

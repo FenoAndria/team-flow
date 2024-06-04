@@ -13,18 +13,32 @@ export default {
       {
         name: "AppIndex",
         tag: "Home",
+        activeClass: [
+            "AppIndex",
+        ],
       },
       {
         name: "LeadTaskIndex",
         tag: "Task",
+        activeClass: [
+            "LeadTaskIndex",
+            "LeadTaskShow",
+            "LeadCreateSubtask",
+        ],
       },
       {
         name: "LeadTeamMember",
         tag: "Member",
+        activeClass: [
+            "LeadTeamMember",
+        ],
       },
       {
         name: "LeadInvitationIndex",
         tag: "Invitation",
+        activeClass: [
+            "LeadInvitationIndex",
+        ],
       },
     ];
     return { links };

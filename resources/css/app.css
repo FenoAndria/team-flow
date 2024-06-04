@@ -27,3 +27,14 @@ input{
 .list-content {
     @apply py-1 px-2 bg-gray-300 rounded ;
 }
+
+.navlink{
+    @apply text-dark font-semibold hover:text-primary transition-all duration-150; 
+}
+
+.navlink.active{
+    @apply text-primary underline underline-offset-4 font-bold ; 
+}
+.avatar-navbar{
+    @apply h-8 rounded-full border-2 border-neutral
+}

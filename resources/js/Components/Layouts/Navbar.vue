@@ -1,15 +1,27 @@
 <template>
-  <div class="flex justify-between">
-    <div class="flex space-x-4">
+  <div class="flex justify-between items-center px-4 py-2 shadow">
+    <div class="flex space-x-8">
       <div v-for="link in links">
         <router-link :to="{ name: link.name }">
-          <span class="">{{ link.tag }}</span>
+          <div class="navlink" :class="{ active: isLinkActive(link) }">
+            {{ link.tag }}
+          </div>
         </router-link>
       </div>
     </div>
-    <div class="">
-      <span>{{ UserData.name }}</span>
-      <button class="bg-neutral" @click="logout"><i class="bi bi-power"></i>Logout</button>
+    <div class="flex">
+      <div class="flex items-center space-x-1">
+        <img
+          src="./../../../../public/assets/Avatar.png"
+          class="avatar-navbar"
+        />
+        <span class="font-bold text-primary pr-2">{{ UserData.name }} </span>
+      </div>
+      <div class="">
+        <button class="bg-neutral" @click="logout">
+          <i class="bi bi-power"></i> Logout
+        </button>
+      </div>
     </div>
   </div>
 </template>
@@ -26,7 +38,12 @@ export default {
       localStorage.setItem("vuex", "");
       location.reload();
     };
-    return { UserData, route, logout };
+    const isLinkActive = (routeLink) => {
+      if (routeLink) {
+        return routeLink.activeClass.find((item) => item == route.name); // Vérifie si l'URL actuelle correspond à la route du lien
+      }
+    };
+    return { UserData, route, logout, isLinkActive };
   },
 };
 </script>
