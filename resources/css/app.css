@@ -3,7 +3,7 @@
 @tailwind utilities;
 
 button{
-    @apply px-4 py-2 rounded 
+    @apply px-3 py-2 rounded text-white font-semibold
 }
 input{
     @apply border border-primary rounded px-2 py-1 block w-full

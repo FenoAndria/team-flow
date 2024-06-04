@@ -11,12 +11,16 @@ module.exports = {
     theme: {
         extend: {
             colors: {
-                dark: '#262626',
-                danger: colors.rose,
-                primary: '#141452',
-                secondary: '#ff1a1a',
-                success: colors.green,
-                warning: colors.yellow,
+                dark: '#262626', 
+                primary: '#3F51B5',
+                secondary: '#FFC107',
+                success: '#4CAF50',
+                warning: '#FFEB3B',
+                danger: '#F44336',
+                info: '#2196F3',
+                neutral: '#9E9E9E',
+                background: '#FFFFFF',
+                text: '#212121',
             },
         },
     },

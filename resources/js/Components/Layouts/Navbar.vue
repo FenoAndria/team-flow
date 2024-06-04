@@ -9,7 +9,7 @@
     </div>
     <div class="">
       <span>{{ UserData.name }}</span>
-      <button class="btn bg-red-200" @click="logout">Logout</button>
+      <button class="bg-neutral" @click="logout"><i class="bi bi-power"></i>Logout</button>
     </div>
   </div>
 </template>
