@@ -37,14 +37,23 @@
             </p>
             <div class="flex justify-between items-center border-b">
               <p class="font-semibold text-lg">Subtasks :</p>
-              <router-link
-                :to="{
-                  name: 'LeadCreateSubtask',
-                  params: { task: teamTask.id },
-                }"
+              <label
+                class="
+                  text-info
+                  hover:underline
+                  font-semibold
+                  bg-neutral-100
+                  px-4
+                  rounded
+                  border
+                  hover:bg-neutral-200
+                  cursor-pointer
+                "
+                @click="setNewSubtaskModalData(teamTask)"
+                for="newSubtaskModal"
               >
-                <p class="text-info hover:underline">New subtask</p>
-              </router-link>
+                New subtask
+              </label>
             </div>
             <div class="text-sm">
               <div v-if="teamTask.subtasks">
@@ -79,15 +88,23 @@
                           <span>{{ subtask.assigned_to.profil.name }}</span>
                         </div>
                         <div v-else>
-                          <div
-                            class="cursor-pointer text-info hover:text-primary hover:underline hover:font-semibold flex items-center space-x-1"
-                            @click="openModal(subtask)"
+                          <label
+                            class="
+                              cursor-pointer
+                              text-info
+                              hover:text-primary
+                              hover:underline
+                              hover:font-semibold
+                              flex
+                              items-center
+                              space-x-1
+                            "
+                            @click="setModalData(subtask)"
+                            for="assignUserModal"
                           >
-                            <span
-                              class="bi bi-person-plus-fill  text-sm"
-                            ></span>
+                            <span class="bi bi-person-plus-fill text-sm"></span>
                             <span> Assign to a user</span>
-                          </div>
+                          </label>
                         </div>
                       </div>
                     </div>
@@ -99,18 +116,20 @@
         </div>
       </div>
     </div>
-    <Modal
-      :isOpen="isModalOpen"
-      :content="modalContent"
-      @close="closeModal"
-      @reloadShowTeamTask="reloadShowTeamTask"
+    <new-subtask-modal
+      modalId="newSubtaskModal"
+      :content="newSubtaskModalContent"
+    />
+    <AssignUserModal
+      modalId="assignUserModal"
+      :content="assignUserModalContent"
     />
   </LeadLayout>
 </template>
 <script>
 import { computed, onMounted, reactive, toRefs } from "@vue/runtime-core";
 import LeadLayout from "../../../Components/Layouts/LeadLayout.vue";
-import Modal from "../../../Components/Layouts/Modal.vue";
+import AssignUserModal from "../../../Components/Layouts/Modal/AssignUserModal.vue";
 import { showTeamTask } from "../../../Services/Lead/LeadTaskService";
 import { useStore } from "vuex";
 import { useRoute } from "vue-router";
@@ -118,27 +137,30 @@ import statusColor from "../../../Services/statusColor";
 import Loading from "../../../Components/Layouts/Loading.vue";
 import StatusBadge from "../../../Components/Layouts/StatusBadge.vue";
 import dayjs from "dayjs";
+import NewSubtaskModal from "../../../Components/Layouts/Modal/NewSubtaskModal.vue";
 export default {
-  components: { LeadLayout, Modal, StatusBadge, Loading },
+  components: {
+    LeadLayout,
+    AssignUserModal,
+    StatusBadge,
+    Loading,
+    NewSubtaskModal,
+  },
   setup(props) {
     const route = useRoute();
     const store = useStore();
     const state = reactive({
       isModalOpen: false,
-      modalContent: {},
+      assignUserModalContent: {},
+      newSubtaskModalContent: {},
     });
     const teamTask = computed(() => store.getters.teamTask);
     const loadingTeamTask = computed(() => store.getters.loadingTeamTask);
-    const openModal = (subtask) => {
-      state.modalContent = subtask;
-      state.isModalOpen = true;
+    const setModalData = (subtask) => {
+      state.assignUserModalContent = subtask;
     };
-    const closeModal = () => {
-      state.modalContent = {};
-      state.isModalOpen = false;
-    };
-    const reloadShowTeamTask = async () => {
-      await showTeamTask(route.params.task);
+    const setNewSubtaskModalData = (task) => {
+      state.newSubtaskModalContent = task;
     };
     onMounted(async () => {
       await showTeamTask(route.params.task);
@@ -148,9 +170,8 @@ export default {
       teamTask,
       loadingTeamTask,
       statusColor,
-      closeModal,
-      openModal,
-      reloadShowTeamTask,
+      setModalData,
+      setNewSubtaskModalData,
       dayjs,
     };
   },

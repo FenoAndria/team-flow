@@ -23,8 +23,7 @@ export const showTeamTask = async (taskId) => {
 
 export const storeSubtask = async (data) => {
     await store.dispatch('storeSubtask', data).then((result) => {
-        console.log(result.data);
-        router.push({ name: 'LeadTaskShow', params: { task: data.taskId } })
+        store.commit('setWithSuccess', true)
     }).catch((err) => {
         console.log(err.response);
     });
@@ -32,7 +31,6 @@ export const storeSubtask = async (data) => {
 
 export const assignUserSubtask = async (data) => {
     await store.dispatch('assignUser', data).then((result) => {
-        console.log(result.data);
     }).catch((err) => {
         console.log(err.response);
     });
