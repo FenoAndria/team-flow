@@ -1,5 +1,10 @@
 <template>
-  <input type="checkbox" :id="modalId" class="modal-toggle" />
+  <input
+    type="checkbox"
+    :id="modalId"
+    class="modal-toggle"
+    @change="unsetValidationError"
+  />
   <div class="modal">
     <div class="modal-box">
       <slot></slot>
@@ -15,7 +20,16 @@
   </div>
 </template>
 <script>
+import store from "../../Stores/Index";
 export default {
   props: ["modalId", "content"],
+  methods: {
+    unsetValidationError() {
+      // reinitialize validationError state after closing modal
+      if (!document.querySelector("#" + this.modalId).checked) {
+        store.commit("setValidationError", ""); 
+      }
+    },
+  },
 };
 </script>

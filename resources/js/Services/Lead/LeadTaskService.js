@@ -1,5 +1,4 @@
 import store from "../../Stores/Index";
-import router from '../../Router/Index'
 
 export const getTeamTasks = async () => {
     store.commit('setLoadingTeamTasks', true)
@@ -22,16 +21,27 @@ export const showTeamTask = async (taskId) => {
 }
 
 export const storeSubtask = async (data) => {
+    store.commit('setLoadingStoreSubtask', true)
     await store.dispatch('storeSubtask', data).then((result) => {
         store.commit('setWithSuccess', true)
+        store.commit('setLoadingStoreSubtask', false)
     }).catch((err) => {
-        console.log(err.response);
+        if (err && (err.response.status == 422)) {
+            store.commit('setValidationError', err.response.data)
+        }
+        store.commit('setLoadingStoreSubtask', false)
     });
 }
 
 export const assignUserSubtask = async (data) => {
+    store.commit('setLoadingAssignUser', true)
     await store.dispatch('assignUser', data).then((result) => {
+        store.commit('setWithSuccess', true)
+        store.commit('setLoadingAssignUser', false)
     }).catch((err) => {
-        console.log(err.response);
+        if (err && (err.response.status == 422)) {
+            store.commit('setValidationError', err.response.data)
+        }
+        store.commit('setLoadingAssignUser', false)
     });
 }

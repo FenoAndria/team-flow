@@ -1,21 +1,29 @@
 <template>
   <Modal :modalId="modalId" :content="content">
-    <h1>Create subtask</h1>
-    <div v-if="content">Task : {{ content.title }}</div>
+    <p class="text-xl border-b">Create subtask</p>
+    <div v-if="content" class="text-dark">{{ content.title }}</div>
     <form @submit="handleStoreSubtask">
       <div class="">
         <label for="title">Title</label>
         <input type="text" v-model="subtask.title" />
+        <ValidationError column="title" />
       </div>
       <div class="">
         <label for="description">Description</label>
         <input type="text" v-model="subtask.description" />
+        <ValidationError column="description" />
       </div>
       <div class="">
         <label for="deadline">Deadline</label>
         <input type="date" v-model="subtask.deadline" />
+        <ValidationError column="deadline" />
       </div>
-      <button class="bg-info w-full">Save</button>
+      <div class="">
+        <div class="flex justify-center" v-if="loadingStoreSubtask">
+          <span class="loading loading-dots"></span>
+        </div>
+        <button class="bg-info w-full mt-2" v-else>Save</button>
+      </div>
     </form>
   </Modal>
 </template>
@@ -27,18 +35,21 @@ import {
   storeSubtask,
 } from "../../../Services/Lead/LeadTaskService";
 import store from "../../../Stores/Index";
+import ValidationError from "../../ValidationError.vue";
 export default {
   props: ["modalId", "content"],
-  components: { Modal },
+  components: { Modal, ValidationError },
   data() {
     return {
-      user: "",
       subtask: {
         title: "",
         description: "",
         deadline: null,
       },
     };
+  },
+  computed: {
+    ...mapGetters(["loadingStoreSubtask"]),
   },
   methods: {
     async handleStoreSubtask(e) {
@@ -49,6 +60,7 @@ export default {
         await showTeamTask(this.content.id); // reload task list
         store.commit("setWithSuccess", ""); // reinitialize withSuccess state
         this.subtask = ""; // reinitialize subtask :)
+        store.commit("setValidationError", ""); // reinitialize validationError state
       }
     },
   },

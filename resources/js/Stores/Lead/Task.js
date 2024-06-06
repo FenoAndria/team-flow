@@ -5,6 +5,8 @@ const state = {
     loadingTeamTask: false,
     teamTasks: [],
     loadingTeamTasks: false,
+    loadingStoreSubtask: false,
+    loadingAssignUser: false,
 }
 
 const getters = {
@@ -12,6 +14,8 @@ const getters = {
     loadingTeamTask: (state) => state.loadingTeamTask,
     teamTasks: (state) => state.teamTasks,
     loadingTeamTasks: (state) => state.loadingTeamTasks,
+    loadingStoreSubtask: (state) => state.loadingStoreSubtask,
+    loadingAssignUser: (state) => state.loadingAssignUser,
 }
 
 const mutations = {
@@ -19,6 +23,8 @@ const mutations = {
     setLoadingTeamTask: (state, loadingTeamTask) => state.loadingTeamTask = loadingTeamTask,
     setTeamTasks: (state, teamTasks) => state.teamTasks = teamTasks,
     setLoadingTeamTasks: (state, loadingTeamTasks) => state.loadingTeamTasks = loadingTeamTasks,
+    setLoadingStoreSubtask: (state, loadingStoreSubtask) => state.loadingStoreSubtask = loadingStoreSubtask,
+    setLoadingAssignUser: (state, loadingAssignUser) => state.loadingAssignUser = loadingAssignUser,
 }
 
 const actions = {
