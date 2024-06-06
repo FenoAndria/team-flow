@@ -22,10 +22,10 @@ input{
 }
 
 .list-container {
-    @apply space-y-1;
+    @apply space-y-2;
 }
 .list-content {
-    @apply py-1 px-2 bg-gray-300 rounded ;
+    @apply p-4 bg-white rounded shadow border transition-all delay-75 duration-100;
 }
 
 .navlink{
@@ -40,5 +40,13 @@ input{
 }
 
 #main{
-    @apply px-4 
+    @apply px-8 mt-2
+}
+
+.loading-container{
+    height : calc(100vh - 65px);
+}
+
+.page-title{
+    @apply text-xl text-primary font-semibold my-2 border-b-2 
 }

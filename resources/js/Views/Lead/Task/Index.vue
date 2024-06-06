@@ -1,41 +1,44 @@
 <template>
   <LeadLayout>
-    <div>Lead task index</div>
     <div>
       <div v-if="loadingTeamTasks">
-        <span class="loading"></span>
+        <Loading />
       </div>
       <div v-else>
+        <div class="page-title">All tasks</div>
         <div v-if="teamTasks.length">
-          <div class="list-container">
-            <div class="list-content" v-for="item in teamTasks">
-              <div class="flex justify-between">
-                <div>
-                  <p class="uppercase font-semibold">
-                    {{ item.title }}
-                  </p>
+          <div class="flex flex-wrap -mx-1">
+            <div class="w-1/2 px-1" v-for="item in teamTasks">
+              <div class="list-content">
+                <div class="flex justify-between">
+                  <div>
+                    <p class="uppercase font-semibold">
+                      {{ item.title }}
+                    </p>
+                  </div>
+                  <div>
+                    <StatusBadge :status="item.status" />
+                  </div>
                 </div>
-                <div>
-                  <p>
-                    Status :
-                    <span :class="statusColor(item.status) + ' font-semibold'">
-                      {{ item.status }}</span
-                    >
+                <hr class="my-1" />
+                <p class="text-sm">
+                  {{ item.description }}
+                </p>
+                <hr />
+                <div class="flex justify-between items-center text-sm">
+                  <p class="text-neutral">
+                    Created at :
+                    <span class="font-semibold">{{
+                      dayjs(item.created_at).format("DD-MM-YYYY")
+                    }}</span>
                   </p>
+                  <router-link
+                    :to="{ name: 'LeadTaskShow', params: { task: item.id } }"
+                    class="text-info hover:underline"
+                    >More...</router-link
+                  >
                 </div>
               </div>
-              <hr />
-              <p class="text-sm">
-                {{ item.description }}
-              </p>
-              <p class="text-sm">
-                Deadline :
-                <span class="font-semibold">{{ item.deadline }}</span>
-              </p>
-              <hr />
-              <router-link
-                :to="{ name: 'LeadTaskShow', params: { task: item.id } }"
-              >Details</router-link>
             </div>
           </div>
         </div>
@@ -50,13 +53,16 @@ import LeadLayout from "../../../Components/Layouts/LeadLayout.vue";
 import { getTeamTasks } from "../../../Services/Lead/LeadTaskService";
 import { useStore } from "vuex";
 import statusColor from "../../../Services/statusColor";
+import Loading from "../../../Components/Layouts/Loading.vue";
+import StatusBadge from "../../../Components/Layouts/StatusBadge.vue";
+import dayjs from "dayjs";
 export default {
-  components: { LeadLayout },
+  components: { LeadLayout, Loading, StatusBadge },
   setup(props) {
     const store = useStore();
     const teamTasks = computed(() => store.getters.teamTasks);
     const loadingTeamTasks = computed(() => store.getters.loadingTeamTasks);
-    
+
     onMounted(async () => {
       await getTeamTasks();
     });
@@ -64,6 +70,7 @@ export default {
       teamTasks,
       loadingTeamTasks,
       statusColor,
+      dayjs,
     };
   },
 };

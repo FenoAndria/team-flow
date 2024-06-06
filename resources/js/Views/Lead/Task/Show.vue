@@ -1,28 +1,20 @@
 <template>
   <LeadLayout>
-    <div>Lead - show task index</div>
     <div>
       <div v-if="loadingTeamTask">
-        <span class="loading"></span>
+        <Loading />
       </div>
       <div v-else>
         <div v-if="teamTask">
           <div class="list-container">
             <div class="flex justify-between">
               <div>
-                <p class="uppercase font-semibold">
+                <p class="text-xl uppercase font-semibold text-primary">
                   {{ teamTask.title }}
                 </p>
               </div>
               <div>
-                <p>
-                  Status :
-                  <span
-                    :class="statusColor(teamTask.status) + ' font-semibold'"
-                  >
-                    {{ teamTask.status }}</span
-                  >
-                </p>
+                <StatusBadge :status="teamTask.status" />
               </div>
             </div>
             <hr />
@@ -31,42 +23,74 @@
             </p>
             <p class="text-sm">
               Deadline :
-              <span class="font-semibold">{{ teamTask.deadline }}</span>
+              <span class="font-semibold">{{
+                teamTask.deadline
+                  ? dayjs(teamTask.deadline).format("DD-MM-YYYY")
+                  : "None"
+              }}</span>
             </p>
-            <hr />
-            <div class="text-sm">
-              <p class="font-semibold underline">Subtasks :</p>
+            <p class="text-sm">
+              Created at :
+              <span class="font-semibold">{{
+                dayjs(teamTask.created_at).format("DD-MM-YYYY") ?? "None"
+              }}</span>
+            </p>
+            <div class="flex justify-between items-center border-b">
+              <p class="font-semibold text-lg">Subtasks :</p>
               <router-link
                 :to="{
                   name: 'LeadCreateSubtask',
                   params: { task: teamTask.id },
                 }"
               >
-                <button class="btn bg-primary text-white">New subtask</button>
+                <p class="text-info hover:underline">New subtask</p>
               </router-link>
+            </div>
+            <div class="text-sm">
               <div v-if="teamTask.subtasks">
-                <div v-for="subtask in teamTask.subtasks">
-                  <div class="flex justify-between">
-                    <p>{{ subtask.title }}</p>
-                    <p :class="statusColor(subtask.status) + ' font-semibold'">
-                      {{ subtask.status }}
-                    </p>
-                  </div>
-                  <div class="text-xs">
-                    <p>Deadline : {{ subtask.deadline }}</p>
-                    <div v-if="subtask.assigned_to">
-                      Assigned to :
-                      {{ subtask.assigned_to.profil.name }}
+                <div class="flex flex-wrap -mx-1">
+                  <div
+                    class="w-1/3 px-1 mb-2"
+                    v-for="subtask in teamTask.subtasks"
+                  >
+                    <div class="list-content hover:bg-neutral-100">
+                      <div class="flex justify-between items-center">
+                        <p class="font-semibold text-lg text-primary">
+                          {{ subtask.title }}
+                        </p>
+                        <StatusBadge :status="subtask.status" />
+                      </div>
+                      <div class="text-xs">
+                        <p>
+                          Deadline :
+                          {{
+                            subtask.deadline
+                              ? dayjs(subtask.deadline).format("DD-MM-YYYY")
+                              : "None"
+                          }}
+                        </p>
+                        <div
+                          v-if="subtask.assigned_to"
+                          class="flex items-center space-x-1"
+                        >
+                          <span
+                            class="bi bi-person-fill text-info text-sm"
+                          ></span>
+                          <span>{{ subtask.assigned_to.profil.name }}</span>
+                        </div>
+                        <div v-else>
+                          <div
+                            class="cursor-pointer text-info hover:text-primary hover:underline hover:font-semibold flex items-center space-x-1"
+                            @click="openModal(subtask)"
+                          >
+                            <span
+                              class="bi bi-person-plus-fill  text-sm"
+                            ></span>
+                            <span> Assign to a user</span>
+                          </div>
+                        </div>
+                      </div>
                     </div>
-                    <div v-else>
-                      <button
-                        class="cursor-pointer"
-                        @click="openModal(subtask)"
-                      >
-                        Assign to a user
-                      </button>
-                    </div>
-                    <p>-----</p>
                   </div>
                 </div>
               </div>
@@ -91,8 +115,11 @@ import { showTeamTask } from "../../../Services/Lead/LeadTaskService";
 import { useStore } from "vuex";
 import { useRoute } from "vue-router";
 import statusColor from "../../../Services/statusColor";
+import Loading from "../../../Components/Layouts/Loading.vue";
+import StatusBadge from "../../../Components/Layouts/StatusBadge.vue";
+import dayjs from "dayjs";
 export default {
-  components: { LeadLayout, Modal },
+  components: { LeadLayout, Modal, StatusBadge, Loading },
   setup(props) {
     const route = useRoute();
     const store = useStore();
@@ -124,6 +151,7 @@ export default {
       closeModal,
       openModal,
       reloadShowTeamTask,
+      dayjs,
     };
   },
 };
