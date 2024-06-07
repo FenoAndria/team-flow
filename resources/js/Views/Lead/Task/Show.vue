@@ -6,7 +6,7 @@
       </div>
       <div v-else>
         <div v-if="teamTask">
-          <div class="list-container">
+          <div class="">
             <div class="flex justify-between">
               <div>
                 <p class="text-xl uppercase font-semibold text-primary">
@@ -62,7 +62,7 @@
                     class="w-1/3 px-1 mb-2"
                     v-for="subtask in teamTask.subtasks"
                   >
-                    <div class="list-content hover:bg-neutral-100">
+                    <div class="list-content">
                       <div class="flex justify-between items-center">
                         <p class="font-semibold text-lg text-primary">
                           {{ subtask.title }}

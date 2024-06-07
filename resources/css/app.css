@@ -22,10 +22,10 @@ input{
 }
 
 .list-container {
-    @apply space-y-2;
+    @apply flex flex-wrap -mx-1;
 }
 .list-content {
-    @apply p-4 bg-white rounded shadow border transition-all delay-75 duration-100;
+    @apply p-4 bg-white  hover:bg-neutral-100 rounded shadow border transition-all delay-75 duration-100 ;
 }
 
 .navlink{
@@ -39,6 +39,10 @@ input{
     @apply h-8 rounded-full border-2 border-neutral
 }
 
+.avatar-user{
+    @apply w-24 shadow rounded-full border-2 border-neutral
+}
+
 #main{
     @apply px-8 mt-2
 }
@@ -50,3 +54,4 @@ input{
 .page-title{
     @apply text-xl text-primary font-semibold my-2 border-b-2 
 }
+ 
