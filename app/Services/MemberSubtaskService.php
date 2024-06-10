@@ -7,6 +7,7 @@ use Illuminate\Support\Facades\Auth;
 
 class MemberSubtaskService
 {
+
     public function all()
     {
         $user = Auth::user();
@@ -18,6 +19,10 @@ class MemberSubtaskService
         if ($request && $request['status']) {
             $subtask->status = $request['status'];
             $subtask->save();
+            if ($subtask->status == 'In Progress' && $subtask->task->status == 'Todo') {
+                $subtask->task->status = 'In Progress';
+                $subtask->task->save();
+            }
         }
         return $subtask;
     }
