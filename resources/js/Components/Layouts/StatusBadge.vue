@@ -1,5 +1,8 @@
 <template>
-  <div class="font-semibold rounded px-2 text-white" :class="statusColor(status)">
+  <div
+    class="font-semibold rounded px-2 text-white"
+    :class="statusColor(status)"
+  >
     {{ status }}
   </div>
 </template>
@@ -17,6 +20,12 @@ export default {
           case "Completed":
             return "bg-green-500";
           case "Cancelled":
+            return "bg-red-500";
+          case "Pending":
+            return "bg-blue-500";
+          case "Accepted":
+            return "bg-green-500";
+          case "Declined":
             return "bg-red-500";
         }
       }

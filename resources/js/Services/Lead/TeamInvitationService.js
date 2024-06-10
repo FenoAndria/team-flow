@@ -21,9 +21,14 @@ export const getUsersInvitable = async () => {
 }
 
 export const inviteUser = async (user_id) => {
+    store.commit('setLoadingInviteUser', true)
     await store.dispatch('inviteUser', { user_id }).then((result) => {
-        
+        store.commit('setWithSuccess', true)
+        store.commit('setLoadingInviteUser', false)
     }).catch((err) => {
-        console.log(err.response);
+        if (err && (err.response.status == 422)) {
+            store.commit('setValidationError', err.response.data)
+        }
+        store.commit('setLoadingInviteUser', false)
     });
 }

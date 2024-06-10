@@ -2,7 +2,7 @@
   <LeadLayout>
     <div>
       <div v-if="loadingTeamMember">
-        <span class="loading"></span>
+        <Loading/>
       </div>
       <div v-else>
         <div v-if="teamMember.length">
@@ -45,11 +45,12 @@
 <script>
 import { computed, onMounted } from "@vue/runtime-core";
 import LeadLayout from "../../../Components/Layouts/LeadLayout.vue";
+import Loading from "../../../Components/Layouts/Loading.vue";
 import { getTeamMember } from "../../../Services/Lead/LeadTeamService";
 import { useStore } from "vuex";
 import dayjs from "dayjs";
 export default {
-  components: { LeadLayout },
+  components: { LeadLayout,Loading },
   setup(props) {
     const store = useStore();
     const teamMember = computed(() => store.getters.teamMember);

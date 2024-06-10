@@ -5,6 +5,7 @@ const state = {
     loadingTeamInvitation: false,
     usersInvited: [],
     loadingUsersInvited: false,
+    loadingInviteUser: false,
 }
 
 const getters = {
@@ -12,6 +13,7 @@ const getters = {
     loadingTeamInvitation: (state) => state.loadingTeamInvitation,
     usersInvited: (state) => state.usersInvited,
     loadingUsersInvited: (state) => state.loadingUsersInvited,
+    loadingInviteUser: (state) => state.loadingInviteUser,
 }
 
 const mutations = {
@@ -19,6 +21,7 @@ const mutations = {
     setLoadingTeamInvitation: (state, loadingTeamInvitation) => state.loadingTeamInvitation = loadingTeamInvitation,
     setUsersInvited: (state, usersInvited) => state.usersInvited = usersInvited,
     setLoadingUsersInvited: (state, loadingUsersInvited) => state.loadingUsersInvited = loadingUsersInvited,
+    setLoadingInviteUser: (state, loadingInviteUser) => state.loadingInviteUser = loadingInviteUser,
 }
 
 const actions = {
