@@ -2,14 +2,14 @@
 @tailwind components;
 @tailwind utilities;
 
+.button {
+    @apply px-2 py-1 rounded text-white font-semibold cursor-pointer;
+}
 button{
-    @apply px-3 py-2 rounded text-white font-semibold 
+    @apply button
 }
 input{
     @apply border border-primary rounded px-2 py-1 block w-full text-dark
-}
-.btn {
-    @apply px-2  rounded cursor-pointer ;
 }
 .btn-default{
     @apply btn bg-primary text-white font-semibold

@@ -18,9 +18,9 @@ export default {
         activeClass: ["AppIndex"],
       },
       {
-        name: "MemberInvitationIndex",
-        tag: "Invitations",
-        activeClass: ["MemberInvitationIndex"],
+        name: "TaskIndex",
+        tag: "Task",
+        activeClass: ["TaskIndex"],
       },
       {
         name: "TeamIndex",
@@ -28,9 +28,9 @@ export default {
         activeClass: ["TeamIndex", "TeamShow"],
       },
       {
-        name: "TaskIndex",
-        tag: "Task",
-        activeClass: ["TaskIndex"],
+        name: "MemberInvitationIndex",
+        tag: "Invitations",
+        activeClass: ["MemberInvitationIndex"],
       },
     ];
     return { links };

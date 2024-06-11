@@ -1,70 +1,60 @@
 <template>
   <UserLayout>
-    <div>Task Index</div>
     <div>
       <div v-if="loadingMemberSubtasks">
-        <span class="loading"></span>
+        <Loading/>
       </div>
       <div v-else>
-        <div v-if="memberSubtasks.length">
-          <div class="list-container">
-            <div
-              class="list-content flex justify-between"
-              v-for="item in memberSubtasks"
-            >
+        <div class="flex flex-wrap -mx-1" v-if="memberSubtasks.length">
+          <div class="w-1/2 px-1" v-for="item in memberSubtasks">
+            <div class="list-content">
               <div>
-                <p class="uppercase font-semibold">
-                  {{ item.title }}
-                </p>
-                <p class="uppercase text-sm font-semibold">
+                <div class="flex justify-between border-b py-1">
+                  <p class="font-semibold text-lg text-primary">
+                    {{ item.title }}
+                  </p>
+                  <StatusBadge :status="item.status" />
+                </div>
+                <p class="text-sm text-neutral-600">
                   {{ item.description }}
                 </p>
-                <p class="text-xs">
-                  Team :
-                  <span class="font-semibold">{{ item.task.team.name }}</span>
+                <p class="text-sm font-semibold">
+                  <span class="uppercase">{{ item.task.team.name }}</span>
+                  Team | {{ item.task.title }}
                 </p>
-                <!-- <p class="text-xs">
-                  Assigned on {{ dayjs(item.updated_at).format("DD-MM-YYYY") }}
-                </p> -->
               </div>
-              <div>
-                <p>
-                  Status :
-                  <span :class="statusColor(item.status) + ' font-semibold'">
-                    {{ item.status }}</span
-                  >
-                </p>
+              <div class="flex justify-between">
+                <div></div>
                 <div>
                   <div v-if="item.status == 'Todo'">
                     <button
-                      class="btn bg-blue-500"
+                      class="bg-blue-500"
                       @click="changeStatus(item.id, 'In Progress')"
                     >
                       Begin
                     </button>
                   </div>
-                  <div v-else-if="item.status == 'In Progress'">
-                    <p class="italic text-xs">
-                      Started on :
-                      {{ dayjs(item.updated_at).format("DD-MM-YYYY") }}
-                    </p>
+                  <div
+                    v-else-if="item.status == 'In Progress'"
+                    class="space-x-2"
+                  >
                     <button
-                      class="btn bg-green-500"
+                      class="bg-green-500"
                       @click="changeStatus(item.id, 'Completed')"
                     >
                       Complete
                     </button>
                     <button
-                      class="btn bg-red-500"
+                      class="bg-red-500"
                       @click="changeStatus(item.id, 'Cancelled')"
                     >
                       Cancel
                     </button>
                   </div>
                   <p class="italic text-xs" v-if="item.status == 'Completed'">
-                      On :
-                      {{ dayjs(item.updated_at).format("DD-MM-YYYY") }}
-                    </p>
+                    On :
+                    {{ dayjs(item.updated_at).format("DD-MM-YYYY") }}
+                  </p>
                 </div>
               </div>
             </div>
@@ -79,21 +69,22 @@
 import { computed, onMounted } from "@vue/runtime-core";
 import { useStore } from "vuex";
 import UserLayout from "../../../Components/Layouts/UserLayout.vue";
+import Loading from "../../../Components/Layouts/Loading.vue";
 import {
   getMemberSubtasks,
   updateMemberSubtask,
 } from "../../../Services/Member/MemberSubtaskService";
 import dayjs from "dayjs";
-import statusColor from "../../../Services/statusColor";
+import StatusBadge from "../../../Components/Layouts/StatusBadge.vue";
 export default {
-  components: { UserLayout },
+  components: { UserLayout, StatusBadge, Loading },
   setup(props) {
     const store = useStore();
     const memberSubtasks = computed(() => store.getters.memberSubtasks);
     const loadingMemberSubtasks = computed(
       () => store.getters.loadingMemberSubtasks
     );
-   
+
     const changeStatus = async (subtaskId, status) => {
       await updateMemberSubtask({ id: subtaskId, status });
       getMemberSubtasks();
@@ -105,7 +96,6 @@ export default {
       memberSubtasks,
       loadingMemberSubtasks,
       dayjs,
-      statusColor,
       changeStatus,
     };
   },

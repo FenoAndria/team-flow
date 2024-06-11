@@ -1,27 +1,23 @@
 <template>
   <UserLayout>
-    <div>Invitation Index</div>
     <div>
       <div v-if="loadingMemberInvitations">
-        <span class="loading"></span>
+        <Loading />
       </div>
       <div v-else>
-        <div v-if="memberInvitations.length">
-          <div class="list-container">
-            <div
-              class="list-content flex justify-between"
-              v-for="memberInvitation in memberInvitations"
-            >
+        <div class="flex flex-wrap -mx-1" v-if="memberInvitations.length">
+          <div class="w-1/3 px-1" v-for="memberInvitation in memberInvitations">
+            <div class="list-content">
               <div>
-                <p class="uppercase font-semibold">
+                <p class="uppercase font-semibold text-primary text-lg">
                   {{ memberInvitation.team.name }}
                 </p>
-                <p class="text-xs">
-                  Managed by
-                  <span class="font-semibold">{{
-                    memberInvitation.team.lead.name
-                  }}</span>
-                  |
+                <p class="text-sm space-x-1 font-semibold">
+                  <span class="bi bi-person-workspace"></span>
+                  <span class="">{{ memberInvitation.team.lead.name }}</span>
+                </p>
+                <p class="text-xs font-semibold text-neutral italic">
+                  On
                   {{ dayjs(memberInvitation.created_at).format("DD-MM-YYYY") }}
                 </p>
               </div>
@@ -36,22 +32,22 @@
                   <p
                     :class="
                       memberInvitation.status == 'Accepted'
-                        ? 'text-success-600'
-                        : 'text-danger-600'
+                        ? 'text-success'
+                        : 'text-danger'
                     "
                   >
                     {{ memberInvitation.status }}
                   </p>
                 </div>
-                <div v-else class="flex">
+                <div v-else class="space-x-2">
                   <button
-                    class="btn bg-green-500"
+                    class="bg-green-500"
                     @click="replyInvitation(memberInvitation.id, 'Accepted')"
                   >
                     Accept
                   </button>
                   <button
-                    class="btn bg-red-600"
+                    class="bg-red-600"
                     @click="replyInvitation(memberInvitation.id, 'Declined')"
                   >
                     Decline
@@ -70,13 +66,14 @@
 import { computed, onMounted } from "@vue/runtime-core";
 import { useStore } from "vuex";
 import UserLayout from "../../../Components/Layouts/UserLayout.vue";
+import Loading from "../../../Components/Layouts/Loading.vue";
 import {
   getMemberInvitations,
   updateMemberInvitations,
 } from "../../../Services/Member/MemberInvitationService";
 import dayjs from "dayjs";
 export default {
-  components: { UserLayout },
+  components: { UserLayout, Loading },
   setup(props) {
     const store = useStore();
     const memberInvitations = computed(() => store.getters.memberInvitations);

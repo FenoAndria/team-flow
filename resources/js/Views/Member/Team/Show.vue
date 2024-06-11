@@ -2,57 +2,112 @@
   <UserLayout>
     <div>
       <div v-if="loadingShowTeam">
-        <span class="loading"></span>
+        <Loading />
       </div>
       <div v-else>
         <div v-if="team">
-          <div class="flex justify-between">
+          <LeaveTeamModal modalId="leaveTeamModal" :content="team"/>
+          <div
+            class="
+              flex
+              justify-between
+              items-center
+              border-b-2 border-info
+              pb-1
+            "
+          >
             <div>
-              <p>Name : {{ team.name }}</p>
-              <p>Lead : {{ team.lead.name + " | " + team.lead.email }}</p>
+              <p class="text-2xl text-primary uppercase font-semibold">
+                {{ team.name }}
+              </p>
+              <p class="text-neutral-500">
+                <span class="bi bi-person-workspace"></span>
+                {{ team.lead.name }}
+              </p>
             </div>
             <div>
-              <button class="btn btn-error" @click="leave(team.id)">
-                Leave
-              </button>
+              <label class="button bg-danger" for="leaveTeamModal" @click="leave(team.id)">
+                <span class="bi bi-person-x-fill"></span> Leave
+              </label>
             </div>
           </div>
-          <div class="flex">
+          <div class="flex space-x-2">
             <div class="w-1/2">
-              <p>Tasks</p>
-              <div class="list-container">
-                <div class="list-content" v-for="task in team.task">
-                  <div class="flex justify-between">
-                    <p>{{ task.title }}</p>
-                    <p :class="statusColor(task.status)">{{ task.status }}</p>
+              <p class="text-xl text-info font-semibold my-2">
+                <span class="bi bi-clipboard"></span> Tasks
+              </p>
+              <div class="">
+                <div class="list-content mb-2" v-for="task in team.task">
+                  <div class="flex justify-between items-center border-b">
+                    <p class="text-primary text-lg">{{ task.title }}</p>
+                    <StatusBadge :status="task.status" />
                   </div>
-                  <hr />
-                  <div>
+                  <div class="pl-2">
                     <div
-                      class="flex justify-between"
+                      class="
+                        flex
+                        justify-between
+                        border
+                        py-1
+                        px-2
+                        rounded
+                        hover:rounded-lg
+                        hover:bg-white
+                        hover:shadow-sm
+                        my-1
+                        transition-all
+                        delay-75
+                      "
                       v-for="subtask in task.subtasks"
                     >
-                      <p>{{ subtask.title }}</p>
-                      <p>
-                        {{
-                          subtask.assigned_to
-                            ? subtask.assigned_to.profil.name
-                            : "none"
-                        }}
-                      </p>
+                      <p class="text-neutral-600">{{ subtask.title }}</p>
+                      <div
+                        class="
+                          flex
+                          items-center
+                          space-x-2
+                          text-neutral
+                          font-semibold
+                        "
+                        v-if="subtask.assigned_to"
+                      >
+                        <span
+                          v-if="subtask.assigned_to.email == UserData.email"
+                          class="text-success"
+                        >
+                          You
+                        </span>
+                        <span v-else>{{
+                          subtask.assigned_to.profil.name
+                        }}</span>
+                      </div>
+                      <p class="text-danger font-semibold" v-else>None</p>
                     </div>
                   </div>
                 </div>
               </div>
             </div>
             <div class="w-1/2">
-              <p>Members</p>
-              <div class="list-container">
+              <p class="text-xl text-info font-semibold my-2">
+                <span class="bi bi-clipboard"></span> Members
+              </p>
+              <div class="space-y-2">
                 <div
-                  class="list-content flex justify-between"
+                  class="
+                    list-content
+                    flex
+                    items-center
+                    space-x-2
+                    text-neutral-600
+                    font-semibold
+                  "
                   v-for="member in team.member"
                 >
-                  <p>{{ member.profil.name }}</p>
+                  <img
+                    src="./../../../../../public/assets/Avatar.png"
+                    class="h-8 rounded-full border border-neutral border-2"
+                  />
+                  <p class="text-lg">{{ member.profil.name }}</p>
                 </div>
               </div>
             </div>
@@ -67,25 +122,29 @@
 import { computed, onMounted } from "@vue/runtime-core";
 import { useStore } from "vuex";
 import UserLayout from "../../../Components/Layouts/UserLayout.vue";
+import Loading from "../../../Components/Layouts/Loading.vue";
+import StatusBadge from "../../../Components/Layouts/StatusBadge.vue";
+import LeaveTeamModal from "../../../Components/Layouts/Modal/LeaveTeamModal.vue";
+import UserData from "../../../Services/UserData";
 import {
   leaveTeam,
   showTeam,
 } from "../../../Services/Member/MemberTeamService";
 import dayjs from "dayjs";
 import { useRoute } from "vue-router";
-import router from '../../../Router/Index';
+import router from "../../../Router/Index";
 import statusColor from "../../../Services/statusColor";
 export default {
-  components: { UserLayout },
+  components: { UserLayout, Loading, StatusBadge, LeaveTeamModal },
   setup(props) {
     const store = useStore();
     const route = useRoute();
     const team = computed(() => store.getters.showTeam);
     const loadingShowTeam = computed(() => store.getters.loadingShowTeam);
-   
+
     const leave = async (teamId) => {
-      await leaveTeam(teamId);
-      router.push({ name: "TeamIndex" });
+      // await leaveTeam(teamId);
+      // router.push({ name: "TeamIndex" });
     };
     onMounted(async () => {
       await showTeam(route.params.team);
@@ -96,6 +155,7 @@ export default {
       dayjs,
       statusColor,
       leave,
+      UserData,
     };
   },
 };
