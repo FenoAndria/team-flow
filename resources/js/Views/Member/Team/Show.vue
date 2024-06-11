@@ -1,12 +1,13 @@
 <template>
   <UserLayout>
+    <Breadcumb :previousPage="[{ name: 'TeamIndex', tag: 'Team' }]" currentPage="Show"/>
     <div>
       <div v-if="loadingShowTeam">
         <Loading />
       </div>
       <div v-else>
         <div v-if="team">
-          <LeaveTeamModal modalId="leaveTeamModal" :content="team"/>
+          <LeaveTeamModal modalId="leaveTeamModal" :content="team" />
           <div
             class="
               flex
@@ -26,7 +27,7 @@
               </p>
             </div>
             <div>
-              <label class="button bg-danger" for="leaveTeamModal" @click="leave(team.id)">
+              <label class="button bg-danger" for="leaveTeamModal">
                 <span class="bi bi-person-x-fill"></span> Leave
               </label>
             </div>
@@ -89,7 +90,7 @@
             </div>
             <div class="w-1/2">
               <p class="text-xl text-info font-semibold my-2">
-                <span class="bi bi-clipboard"></span> Members
+                <span class="bi bi-person-square"></span> Members
               </p>
               <div class="space-y-2">
                 <div
@@ -124,28 +125,20 @@ import { useStore } from "vuex";
 import UserLayout from "../../../Components/Layouts/UserLayout.vue";
 import Loading from "../../../Components/Layouts/Loading.vue";
 import StatusBadge from "../../../Components/Layouts/StatusBadge.vue";
+import Breadcumb from "../../../Components/Layouts/Breadcumb.vue";
 import LeaveTeamModal from "../../../Components/Layouts/Modal/LeaveTeamModal.vue";
 import UserData from "../../../Services/UserData";
-import {
-  leaveTeam,
-  showTeam,
-} from "../../../Services/Member/MemberTeamService";
+import { showTeam } from "../../../Services/Member/MemberTeamService";
 import dayjs from "dayjs";
 import { useRoute } from "vue-router";
-import router from "../../../Router/Index";
-import statusColor from "../../../Services/statusColor";
 export default {
-  components: { UserLayout, Loading, StatusBadge, LeaveTeamModal },
+  components: { UserLayout, Loading, StatusBadge, LeaveTeamModal, Breadcumb },
   setup(props) {
     const store = useStore();
     const route = useRoute();
     const team = computed(() => store.getters.showTeam);
     const loadingShowTeam = computed(() => store.getters.loadingShowTeam);
 
-    const leave = async (teamId) => {
-      // await leaveTeam(teamId);
-      // router.push({ name: "TeamIndex" });
-    };
     onMounted(async () => {
       await showTeam(route.params.team);
     });
@@ -153,8 +146,6 @@ export default {
       team,
       loadingShowTeam,
       dayjs,
-      statusColor,
-      leave,
       UserData,
     };
   },

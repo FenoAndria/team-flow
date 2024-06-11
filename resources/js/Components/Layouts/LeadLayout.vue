@@ -20,7 +20,7 @@ export default {
       {
         name: "LeadTaskIndex",
         tag: "Task",
-        activeClass: ["LeadTaskIndex", "LeadTaskShow", "LeadCreateSubtask"],
+        activeClass: ["LeadTaskIndex", "LeadTaskShow"],
       },
       {
         name: "LeadTeamMember",

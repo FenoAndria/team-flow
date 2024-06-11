@@ -1,5 +1,6 @@
 <template>
   <LeadLayout>
+    <Breadcumb :previousPage="[{ name: 'LeadTaskIndex', tag: 'Tasks' }]" currentPage="Show"/>
     <div>
       <div v-if="loadingTeamTask">
         <Loading />
@@ -138,6 +139,7 @@ import Loading from "../../../Components/Layouts/Loading.vue";
 import StatusBadge from "../../../Components/Layouts/StatusBadge.vue";
 import dayjs from "dayjs";
 import NewSubtaskModal from "../../../Components/Layouts/Modal/NewSubtaskModal.vue";
+import Breadcumb from "../../../Components/Layouts/Breadcumb.vue";
 export default {
   components: {
     LeadLayout,
@@ -145,6 +147,7 @@ export default {
     StatusBadge,
     Loading,
     NewSubtaskModal,
+    Breadcumb,
   },
   setup(props) {
     const route = useRoute();

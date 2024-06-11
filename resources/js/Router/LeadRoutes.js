@@ -1,6 +1,5 @@
 import LeadTaskIndex from './../Views/Lead/Task/Index.vue'
 import LeadTaskShow from './../Views/Lead/Task/Show.vue'
-import LeadCreateSubtask from './../Views/Lead/Task/CreateSubtask.vue'
 import LeadTeamMember from './../Views/Lead/TeamMember/Index.vue'
 import LeadInvitationIndex from './../Views/Lead/Invitation/Index.vue'
 const routes = [
@@ -17,11 +16,6 @@ const routes = [
                 path: ':task',
                 name: "LeadTaskShow",
                 component: LeadTaskShow,
-            },
-            {
-                path: ':task/create-subtask',
-                name: "LeadCreateSubtask",
-                component: LeadCreateSubtask,
             },
         ],
     },
