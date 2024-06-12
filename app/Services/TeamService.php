@@ -49,9 +49,9 @@ class TeamService
             'user_id' => $user->id,
         ];
         $teamInvitation = TeamInvitation::where($whereClause)->first();
+        $this->invitationService->delete($teamInvitation);
         $delete = TeamMember::where($whereClause)->delete();
         $this->subtaskService->unassignUser($team);
-        $this->invitationService->delete($teamInvitation);
         return $delete;
     }
 

@@ -41,6 +41,9 @@ class SubtaskService
         $subtasks = Subtask::whereIn('task_id', $tasks)->where('assigned_to', $user->id)->get();
         foreach ($subtasks as $subtask) {
             $subtask->assigned_to = null;
+            if ($subtask->status == 'In Progress' || $subtask->status == 'Cancelled') {
+                $subtask->status = 'Todo';
+            }
             $subtask->save();
         }
     }
