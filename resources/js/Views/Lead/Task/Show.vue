@@ -134,7 +134,6 @@ import AssignUserModal from "../../../Components/Layouts/Modal/AssignUserModal.v
 import { showTeamTask } from "../../../Services/Lead/LeadTaskService";
 import { useStore } from "vuex";
 import { useRoute } from "vue-router";
-import statusColor from "../../../Services/statusColor";
 import Loading from "../../../Components/Layouts/Loading.vue";
 import StatusBadge from "../../../Components/Layouts/StatusBadge.vue";
 import dayjs from "dayjs";
@@ -172,7 +171,6 @@ export default {
       ...toRefs(state),
       teamTask,
       loadingTeamTask,
-      statusColor,
       setModalData,
       setNewSubtaskModalData,
       dayjs,

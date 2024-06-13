@@ -5,9 +5,12 @@
         <Loading />
       </div>
       <div v-else>
-        <div class="flex flex-wrap -mx-1" v-if="memberInvitations.length">
-          <div class="w-1/3 px-1" v-for="memberInvitation in memberInvitations">
-            <div class="list-content">
+        <div class="my-card-container" v-if="memberInvitations.length">
+          <div
+            class="my-card list-content my-card-4"
+            v-for="memberInvitation in memberInvitations"
+          >
+            <div class="">
               <div>
                 <p class="uppercase font-semibold text-primary text-lg">
                   {{ memberInvitation.team.name }}
@@ -39,19 +42,22 @@
                     {{ memberInvitation.status }}
                   </p>
                 </div>
-                <div v-else class="space-x-2">
-                  <button
-                    class="bg-green-500"
-                    @click="replyInvitation(memberInvitation.id, 'Accepted')"
-                  >
-                    Accept
-                  </button>
-                  <button
-                    class="bg-red-600"
-                    @click="replyInvitation(memberInvitation.id, 'Declined')"
-                  >
-                    Decline
-                  </button>
+                <div v-else class="flex justify-between">
+                  <div></div>
+                  <div class="space-x-2">
+                    <button
+                      class="bg-green-500"
+                      @click="replyInvitation(memberInvitation.id, 'Accepted')"
+                    >
+                      Accept
+                    </button>
+                    <button
+                      class="bg-red-600"
+                      @click="replyInvitation(memberInvitation.id, 'Declined')"
+                    >
+                      Decline
+                    </button>
+                  </div>
                 </div>
               </div>
             </div>

@@ -7,9 +7,9 @@
       <div v-else>
         <div class="page-title">All tasks</div>
         <div v-if="teamTasks.length">
-          <div class="flex flex-wrap -mx-1">
-            <div class="w-1/2 px-1" v-for="item in teamTasks">
-              <div class="list-content">
+          <div class="my-card-container">
+            <div class="my-card list-content my-card-3" v-for="item in teamTasks">
+              <div class="">
                 <div class="flex justify-between">
                   <div>
                     <p class="uppercase font-semibold">
@@ -21,10 +21,7 @@
                   </div>
                 </div>
                 <hr class="my-1" />
-                <p class="text-sm">
-                  {{ item.description }}
-                </p>
-                <hr />
+              
                 <div class="flex justify-between items-center text-sm">
                   <p class="text-neutral">
                     Created at :
@@ -52,7 +49,6 @@ import { computed, onMounted } from "@vue/runtime-core";
 import LeadLayout from "../../../Components/Layouts/LeadLayout.vue";
 import { getTeamTasks } from "../../../Services/Lead/LeadTaskService";
 import { useStore } from "vuex";
-import statusColor from "../../../Services/statusColor";
 import Loading from "../../../Components/Layouts/Loading.vue";
 import StatusBadge from "../../../Components/Layouts/StatusBadge.vue";
 import dayjs from "dayjs";
@@ -69,7 +65,6 @@ export default {
     return {
       teamTasks,
       loadingTeamTasks,
-      statusColor,
       dayjs,
     };
   },

@@ -5,9 +5,9 @@
         <Loading/>
       </div>
       <div v-else>
-        <div class="flex flex-wrap -mx-1" v-if="memberSubtasks.length">
-          <div class="w-1/2 px-1" v-for="item in memberSubtasks">
-            <div class="list-content">
+        <div class="my-card-container" v-if="memberSubtasks.length">
+          <div class="my-card list-content my-card-3" v-for="item in memberSubtasks">
+            <div class="">
               <div>
                 <div class="flex justify-between border-b py-1">
                   <p class="font-semibold text-lg text-primary">

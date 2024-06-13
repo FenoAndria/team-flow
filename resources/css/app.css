@@ -54,4 +54,22 @@ input{
 .page-title{
     @apply text-xl text-primary font-semibold my-2 border-b-2 
 }
+
+.my-card-container {
+    gap: 0.25rem;
+    @apply flex flex-wrap ;
+  }
+.my-card {
+   border: 1px solid #ccc;
+    background-color: #fff;
+  }
+.my-card-2{
+   width: calc(50% - 0.25rem);
+  }
+.my-card-3{
+   width: calc(33.333% - 0.25rem);
+  }
+.my-card-4{
+   width: calc(25% - 0.25rem);
+  }
  

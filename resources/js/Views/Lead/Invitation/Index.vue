@@ -63,7 +63,6 @@ import LeadLayout from "../../../Components/Layouts/LeadLayout.vue";
 import Loading from "../../../Components/Layouts/Loading.vue";
 import { useStore } from "vuex";
 import dayjs from "dayjs";
-import statusColor from "../../../Services/StatusColor";
 import { getTeamInvitation } from "../../../Services/Lead/TeamInvitationService";
 import InviteModal from "../../../Components/Layouts/InviteModal.vue";
 import StatusBadge from "../../../Components/Layouts/StatusBadge.vue";
@@ -83,7 +82,6 @@ export default {
       dayjs,
       teamInvitation,
       loadingTeamInvitation,
-      statusColor,
     };
   },
 };
