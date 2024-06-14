@@ -50,7 +50,7 @@ class User extends Authenticatable
         return $this->hasOne(Profil::class);
     }
 
-    public function Role(): HasOne
+    public function role(): HasOne
     {
         return $this->hasOne(Role::class, 'id', 'role_id');
     }

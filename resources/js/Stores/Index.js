@@ -8,6 +8,7 @@ import User from './User';
 
 import Member from './Member/Index'
 import Lead from './Lead/Index'
+import Admin from './Admin/Index'
 
 const vuexLocal = new VuexPersistence({
     key: 'vuex',
@@ -30,6 +31,7 @@ const store = new Vuex.Store({
         User,
         ...Member,
         ...Lead,
+        ...Admin,
     },
     plugins: [vuexLocal.plugin]
 })

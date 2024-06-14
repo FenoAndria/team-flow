@@ -2,12 +2,12 @@
   <UserLayout>
     <Breadcumb :previousPage="[{ name: 'TeamIndex', tag: 'Team' }]" currentPage="Show"/>
     <div>
-      <div v-if="loadingShowTeam">
+      <div v-if="loadingMemberTeam">
         <Loading />
       </div>
       <div v-else>
-        <div v-if="team">
-          <LeaveTeamModal modalId="leaveTeamModal" :content="team" />
+        <div v-if="memberTeam">
+          <LeaveTeamModal modalId="leaveTeamModal" :content="memberTeam" />
           <div
             class="
               flex
@@ -19,11 +19,11 @@
           >
             <div>
               <p class="text-2xl text-primary uppercase font-semibold">
-                {{ team.name }}
+                {{ memberTeam.name }}
               </p>
               <p class="text-neutral-500">
                 <span class="bi bi-person-workspace"></span>
-                {{ team.lead.name }}
+                {{ memberTeam.lead.name }}
               </p>
             </div>
             <div>
@@ -38,7 +38,7 @@
                 <span class="bi bi-clipboard"></span> Tasks
               </p>
               <div class="">
-                <div class="list-content mb-2" v-for="task in team.task">
+                <div class="list-content mb-2" v-for="task in memberTeam.task">
                   <div class="flex justify-between items-center border-b">
                     <p class="text-primary text-lg">{{ task.title }}</p>
                     <StatusBadge :status="task.status" />
@@ -102,11 +102,11 @@
                     text-neutral-600
                     font-semibold
                   "
-                  v-for="member in team.member"
+                  v-for="member in memberTeam.member"
                 >
                   <img
                     src="./../../../../../public/assets/Avatar.png"
-                    class="h-8 rounded-full border border-neutral border-2"
+                    class="h-8 rounded-full border border-neutral "
                   />
                   <p class="text-lg">{{ member.profil.name }}</p>
                 </div>
@@ -128,7 +128,7 @@ import StatusBadge from "../../../Components/Layouts/StatusBadge.vue";
 import Breadcumb from "../../../Components/Layouts/Breadcumb.vue";
 import LeaveTeamModal from "../../../Components/Layouts/Modal/LeaveTeamModal.vue";
 import UserData from "../../../Services/UserData";
-import { showTeam } from "../../../Services/Member/MemberTeamService";
+import { getMemberTeam } from "../../../Services/Member/MemberTeamService";
 import dayjs from "dayjs";
 import { useRoute } from "vue-router";
 export default {
@@ -136,15 +136,15 @@ export default {
   setup(props) {
     const store = useStore();
     const route = useRoute();
-    const team = computed(() => store.getters.showTeam);
-    const loadingShowTeam = computed(() => store.getters.loadingShowTeam);
+    const memberTeam = computed(() => store.getters.memberTeam);
+    const loadingMemberTeam = computed(() => store.getters.loadingMemberTeam);
 
     onMounted(async () => {
-      await showTeam(route.params.team);
+      await getMemberTeam(route.params.team);
     });
     return {
-      team,
-      loadingShowTeam,
+      memberTeam,
+      loadingMemberTeam,
       dayjs,
       UserData,
     };

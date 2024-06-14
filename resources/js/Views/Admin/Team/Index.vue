@@ -1,19 +1,18 @@
 <template>
-  <UserLayout>
-    <div>
-      <div v-if="loadingMemberTeams">
+  <AdminLayout> 
+    <div v-if="loadingTeams">
         <Loading />
       </div>
       <div v-else>
-        <div class="flex flex-wrap -mx-1" v-if="memberTeams.length">
-          <div class="w-1/3 px-1" v-for="item in memberTeams">
+        <div class="flex flex-wrap -mx-1" v-if="teams.length">
+          <div class="w-1/3 px-1" v-for="item in teams">
             <div class="list-content">
               <p class="uppercase font-semibold text-primary text-lg">
-                {{ item.team.name }}
+                {{ item.name }}
               </p>
               <p class="text-sm space-x-1 font-semibold">
                 <span class="bi bi-person-workspace"></span>
-                <span class="">{{ item.team.lead.name }}</span>
+                <span class="">{{ item.lead.name }}</span>
               </p>
               <p class="text-sm space-x-1 font-semibold">
                 <span class="bi bi-calendar-event"></span>
@@ -22,7 +21,7 @@
                 }}</span>
               </p>
               <router-link
-                :to="{ name: 'TeamShow', params: { team: item.team.id } }"
+                :to="{ name: 'AdminTeamShow', params: { team: item.id } }"
                 class="text-info hover:underline"
                 >More...</router-link
               >
@@ -31,29 +30,29 @@
         </div>
         <div v-else>Empty</div>
       </div>
-    </div>
-  </UserLayout>
+  </AdminLayout>
 </template>
 <script>
 import { computed, onMounted } from "@vue/runtime-core";
 import { useStore } from "vuex";
-import UserLayout from "../../../Components/Layouts/UserLayout.vue";
-import Loading from "../../../Components/Layouts/Loading.vue";
-import { getMemberTeams } from "../../../Services/Member/MemberTeamService";
 import dayjs from "dayjs";
+import AdminLayout from "../../../Components/Layouts/AdminLayout.vue";
+import { getTeams } from "../../../Services/Admin/TeamService";
+import Loading from "../../../Components/Layouts/Loading.vue";
+import StatusBadge from "../../../Components/Layouts/StatusBadge.vue";
 export default {
-  components: { UserLayout, Loading },
+  components: { AdminLayout, Loading, StatusBadge },
   setup(props) {
     const store = useStore();
-    const memberTeams = computed(() => store.getters.memberTeams);
-    const loadingMemberTeams = computed(() => store.getters.loadingMemberTeams);
+    const teams = computed(() => store.getters.teams);
+    const loadingTeams = computed(() => store.getters.loadingTeams);
 
     onMounted(async () => {
-      await getMemberTeams();
+      await getTeams();
     });
     return {
-      memberTeams,
-      loadingMemberTeams,
+      teams,
+      loadingTeams,
       dayjs,
     };
   },

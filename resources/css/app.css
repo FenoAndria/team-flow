@@ -64,12 +64,12 @@ input{
     background-color: #fff;
   }
 .my-card-2{
-   width: calc(50% - 0.25rem);
+   width: calc(50% - 0.20rem);
   }
 .my-card-3{
-   width: calc(33.333% - 0.25rem);
+   width: calc(33.333% - 0.20rem);
   }
 .my-card-4{
-   width: calc(25% - 0.25rem);
+   width: calc(25% - 0.20rem);
   }
  

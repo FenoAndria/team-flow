@@ -19,13 +19,15 @@ class TeamService
         $this->subtaskService = $subtaskService;
         $this->invitationService = $invitationService;
     }
+
+    public function all()
+    {
+        return Team::all();
+    }
+
     public function store(array $request)
     {
-        $isTeamMember = TeamMember::where('user_id', $request['lead_id'])->first();
-        if ($isTeamMember) {
-            throw new Exception('User already member of a team!');
-        }
-        $team = Team::create([
+        $team = Team::create([ 
             'name' => $request['name'],
             'lead_id' => $request['lead_id'],
         ]);

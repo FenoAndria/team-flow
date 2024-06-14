@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Http\Requests\TaskRequest;
+use App\Http\Resources\TaskResource;
 use App\Services\TaskService;
 use Illuminate\Http\Request;
 
@@ -12,6 +13,12 @@ class TaskController extends Controller
     public function __construct(TaskService $taskService)
     {
         $this->taskService = $taskService;
+    }
+    
+    public function index()
+    {
+        $tasks = $this->taskService->all();
+        return response()->json(TaskResource::collection($tasks));
     }
 
     public function store(TaskRequest $request)

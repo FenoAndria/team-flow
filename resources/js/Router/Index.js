@@ -15,6 +15,7 @@ import LeadIndexPage from '../Components/Layouts/LeadIndex.vue'
 import RoleValidation from "../Middleware/RoleValidation";
 import MemberRoutes from "./MemberRoutes";
 import LeadRoutes from "./LeadRoutes";
+import AdminRoutes from "./AdminRoutes";
 
 const setIndexPage = (indexPage) => {
     switch (indexPage) {
@@ -49,6 +50,14 @@ const router = createRouter({
             meta: {
                 requiresAuth: false
             }
+        },
+        {
+            path: '/admin/',
+            name: 'Admin',
+            children: [
+                ...AdminRoutes
+            ],
+            beforeEnter: RoleValidation('Admin')
         },
         {
             path: '/member/',

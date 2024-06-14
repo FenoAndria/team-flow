@@ -39,8 +39,12 @@ Route::middleware('auth:sanctum')->group(function () {
     });
 
     Route::middleware('isAdmin')->group(function () {
+        Route::get('/team', [TeamController::class, 'index'])->name('team-index');
+        Route::get('/team/{team}', [TeamController::class, 'show'])->name('team-show');
         Route::post('/team', [TeamController::class, 'store'])->name('team-store');
+        Route::get('/task', [TaskController::class, 'index'])->name('task-index');
         Route::post('/task', [TaskController::class, 'store'])->name('task-store');
+        Route::get('/users', [UserController::class, 'index'])->name('user-index');
     });
 
     Route::middleware('isLead')->group(function () {
@@ -59,8 +63,8 @@ Route::middleware('auth:sanctum')->group(function () {
         Route::get('/invitation', [InvitationController::class, 'show'])->name('show-member-invitation');
         Route::put('/invitation/{team_invitation}', [InvitationController::class, 'update'])->name('update-member-invitation');
         Route::post('/leave-team/{team}', [TeamController::class, 'leave'])->name('member-leave-team');
-        Route::get('/team', [MemberController::class, 'memberTeams'])->name('show-member-teams');
-        Route::get('/team/{team}', [MemberController::class, 'showTeam'])->name('show-team');
+        Route::get('/member-team', [MemberController::class, 'memberTeams'])->name('show-member-teams');
+        Route::get('/member-team/{team}', [MemberController::class, 'showTeam'])->name('show-team');
 
         Route::get('/subtask', [MemberSubtaskController::class, 'index'])->name('show-member-subtask');
         Route::put('/subtask/{subtask}', [MemberSubtaskController::class, 'update'])->name('update-member-subtask');

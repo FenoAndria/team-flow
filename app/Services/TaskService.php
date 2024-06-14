@@ -6,6 +6,12 @@ use App\Models\Task;
 
 class TaskService
 {
+
+    public function all()
+    {
+        return Task::all();
+    }
+    
     public function store(array $request)
     {
         $task = Task::create([

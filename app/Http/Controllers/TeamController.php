@@ -7,6 +7,7 @@ use App\Http\Requests\TeamRequest;
 use App\Http\Resources\Lead\InvitationResource;
 use App\Http\Resources\Member\MemberResource;
 use App\Http\Resources\TaskResource;
+use App\Http\Resources\TeamResource;
 use App\Http\Resources\UserResource;
 use App\Models\Task;
 use App\Models\Team;
@@ -19,6 +20,17 @@ class TeamController extends Controller
     public function __construct(TeamService $teamService)
     {
         $this->teamService = $teamService;
+    }
+    
+    public function index()
+    {
+        $teams = $this->teamService->all();
+        return response()->json(TeamResource::collection($teams));
+    }
+    
+    public function show(Team $team)
+    {
+        return response()->json(new TeamResource($team));
     }
 
     public function store(TeamRequest $request)

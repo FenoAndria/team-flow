@@ -1,32 +1,32 @@
 import API from '../../Services/API'
 
 const state = {
-    teams: [],
-    showTeam: '',
-    loadingTeams: false,
-    loadingShowTeam: false
+    memberTeams: [],
+    memberTeam: '',
+    loadingMemberTeams: false,
+    loadingMemberTeam: false
 }
 
 const getters = {
-    teams: (state) => state.teams,
-    showTeam: (state) => state.showTeam,
-    loadingTeams: (state) => state.loadingTeams,
-    loadingShowTeam: (state) => state.loadingShowTeam,
+    memberTeams: (state) => state.memberTeams,
+    memberTeam: (state) => state.memberTeam,
+    loadingMemberTeams: (state) => state.loadingMemberTeams,
+    loadingMemberTeam: (state) => state.loadingMemberTeam,
 }
 
 const mutations = {
-    setTeams: (state, teams) => state.teams = teams,
-    setShowTeam: (state, showTeam) => state.showTeam = showTeam,
-    setLoadingTeams: (state, loadingTeams) => state.loadingTeams = loadingTeams,
-    setLoadingShowTeam: (state, loadingShowTeam) => state.loadingShowTeam = loadingShowTeam
+    setMemberTeams: (state, memberTeams) => state.memberTeams = memberTeams,
+    setMemberTeam: (state, memberTeam) => state.memberTeam = memberTeam,
+    setLoadingMemberTeams: (state, loadingMemberTeams) => state.loadingMemberTeams = loadingMemberTeams,
+    setLoadingMemberTeam: (state, loadingMemberTeam) => state.loadingMemberTeam = loadingMemberTeam
 }
 
 const actions = {
-    getTeams: async ({ commit }) => {
-        return await API().get('team')
+    getMemberTeams: async ({ commit }) => {
+        return await API().get('member-team')
     },
-    showTeam: async ({ commit }, teamId) => {
-        return await API().get('team/' + teamId)
+    getMemberTeam: async ({ commit }, teamId) => {
+        return await API().get('member-team/' + teamId)
     },
     leaveTeam: async ({ commit }, teamId) => {
         return await API().post('leave-team/' + teamId)

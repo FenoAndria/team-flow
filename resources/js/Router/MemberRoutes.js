@@ -19,7 +19,6 @@ export default [
                 }
             },
         ],
-        // beforeEnter: RoleValidation('User')
     },
     {
         path: 'task/',
@@ -37,7 +36,6 @@ export default [
                 }
             },
         ],
-        // beforeEnter: RoleValidation('User')
     },
     {
         path: 'team/',
@@ -63,6 +61,5 @@ export default [
                 }
             },
         ],
-        // beforeEnter: RoleValidation('User')
     },
 ]

@@ -2,6 +2,7 @@
 
 namespace App\Http\Requests;
 
+use App\Models\TeamMember;
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Validation\Rule;
 
@@ -17,7 +18,11 @@ class TeamRequest extends LayoutRequest
     {
         return [
             'name' => 'required',
-            'lead_id' => ['required', 'exists:users,id', Rule::unique('teams')->ignore($this->route('team'))]
+            'lead_id' => ['required', 'exists:users,id', Rule::unique('teams')->ignore($this->route('team')), function ($attribute, $value, $fail) {
+                if (TeamMember::where('user_id', $value)->exists()) {
+                    $fail('User selected already member of a team!');
+                }
+            }]
         ];
     }
 }
