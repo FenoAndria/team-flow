@@ -5,7 +5,24 @@
     </div>
     <div v-else>
       <div class="page-title">All tasks</div>
-      <div v-if="tasks.length">
+      <label
+        class="
+          text-info
+          hover:underline
+          font-semibold
+          bg-neutral-100
+          px-4
+          rounded
+          border
+          hover:bg-neutral-200
+          cursor-pointer
+        "
+        for="newTaskModal"
+      >
+        New task
+      </label>
+      <NewTaskModal modalId="newTaskModal" :content="teams"/>
+      <div v-if="tasks.length" class="mt-2">
         <div class="my-card-container">
           <div class="my-card list-content my-card-3" v-for="item in tasks">
             <div class="">
@@ -21,7 +38,7 @@
               </div>
               <hr class="my-1" />
               <p class="">
-                {{item.team}}
+                {{ item.team }}
               </p>
               <div class="flex justify-between items-center text-sm">
                 <p class="text-neutral">
@@ -52,19 +69,26 @@ import AdminLayout from "../../../Components/Layouts/AdminLayout.vue";
 import { getTasks } from "../../../Services/Admin/TaskService";
 import Loading from "../../../Components/Layouts/Loading.vue";
 import StatusBadge from "../../../Components/Layouts/StatusBadge.vue";
+import NewTaskModal from "../../../Components/Layouts/Modal/NewTaskModal.vue";
+import { getTeams } from '../../../Services/Admin/TeamService';
 export default {
-  components: { AdminLayout, Loading, StatusBadge },
+  components: { AdminLayout, Loading, StatusBadge, NewTaskModal },
   setup(props) {
     const store = useStore();
     const tasks = computed(() => store.getters.tasks);
     const loadingTasks = computed(() => store.getters.loadingTasks);
+    const teams = computed(() => store.getters.teams);
+    const loadingTeams = computed(() => store.getters.loadingTeams);
 
     onMounted(async () => {
       await getTasks();
+      await getTeams();
     });
     return {
       tasks,
       loadingTasks,
+      teams,
+      loadingTeams,
       dayjs,
     };
   },

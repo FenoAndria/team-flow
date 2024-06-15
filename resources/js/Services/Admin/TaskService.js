@@ -9,3 +9,16 @@ export const getTasks = async () => {
         console.log(err.response);
     });
 }
+
+export const storeTask = async (data) => {
+    store.commit('setLoadingStoreTask', true)
+    await store.dispatch('storeTask', data).then((result) => {
+        store.commit('setWithSuccess', true)
+        store.commit('setLoadingStoreTask', false)
+    }).catch((err) => {
+        if (err && (err.response.status == 422)) {
+            store.commit('setValidationError', err.response.data)
+        }
+        store.commit('setLoadingStoreTask', false)
+    });
+}

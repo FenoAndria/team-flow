@@ -25,7 +25,7 @@ export default {
       {
         name: "AdminTeamIndex",
         tag: "Teams",
-        activeClass: ["AdminTeamIndex"],
+        activeClass: ["AdminTeamIndex","AdminTeamShow"],
       }, 
     ];
     return {links}

@@ -15,7 +15,6 @@ class TaskRequest extends LayoutRequest
         return [
             'title' => 'required',
             'description' => 'required',
-            // 'status' => 'in:Todo,In Progress,Completed,Cancelled',
             'deadline' => 'nullable|date',
             'team_id' => 'required|exists:teams,id',
         ];
