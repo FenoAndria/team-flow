@@ -29,7 +29,6 @@ class TeamService
     {
         $team = Team::create([ 
             'name' => $request['name'],
-            'lead_id' => $request['lead_id'],
         ]);
         return $team;
     }

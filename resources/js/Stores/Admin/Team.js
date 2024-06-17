@@ -5,6 +5,7 @@ const state = {
     loadingTeams: false,
     team: '',
     loadingTeam: false,
+    loadingStoreTeam: false,
 }
 
 const getters = {
@@ -12,6 +13,7 @@ const getters = {
     loadingTeams: (state) => state.loadingTeams,
     team: (state) => state.team,
     loadingTeam: (state) => state.loadingTeam,
+    loadingStoreTeam: (state) => state.loadingStoreTeam,
 }
 
 const mutations = {
@@ -19,6 +21,7 @@ const mutations = {
     setLoadingTeams: (state, loadingTeams) => state.loadingTeams = loadingTeams,
     setTeam: (state, team) => state.team = team,
     setLoadingTeam: (state, loadingTeam) => state.loadingTeam = loadingTeam,
+    setLoadingStoreTeam: (state, loadingStoreTeam) => state.loadingStoreTeam = loadingStoreTeam,
 }
 
 const actions = {
@@ -27,6 +30,9 @@ const actions = {
     },
     getTeam: async ({ commit }, team) => {
         return await API().get('team/' + team)
+    },
+    storeTeam: async ({ commit }, team) => {
+        return await API().post('team', team)
     },
 
 }

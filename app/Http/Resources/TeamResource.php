@@ -18,12 +18,14 @@ class TeamResource extends JsonResource
         return [
             'id' => $this->id,
             'name' => $this->name,
-            'lead' => [
-                'name' => ($this->lead)->profil->name,
-                'email' => ($this->lead)->email,
-            ],
+            'lead' => $this->lead && $this->lead->profil ? [
+                'name' => $this->lead->profil->name,
+                'email' => $this->lead->email,
+            ] : null,
             'task' => TaskResource::collection($this->task),
             'member' => MemberResource::collection($this->member),
+            'created_at' => $this->created_at,
+            'updated_at' => $this->updated_at,
         ];
     }
 }

@@ -25,7 +25,7 @@
               </p>
               <p class="text-neutral-500">
                 <span class="bi bi-person-workspace"></span>
-                {{ team.lead.name }}
+                {{ team.lead ? team.lead.name : "None"}}
               </p>
             </div>
           </div>

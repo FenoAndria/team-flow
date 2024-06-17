@@ -19,3 +19,17 @@ export const getTeam = async (team) => {
         console.log(err.response);
     });
 }
+
+
+export const storeTeam = async (team) => {
+    store.commit('setLoadingStoreTeam', true)
+    await store.dispatch('storeTeam', team).then((result) => {
+        store.commit('setWithSuccess', true)
+        store.commit('setLoadingStoreTeam', false)
+    }).catch((err) => {
+        if (err && (err.response.status == 422)) {
+            store.commit('setValidationError', err.response.data)
+        }
+        store.commit('setLoadingStoreTeam', false)
+    });
+}

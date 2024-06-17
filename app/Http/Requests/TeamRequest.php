@@ -18,7 +18,7 @@ class TeamRequest extends LayoutRequest
     {
         return [
             'name' => 'required',
-            'lead_id' => ['required', 'exists:users,id', Rule::unique('teams')->ignore($this->route('team')), function ($attribute, $value, $fail) {
+            'lead_id' => ['nullable', 'exists:users,id', Rule::unique('teams')->ignore($this->route('team')), function ($attribute, $value, $fail) {
                 if (TeamMember::where('user_id', $value)->exists()) {
                     $fail('User selected already member of a team!');
                 }
