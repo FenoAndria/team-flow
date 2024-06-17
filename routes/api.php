@@ -45,6 +45,9 @@ Route::middleware('auth:sanctum')->group(function () {
         Route::get('/task', [TaskController::class, 'index'])->name('task-index');
         Route::post('/task', [TaskController::class, 'store'])->name('task-store');
         Route::get('/users', [UserController::class, 'index'])->name('user-index');
+
+        Route::post('/lead-invitation', [TeamController::class, 'inviteLead'])->name('send-lead-invitation');
+        Route::get('/lead-invitable', [TeamController::class, 'showInvitableLead'])->name('show-lead-invitable');
     });
 
     Route::middleware('isLead')->group(function () {

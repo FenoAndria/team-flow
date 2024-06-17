@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Http\Requests\TeamInvitationRequest;
+use App\Http\Requests\LeadInvitationRequest;
 use App\Http\Requests\TeamRequest;
 use App\Http\Resources\Lead\InvitationResource;
 use App\Http\Resources\Member\MemberResource;
@@ -38,6 +39,18 @@ class TeamController extends Controller
         try {
             $team = $this->teamService->store($request->validated());
             return response()->json($team);
+        } catch (\Throwable $e) {
+            return response()->json([
+                'error' => $e->getMessage(),
+            ], 500);
+        }
+    }
+
+    public function inviteLead(LeadInvitationRequest $request)
+    {
+        try {
+            $leadInvitation = $this->teamService->inviteLead($request->validated());
+            return response()->json($leadInvitation);
         } catch (\Throwable $e) {
             return response()->json([
                 'error' => $e->getMessage(),
@@ -85,6 +98,12 @@ class TeamController extends Controller
     public function showUsersInvitable()
     {
         $users = $this->teamService->showUsersInvitable();
+        return response()->json(UserResource::collection($users));
+    }
+
+    public function showInvitableLead()
+    {
+        $users = $this->teamService->showInvitableLead();
         return response()->json(UserResource::collection($users));
     }
 

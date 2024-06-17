@@ -2,11 +2,12 @@
 
 namespace App\Rules;
 
+use App\Models\Team;
 use App\Traits\TeamTrait;
 use Closure;
 use Illuminate\Contracts\Validation\ValidationRule;
 
-class CheckIfUserIsLead implements ValidationRule
+class CheckIfTeamHaveLead implements ValidationRule
 {
     use TeamTrait;
     /**
@@ -16,8 +17,8 @@ class CheckIfUserIsLead implements ValidationRule
      */
     public function validate(string $attribute, mixed $value, Closure $fail): void
     {
-        if ($this->isLead($value)) {
-            $fail('User selected is a lead!');
+        if (Team::find($value)->lead_id) {
+            $fail('Team selected have already a lead!');
         }
     }
 }
