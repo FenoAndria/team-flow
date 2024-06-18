@@ -4,11 +4,13 @@ namespace App\Providers;
 
 // use Illuminate\Support\Facades\Gate;
 
+use App\Models\LeadInvitation;
 use App\Models\Subtask;
 use App\Models\Task;
 use App\Models\Team;
 use App\Models\TeamInvitation;
 use App\Models\Todo;
+use App\Policies\LeadInvitationPolicy;
 use App\Policies\MemberInvitationPolicy;
 use App\Policies\SubtaskPolicy;
 use App\Policies\TaskPolicy;
@@ -30,6 +32,7 @@ class AuthServiceProvider extends ServiceProvider
         Subtask::class => SubtaskPolicy::class,
         TeamInvitation::class => MemberInvitationPolicy::class,
         Team::class => TeamMemberPolicy::class,
+        LeadInvitation::class => LeadInvitationPolicy::class,
     ];
 
     /**

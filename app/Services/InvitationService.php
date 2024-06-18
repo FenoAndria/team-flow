@@ -2,6 +2,7 @@
 
 namespace App\Services;
 
+use App\Models\LeadInvitation;
 use App\Models\TeamInvitation;
 use App\Models\TeamMember;
 use App\Traits\TeamTrait;
@@ -17,6 +18,13 @@ class InvitationService
         return $user->invitation;
     }
 
+    public function showLeadInvitation()
+    {
+        $user = Auth::user();
+        $leadInvitation = LeadInvitation::where('user_id', $user->id)->get();
+        return $leadInvitation;
+    }
+
     public function update(TeamInvitation $teamInvitation, array $request)
     {
         if ($request && $request['status']) {
@@ -27,6 +35,18 @@ class InvitationService
             }
         }
         return $teamInvitation;
+    }
+
+    public function updateLeadInvitation(LeadInvitation $leadInvitation, array $request)
+    {
+        $leadInvitation->status = $request['status'];
+        $leadInvitation->save();
+        if ($request['status'] === 'Accepted') {
+            $leadInvitation->team->lead_id = $leadInvitation->user_id;
+            $leadInvitation->team->save();
+        }
+       
+        return $leadInvitation;
     }
 
     public function delete(TeamInvitation $teamInvitation)

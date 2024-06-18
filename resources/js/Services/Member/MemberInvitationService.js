@@ -10,9 +10,22 @@ export const getMemberInvitations = async () => {
     });
 }
 
-export const updateMemberInvitations = async (invitation) => {
-    await store.dispatch('updateMemberInvitations', invitation).then((result) => {
+export const updateMemberInvitation = async (invitation) => {
+    await store.dispatch('updateMemberInvitation', invitation).then((result) => {
 
+    }).catch((err) => {
+        console.log(err);
+    });
+}
+
+export const updateLeadInvitation = async (leadInvitation) => {
+    await store.dispatch('updateLeadInvitation', leadInvitation).then(async (result) => {
+        if (leadInvitation.status === 'Accepted') {
+            localStorage.setItem("vuex", "");
+            location.reload();
+        } else {
+            await getMemberInvitations();
+        }
     }).catch((err) => {
         console.log(err);
     });

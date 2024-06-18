@@ -2,8 +2,11 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\UpdateLeadInvitationRequest;
 use App\Http\Requests\UpdateMemberInvitationRequest;
+use App\Http\Resources\Admin\LeadInvitationResource;
 use App\Http\Resources\TeamInvitationResource;
+use App\Models\LeadInvitation;
 use App\Models\TeamInvitation;
 use App\Services\InvitationService;
 use Illuminate\Http\Request;
@@ -15,17 +18,22 @@ class InvitationController extends Controller
     {
         $this->invitationService = $invitationService;
     }
+
     public function show()
     {
         $invitation = $this->invitationService->show();
-        return response()->json(TeamInvitationResource::collection($invitation)); 
+        $leadInvitation = $this->invitationService->showLeadInvitation();
+        return response()->json([
+            'teamMember' => TeamInvitationResource::collection($invitation),
+            'lead' => LeadInvitationResource::collection($leadInvitation),
+        ]);
     }
 
     public function update(UpdateMemberInvitationRequest $request, TeamInvitation $teamInvitation)
     {
         $this->authorize('update', $teamInvitation);
         try {
-            $memberInvitation = $this->invitationService->update($teamInvitation,$request->validated());
+            $memberInvitation = $this->invitationService->update($teamInvitation, $request->validated());
             return response()->json($memberInvitation);
         } catch (\Throwable $e) {
             return response()->json([
@@ -33,4 +41,18 @@ class InvitationController extends Controller
             ], 500);
         }
     }
+
+    public function updateLeadInvitation(UpdateLeadInvitationRequest $request, LeadInvitation $leadInvitation)
+    {
+        $this->authorize('update', $leadInvitation);
+        try {
+            $leadInvitation = $this->invitationService->updateLeadInvitation($leadInvitation, $request->validated());
+            return response()->json($leadInvitation);
+        } catch (\Throwable $e) {
+            return response()->json([
+                'error' => $e->getMessage(),
+            ], 500);
+        }
+    }
+
 }

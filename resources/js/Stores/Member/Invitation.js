@@ -19,9 +19,11 @@ const actions = {
     getMemberInvitations: async ({ commit }) => {
         return await API().get('invitation')
     },
-    updateMemberInvitations: async ({ commit }, invitation) => {
+    updateMemberInvitation: async ({ commit }, invitation) => {
         return await API().put('invitation/' + invitation.id, { status: invitation.status })
-        // return await API().put('invitation/' + invitation.id, { status: invitation.status })
+    },
+    updateLeadInvitation: async ({ commit }, leadInvitation) => {
+        return await API().put('lead-invitation/' + leadInvitation.id, { status: leadInvitation.status })
     },
 
 }
