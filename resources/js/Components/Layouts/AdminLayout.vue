@@ -27,6 +27,11 @@ export default {
         tag: "Teams",
         activeClass: ["AdminTeamIndex","AdminTeamShow"],
       }, 
+      {
+        name: "AdminLeadInvitationIndex",
+        tag: "Invitations",
+        activeClass: ["AdminLeadInvitationIndex"],
+      }, 
     ];
     return {links}
   },

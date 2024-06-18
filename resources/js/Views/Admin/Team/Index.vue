@@ -21,9 +21,9 @@
         New team
       </label>
       <NewTeamModal modalId="newTeamModal" />
-      <div class="flex flex-wrap -mx-1 mt-2" v-if="teams.length">
-        <div class="w-1/3 px-1" v-for="item in teams">
-          <div class="list-content">
+      <div class="my-card-container mt-2" v-if="teams.length">
+        <div class="my-card list-content my-card-3" v-for="item in teams">
+          <div class="">
             <p class="uppercase font-semibold text-primary text-lg">
               {{ item.name }}
             </p>

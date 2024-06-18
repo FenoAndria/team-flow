@@ -25,8 +25,25 @@
               </p>
               <p class="text-neutral-500">
                 <span class="bi bi-person-workspace"></span>
-                {{ team.lead ? team.lead.name : "None"}}
+                {{ team.lead ? team.lead.name : "None" }}
               </p>
+              <label
+                class="
+                  text-info
+                  hover:underline
+                  font-semibold
+                  bg-neutral-100
+                  px-4
+                  rounded
+                  border
+                  hover:bg-neutral-200
+                  cursor-pointer
+                "
+                for="invitableLeadModal"
+                v-if="!team.lead"
+                ><span class="bi bi-person-plus"></span> Invite user</label
+              >
+              <InvitableLeadModal modalId="invitableLeadModal" :content="team"/>
             </div>
           </div>
           <div class="flex space-x-2">
@@ -77,16 +94,17 @@
 <script>
 import { computed, onMounted } from "@vue/runtime-core";
 import { useStore } from "vuex";
+import { useRoute } from "vue-router";
+import dayjs from "dayjs";
 import AdminLayout from "../../../Components/Layouts/AdminLayout.vue";
 import Loading from "../../../Components/Layouts/Loading.vue";
 import StatusBadge from "../../../Components/Layouts/StatusBadge.vue";
 import Breadcumb from "../../../Components/Layouts/Breadcumb.vue";
 import UserData from "../../../Services/UserData";
 import { getTeam } from "../../../Services/Admin/TeamService";
-import dayjs from "dayjs";
-import { useRoute } from "vue-router";
+import InvitableLeadModal from "../../../Components/Layouts/Modal/InvitableLeadModal.vue";
 export default {
-  components: { AdminLayout, Loading, StatusBadge, Breadcumb },
+  components: { AdminLayout, Loading, StatusBadge, Breadcumb, InvitableLeadModal },
   setup(props) {
     const store = useStore();
     const route = useRoute();

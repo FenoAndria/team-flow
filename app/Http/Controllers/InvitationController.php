@@ -19,6 +19,12 @@ class InvitationController extends Controller
         $this->invitationService = $invitationService;
     }
 
+    public function indexLeadInvitation()
+    {
+        $leadInvitation = $this->invitationService->indexLeadInvitation();
+        return response()->json(LeadInvitationResource::collection($leadInvitation));
+    }
+    
     public function show()
     {
         $invitation = $this->invitationService->show();

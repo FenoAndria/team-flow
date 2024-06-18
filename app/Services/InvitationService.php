@@ -3,6 +3,7 @@
 namespace App\Services;
 
 use App\Models\LeadInvitation;
+use App\Models\Team;
 use App\Models\TeamInvitation;
 use App\Models\TeamMember;
 use App\Traits\TeamTrait;
@@ -16,6 +17,12 @@ class InvitationService
     {
         $user = Auth::user();
         return $user->invitation;
+    }
+
+    public function indexLeadInvitation()
+    {
+        return LeadInvitation::all();
+        // return Team::with('leadInvitations.user')->get();
     }
 
     public function showLeadInvitation()
