@@ -104,6 +104,7 @@ class TeamController extends Controller
     public function showInvitableLead()
     {
         $users = $this->teamService->showInvitableLead();
+        // return response()->json(($users));
         return response()->json(UserResource::collection($users));
     }
 

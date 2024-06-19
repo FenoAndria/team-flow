@@ -23,7 +23,7 @@ trait UserTrait
         })->get();
         $leadIds = Team::pluck('lead_id')->toArray();
         $teamMemberIds = TeamMember::pluck('user_id')->toArray();
-        $invitedIds = LeadInvitation::pluck('user_id')->toArray();
+        $invitedIds = LeadInvitation::where('status','Accepted')->pluck('user_id')->toArray();
         $invitableLead = $allUsers->filter(function ($user) use ($leadIds, $teamMemberIds, $invitedIds) {
             return !in_array($user->id, $leadIds) && !in_array($user->id, $teamMemberIds) && !in_array($user->id, $invitedIds);
         })->values();
