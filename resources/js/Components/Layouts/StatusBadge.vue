@@ -27,6 +27,8 @@ export default {
             return "bg-green-500";
           case "Declined":
             return "bg-red-500";
+          case "Expired":
+            return "bg-neutral-600";
         }
       }
     };

@@ -8,6 +8,7 @@ use App\Models\TeamInvitation;
 use App\Models\TeamMember;
 use App\Traits\TeamTrait;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\DB;
 
 class InvitationService
 {
@@ -39,6 +40,7 @@ class InvitationService
             $teamInvitation->save();
             if ($request['status'] == 'Accepted' && !$this->isMember($teamInvitation->team_id, $teamInvitation->user_id)) {
                 $this->accept($teamInvitation);
+                LeadInvitation::where('user_id', $teamInvitation->user_id)->where('status', '!=', 'Declined')->update(['status' => 'Declined']);
             }
         }
         return $teamInvitation;
@@ -51,8 +53,12 @@ class InvitationService
         if ($request['status'] === 'Accepted') {
             $leadInvitation->team->lead_id = $leadInvitation->user_id;
             $leadInvitation->team->save();
+            LeadInvitation::where('id', '!=', $leadInvitation->id)->where('status', '!=', 'Declined')->where(function ($query) use ($leadInvitation) {
+                $query->where('team_id', $leadInvitation->team_id)->orWhere('user_id', $leadInvitation->user_id);
+            })->update(['status' => 'Expired']);
+            TeamInvitation::where('user_id', $leadInvitation->user->id)->where('status', '!=', 'Declined')->update(['status' => 'Declined']);
         }
-       
+
         return $leadInvitation;
     }
 
