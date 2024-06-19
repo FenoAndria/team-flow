@@ -48,7 +48,7 @@ export default {
   setup(props) {
     const state = reactive({
       user: {
-        email: "gutmann.aron@example.net",
+        email: "",
         password: "password",
       },
     });

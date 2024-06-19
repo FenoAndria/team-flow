@@ -2,7 +2,6 @@ import { createRouter, createWebHistory } from "vue-router";
 import UserData from "../services/UserData";
 import NotFound from './../Views/NotFound.vue'
 import AppIndex from "./../Views/Index.vue"
-import TodoIndex from "./../Views/Todo/Index.vue"
 import UserIndex from "./../Views/User/Index.vue"
 import UserEdit from "./../Views/User/Edit.vue"
 import Login from "./../Views/Auth/Login.vue"
@@ -77,24 +76,6 @@ const router = createRouter({
                 requiresAuth: true
             },
             beforeEnter: RoleValidation('Lead')
-        },
-        {
-            path: '/todo/',
-            name: "Todo",
-            meta: {
-                requiresAuth: true
-            },
-            children: [
-                {
-                    path: '',
-                    name: "TodoIndex",
-                    component: TodoIndex,
-                    meta: {
-
-                    }
-                },
-            ],
-            beforeEnter: RoleValidation('User')
         },
         {
             path: '/user/',

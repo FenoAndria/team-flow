@@ -34,7 +34,6 @@ Route::middleware('auth:sanctum')->group(function () {
     Route::get('/user', [UserController::class, 'show'])->name('user-show');
     // User middleware
     Route::middleware('isUser')->group(function () {
-        Route::apiResource('todo', TodoController::class);
         Route::put('/profil', [ProfilController::class, 'update'])->name('profil-update');
     });
 
