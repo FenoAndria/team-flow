@@ -32,7 +32,7 @@
                   <p class="text-xs font-semibold text-neutral italic">
                     On
                     {{
-                      dayjs(memberInvitation.created_at).format("DD-MM-YYYY")
+                      $dayjs(memberInvitation.created_at).format("DD-MM-YYYY")
                     }}
                   </p>
                 </div>
@@ -97,26 +97,17 @@
                 </p>
                 <p class="text-xs font-semibold text-neutral italic">
                   On
-                  {{ dayjs(memberInvitation.created_at).format("DD-MM-YYYY") }}
+                  {{ $dayjs(memberInvitation.created_at).format("DD-MM-YYYY") }}
                 </p>
               </div>
               <div>
                 <div
                   v-if="
-                    memberInvitation.status == 'Accepted' ||
-                    memberInvitation.status == 'Declined'
+                    memberInvitation.status != 'Pending'
                   "
-                  class="font-semibold"
+                  class="font-semibold w-max"
                 >
-                  <p
-                    :class="
-                      memberInvitation.status == 'Accepted'
-                        ? 'text-success'
-                        : 'text-danger'
-                    "
-                  >
-                    {{ memberInvitation.status }}
-                  </p>
+                  <StatusBadge :status="memberInvitation.status"/>
                 </div>
                 <div v-else class="flex justify-between">
                   <div></div>
@@ -153,14 +144,14 @@ import { computed, onMounted } from "@vue/runtime-core";
 import { useStore } from "vuex";
 import UserLayout from "../../../Components/Layouts/UserLayout.vue";
 import Loading from "../../../Components/Layouts/Loading.vue";
+import StatusBadge from "../../../Components/Layouts/StatusBadge.vue";
 import {
   getMemberInvitations,
   updateLeadInvitation,
   updateMemberInvitation,
 } from "../../../Services/Member/MemberInvitationService";
-import dayjs from "dayjs";
 export default {
-  components: { UserLayout, Loading },
+  components: { UserLayout, Loading, StatusBadge },
   setup(props) {
     const store = useStore();
     const memberInvitations = computed(() => store.getters.memberInvitations);
@@ -182,7 +173,6 @@ export default {
       loadingMemberInvitations,
       replyInvitation,
       replyLeadInvitation,
-      dayjs,
     };
   },
 };

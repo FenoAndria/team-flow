@@ -8,7 +8,7 @@ use Illuminate\Support\Facades\Auth;
 class MemberSubtaskService
 {
 
-    public function all()
+    public function index()
     {
         $user = Auth::user();
         return Subtask::where('assigned_to', $user->id)->get();

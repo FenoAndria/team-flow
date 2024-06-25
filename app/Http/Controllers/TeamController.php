@@ -3,7 +3,6 @@
 namespace App\Http\Controllers;
 
 use App\Http\Requests\TeamInvitationRequest;
-use App\Http\Requests\LeadInvitationRequest;
 use App\Http\Requests\TeamRequest;
 use App\Http\Resources\Lead\InvitationResource;
 use App\Http\Resources\Member\MemberResource;
@@ -25,7 +24,7 @@ class TeamController extends Controller
     
     public function index()
     {
-        $teams = $this->teamService->all();
+        $teams = $this->teamService->getAllTeams();
         return response()->json(TeamResource::collection($teams));
     }
     
@@ -39,43 +38,6 @@ class TeamController extends Controller
         try {
             $team = $this->teamService->store($request->validated());
             return response()->json($team);
-        } catch (\Throwable $e) {
-            return response()->json([
-                'error' => $e->getMessage(),
-            ], 500);
-        }
-    }
-
-    public function inviteLead(LeadInvitationRequest $request)
-    {
-        try {
-            $leadInvitation = $this->teamService->inviteLead($request->validated());
-            return response()->json($leadInvitation);
-        } catch (\Throwable $e) {
-            return response()->json([
-                'error' => $e->getMessage(),
-            ], 500);
-        }
-    }
-
-    public function invite(TeamInvitationRequest $request)
-    {
-        try {
-            $teamInvitation = $this->teamService->invite($request->validated());
-            return response()->json($teamInvitation);
-        } catch (\Throwable $e) {
-            return response()->json([
-                'error' => $e->getMessage(),
-            ], 500);
-        }
-    }
-
-    public function leave(Team $team)
-    {
-        $this->authorize('leaveTeam', $team);
-        try {
-            $teamLeave = $this->teamService->leave($team);
-            return response()->json(['message' => 'OK!']);
         } catch (\Throwable $e) {
             return response()->json([
                 'error' => $e->getMessage(),
@@ -101,22 +63,4 @@ class TeamController extends Controller
         return response()->json(UserResource::collection($users));
     }
 
-    public function showInvitableLead()
-    {
-        $users = $this->teamService->showInvitableLead();
-        // return response()->json(($users));
-        return response()->json(UserResource::collection($users));
-    }
-
-    public function showTask(Task $task)
-    {
-        $this->authorize('show', $task);
-        return response()->json(new TaskResource($task));
-    }
-
-    public function showMember()
-    {
-        $member = $this->teamService->showMember();
-        return response()->json(MemberResource::collection($member));
-    }
 }

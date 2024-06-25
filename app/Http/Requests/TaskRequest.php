@@ -2,6 +2,8 @@
 
 namespace App\Http\Requests;
 
+use App\Models\Team;
+
 class TaskRequest extends LayoutRequest
 {
 
@@ -16,7 +18,11 @@ class TaskRequest extends LayoutRequest
             'title' => 'required',
             'description' => 'required',
             'deadline' => 'nullable|date',
-            'team_id' => 'required|exists:teams,id',
+            'team_id' => ['required', 'exists:teams,id', function ($attribute, $value, $fail) {
+                if (!(Team::find($value)?->lead_id)) {
+                    $fail('Task must be assigned to the team that has a lead!');
+                }
+            }],
         ];
     }
 }

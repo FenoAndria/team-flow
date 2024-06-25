@@ -43,7 +43,10 @@
                 v-if="!team.lead"
                 ><span class="bi bi-person-plus"></span> Invite user</label
               >
-              <InvitableLeadModal modalId="invitableLeadModal" :content="team"/>
+              <InvitableLeadModal
+                modalId="invitableLeadModal"
+                :content="team"
+              />
             </div>
           </div>
           <div class="flex space-x-2">
@@ -54,7 +57,7 @@
               <div class="">
                 <div class="list-content mb-2" v-for="task in team.task">
                   <div class="flex justify-between items-center">
-                    <p class="text-primary text-lg">{{ task.title }}</p>
+                    <p class="text-neutral-600 text-lg">{{ task.title }}</p>
                     <StatusBadge :status="task.status" />
                   </div>
                 </div>
@@ -72,7 +75,6 @@
                     items-center
                     space-x-2
                     text-neutral-600
-                    font-semibold
                   "
                   v-for="member in team.member"
                 >
@@ -92,34 +94,32 @@
   </AdminLayout>
 </template>
 <script>
-import { computed, onMounted } from "@vue/runtime-core";
-import { useStore } from "vuex";
+import { mapGetters } from "vuex";
 import { useRoute } from "vue-router";
-import dayjs from "dayjs";
 import AdminLayout from "../../../Components/Layouts/AdminLayout.vue";
 import Loading from "../../../Components/Layouts/Loading.vue";
 import StatusBadge from "../../../Components/Layouts/StatusBadge.vue";
 import Breadcumb from "../../../Components/Layouts/Breadcumb.vue";
-import UserData from "../../../Services/UserData";
 import { getTeam } from "../../../Services/Admin/TeamService";
 import InvitableLeadModal from "../../../Components/Layouts/Modal/InvitableLeadModal.vue";
 export default {
-  components: { AdminLayout, Loading, StatusBadge, Breadcumb, InvitableLeadModal },
-  setup(props) {
-    const store = useStore();
-    const route = useRoute();
-    const team = computed(() => store.getters.team);
-    const loadingTeam = computed(() => store.getters.loadingTeam);
-
-    onMounted(async () => {
-      await getTeam(route.params.team);
-    });
+  components: {
+    AdminLayout,
+    Loading,
+    StatusBadge,
+    Breadcumb,
+    InvitableLeadModal,
+  },
+  data() {
     return {
-      team,
-      loadingTeam,
-      dayjs,
-      UserData,
+      route: useRoute(),
     };
+  },
+  computed: {
+    ...mapGetters(["team", "loadingTeam"]),
+  },
+  mounted() {
+    getTeam(this.route.params.team);
   },
 };
 </script>

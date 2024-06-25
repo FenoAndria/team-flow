@@ -12,13 +12,7 @@
 <script>
 import Modal from "../Modal.vue";
 import { mapGetters } from "vuex";
-import { getTeamMember } from "../../../Services/Lead/LeadTeamService";
-import {
-  assignUserSubtask,
-  showTeamTask,
-} from "../../../Services/Lead/LeadTaskService";
 import ValidationError from "../../ValidationError.vue";
-import store from "../../../Stores/Index";
 import { leaveTeam } from "../../../Services/Member/MemberTeamService";
 import router from "../../../Router/Index";
 export default {

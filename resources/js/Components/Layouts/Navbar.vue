@@ -28,10 +28,8 @@
 <script>
 import { useRoute } from "vue-router";
 import UserData from "../../Services/UserData";
-import Badge from "../Badge.vue";
 export default {
   props: ["links"],
-  components: { Badge },
   setup(props) {
     const route = useRoute();
     const logout = () => {
@@ -40,7 +38,7 @@ export default {
     };
     const isLinkActive = (routeLink) => {
       if (routeLink) {
-        return routeLink.activeClass.find((item) => item == route.name); // Vérifie si l'URL actuelle correspond à la route du lien
+        return routeLink.activeClass.find((item) => item == route.name); // Verify current URL match to route.name
       }
     };
     return { UserData, route, logout, isLinkActive };

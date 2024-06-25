@@ -1,8 +1,12 @@
 <?php
 
+use App\Http\Controllers\Admin\LeadInvitationController;
 use App\Http\Controllers\TodoController;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\InvitationController;
+use App\Http\Controllers\Lead\TeamMemberController;
+use App\Http\Controllers\Lead\TeamMemberInvitationController;
+use App\Http\Controllers\Lead\TeamTaskController;
 use App\Http\Controllers\MemberController;
 use App\Http\Controllers\MemberSubtaskController;
 use App\Http\Controllers\ProfilController;
@@ -41,37 +45,40 @@ Route::middleware('auth:sanctum')->group(function () {
         Route::get('/team', [TeamController::class, 'index'])->name('team-index');
         Route::get('/team/{team}', [TeamController::class, 'show'])->name('team-show');
         Route::post('/team', [TeamController::class, 'store'])->name('team-store');
+
         Route::get('/task', [TaskController::class, 'index'])->name('task-index');
         Route::post('/task', [TaskController::class, 'store'])->name('task-store');
+
         Route::get('/users', [UserController::class, 'index'])->name('user-index');
 
-        Route::get('/lead-invitation', [InvitationController::class, 'indexLeadInvitation'])->name('index-lead-invitation');
-        Route::post('/lead-invitation', [TeamController::class, 'inviteLead'])->name('send-lead-invitation');
-        Route::get('/lead-invitable', [TeamController::class, 'showInvitableLead'])->name('show-lead-invitable');
+        Route::get('/lead-invitation', [LeadInvitationController::class, 'index'])->name('lead-invitation-index');
+        Route::post('/lead-invitation', [LeadInvitationController::class, 'store'])->name('lead-invitation-store');
+        Route::get('/lead-invitable', [LeadInvitationController::class, 'showInvitableLead'])->name('lead-invitable-show');
     });
 
     Route::middleware('isLead')->group(function () {
-        Route::get('/users-invitable', [TeamController::class, 'showUsersInvitable'])->name('show-users-invitable');
-        Route::get('/team-member', [TeamController::class, 'showMember'])->name('show-team-member');
-        Route::get('/team-task', [TeamController::class, 'allTask'])->name('all-team-task');
-        Route::get('/team-task/{task}', [TeamController::class, 'showTask'])->name('show-team-task');
-        Route::get('/team-invitation', [TeamController::class, 'showInvitation'])->name('show-team-invitation');
-        Route::post('/team-invitation', [TeamController::class, 'invite'])->name('send-team-invitation');
+        Route::get('/users-invitable', [TeamController::class, 'showUsersInvitable'])->name('users-invitable-show');
+        Route::get('/team-member', [TeamMemberController::class, 'show'])->name('team-member-show');
 
-        Route::post('/subtask/{task}', [SubtaskController::class, 'store'])->name('store-subtask');
-        Route::post('/assign-user-subtask/{subtask}', [SubtaskController::class, 'assignUser'])->name('assignUser-subtask');
+        Route::get('/team-task', [TeamTaskController::class, 'index'])->name('team-task-index');
+        Route::get('/team-task/{task}', [TeamTaskController::class, 'show'])->name('team-task-show');
+        Route::post('/subtask/{task}', [SubtaskController::class, 'store'])->name('subtask-store');
+        Route::post('/assign-user-subtask/{subtask}', [SubtaskController::class, 'assignUser'])->name('subtask-assign-user');
+
+        Route::get('/team-invitation', [TeamMemberInvitationController::class, 'show'])->name('team-member-invitation-show');
+        Route::post('/team-invitation', [TeamMemberInvitationController::class, 'invite'])->name('team-member-invitation-send');
     });
 
     Route::middleware('isMember')->group(function () {
-        Route::get('/invitation', [InvitationController::class, 'show'])->name('show-member-invitation');
-        Route::put('/lead-invitation/{lead_invitation}', [InvitationController::class, 'updateLeadInvitation'])->name('update-lead-invitation');
-        Route::put('/invitation/{team_invitation}', [InvitationController::class, 'update'])->name('update-member-invitation');
-        Route::post('/leave-team/{team}', [TeamController::class, 'leave'])->name('member-leave-team');
-        Route::get('/member-team', [MemberController::class, 'memberTeams'])->name('show-member-teams');
-        Route::get('/member-team/{team}', [MemberController::class, 'showTeam'])->name('show-team');
+        Route::get('/invitation', [InvitationController::class, 'show'])->name('member-invitation-show');
+        Route::put('/lead-invitation/{lead_invitation}', [LeadInvitationController::class, 'update'])->name('lead-invitation-update');
+        Route::put('/invitation/{team_invitation}', [InvitationController::class, 'update'])->name('team-member-invitation-update');
+        Route::post('/leave-team/{team}', [MemberController::class, 'leaveTeam'])->name('member-leave-team');
+        Route::get('/member-team', [MemberController::class, 'memberTeams'])->name('member-teams-index');
+        Route::get('/member-team/{team}', [MemberController::class, 'showTeam'])->name('member-team-show');
 
-        Route::get('/subtask', [MemberSubtaskController::class, 'index'])->name('show-member-subtask');
-        Route::put('/subtask/{subtask}', [MemberSubtaskController::class, 'update'])->name('update-member-subtask');
+        Route::get('/subtask', [MemberSubtaskController::class, 'index'])->name('member-subtask-show');
+        Route::put('/subtask/{subtask}', [MemberSubtaskController::class, 'update'])->name('member-subtask-update');
     });
 });
 

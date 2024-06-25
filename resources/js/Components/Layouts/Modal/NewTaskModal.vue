@@ -20,7 +20,7 @@
       <div class="" v-if="content">
         <label for="team">Team</label>
         <div v-for="item in content" class="">
-          <label class="flex items-center space-x-2 cursor-pointer">
+          <label class="flex items-center space-x-2 cursor-pointer" v-if="item.lead">
             <input
               type="radio"
               v-model="task.team_id"
