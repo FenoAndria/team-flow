@@ -53,7 +53,7 @@
                   </div>
                   <p class="italic text-xs" v-if="item.status == 'Completed'">
                     On :
-                    {{ dayjs(item.updated_at).format("DD-MM-YYYY") }}
+                    {{ $dayjs(item.updated_at).format("DD-MM-YYYY") }}
                   </p>
                 </div>
               </div>
@@ -74,7 +74,6 @@ import {
   getMemberSubtasks,
   updateMemberSubtask,
 } from "../../../Services/Member/MemberSubtaskService";
-import dayjs from "dayjs";
 import StatusBadge from "../../../Components/Layouts/StatusBadge.vue";
 export default {
   components: { UserLayout, StatusBadge, Loading },
@@ -95,7 +94,6 @@ export default {
     return {
       memberSubtasks,
       loadingMemberSubtasks,
-      dayjs,
       changeStatus,
     };
   },

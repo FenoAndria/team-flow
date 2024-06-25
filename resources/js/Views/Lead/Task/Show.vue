@@ -26,14 +26,14 @@
               Deadline :
               <span class="font-semibold">{{
                 teamTask.deadline
-                  ? dayjs(teamTask.deadline).format("DD-MM-YYYY")
+                  ? $dayjs(teamTask.deadline).format("DD-MM-YYYY")
                   : "None"
               }}</span>
             </p>
             <p class="text-sm">
               Created at :
               <span class="font-semibold">{{
-                dayjs(teamTask.created_at).format("DD-MM-YYYY") ?? "None"
+                $dayjs(teamTask.created_at).format("DD-MM-YYYY") ?? "None"
               }}</span>
             </p>
             <div class="flex justify-between items-center border-b">
@@ -58,12 +58,12 @@
             </div>
             <div class="text-sm">
               <div v-if="teamTask.subtasks">
-                <div class="flex flex-wrap -mx-1">
+                <div class="my-card-container mt-2">
                   <div
-                    class="w-1/3 px-1 mb-2"
+                    class="my-card list-content my-card-3"
                     v-for="subtask in teamTask.subtasks"
                   >
-                    <div class="list-content">
+                    <div class="">
                       <div class="flex justify-between items-center">
                         <p class="font-semibold text-lg text-primary">
                           {{ subtask.title }}
@@ -75,7 +75,7 @@
                           Deadline :
                           {{
                             subtask.deadline
-                              ? dayjs(subtask.deadline).format("DD-MM-YYYY")
+                              ? $dayjs(subtask.deadline).format("DD-MM-YYYY")
                               : "None"
                           }}
                         </p>
@@ -136,7 +136,6 @@ import { useStore } from "vuex";
 import { useRoute } from "vue-router";
 import Loading from "../../../Components/Layouts/Loading.vue";
 import StatusBadge from "../../../Components/Layouts/StatusBadge.vue";
-import dayjs from "dayjs";
 import NewSubtaskModal from "../../../Components/Layouts/Modal/NewSubtaskModal.vue";
 import Breadcumb from "../../../Components/Layouts/Breadcumb.vue";
 export default {
@@ -152,7 +151,6 @@ export default {
     const route = useRoute();
     const store = useStore();
     const state = reactive({
-      isModalOpen: false,
       assignUserModalContent: {},
       newSubtaskModalContent: {},
     });
@@ -173,7 +171,6 @@ export default {
       loadingTeamTask,
       setModalData,
       setNewSubtaskModalData,
-      dayjs,
     };
   },
 };

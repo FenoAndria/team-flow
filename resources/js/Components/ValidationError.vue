@@ -6,8 +6,8 @@
     >
       <div class="" v-if="errorsIndex == column">
         <div v-for="(e, errIndex) in err" :key="errIndex">
-          <div class="bg-danger rounded px-2 py-1 font-semibold text-white">
-            {{ e }}
+          <div class="py-1 text-danger">
+            <span class="bi bi-exclamation-circle"></span> {{ e }}
           </div>
         </div>
       </div>
@@ -15,17 +15,12 @@
   </div>
 </template>
 <script>
-import { computed } from "@vue/runtime-core";
-import { useStore } from "vuex";
+import { mapGetters } from "vuex";
 export default {
   name: "ValidationError",
   props: ["column"],
-  setup(props) {
-    const store = useStore();
-    const validationError = computed(() => store.getters.validationError);
-    return {
-      validationError,
-    };
+  computed: {
+    ...mapGetters(["validationError"]),
   },
 };
 </script>

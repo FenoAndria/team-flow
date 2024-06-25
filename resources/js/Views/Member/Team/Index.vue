@@ -5,9 +5,12 @@
         <Loading />
       </div>
       <div v-else>
-        <div class="flex flex-wrap -mx-1" v-if="memberTeams.length">
-          <div class="w-1/3 px-1" v-for="item in memberTeams">
-            <div class="list-content">
+        <div class="my-card-container" v-if="memberTeams.length">
+          <div
+            class="my-card list-content my-card-3"
+            v-for="item in memberTeams"
+          >
+            <div class="">
               <p class="uppercase font-semibold text-primary text-lg">
                 {{ item.team.name }}
               </p>
@@ -18,7 +21,7 @@
               <p class="text-sm space-x-1 font-semibold">
                 <span class="bi bi-calendar-event"></span>
                 <span class="">{{
-                  dayjs(item.created_at).format("DD-MM-YYYY")
+                  $dayjs(item.created_at).format("DD-MM-YYYY")
                 }}</span>
               </p>
               <router-link
@@ -35,27 +38,17 @@
   </UserLayout>
 </template>
 <script>
-import { computed, onMounted } from "@vue/runtime-core";
-import { useStore } from "vuex";
+import { mapGetters } from "vuex";
 import UserLayout from "../../../Components/Layouts/UserLayout.vue";
 import Loading from "../../../Components/Layouts/Loading.vue";
 import { getMemberTeams } from "../../../Services/Member/MemberTeamService";
-import dayjs from "dayjs";
 export default {
   components: { UserLayout, Loading },
-  setup(props) {
-    const store = useStore();
-    const memberTeams = computed(() => store.getters.memberTeams);
-    const loadingMemberTeams = computed(() => store.getters.loadingMemberTeams);
-
-    onMounted(async () => {
-      await getMemberTeams();
-    });
-    return {
-      memberTeams,
-      loadingMemberTeams,
-      dayjs,
-    };
+  computed: {
+    ...mapGetters(["memberTeams", "loadingMemberTeams"]),
+  },
+  mounted() {
+    getMemberTeams();
   },
 };
 </script>

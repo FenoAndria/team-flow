@@ -1,20 +1,16 @@
 <template>
   <div v-if="validationError && validationError.error">
-    <div class="bg-danger rounded px-2 py-1 font-semibold text-white">
-      {{ validationError.error }}
+    <div class="py-1 text-danger">
+      <span class="bi bi-exclamation-circle"></span> {{ validationError.error }}
     </div>
   </div>
 </template>
 <script>
-import { computed } from "@vue/runtime-core";
-import { useStore } from "vuex";
+import { mapGetters } from "vuex";
 export default {
-  setup(props) {
-    const store = useStore();
-    const validationError = computed(() => store.getters.validationError);
-    return {
-      validationError,
-    };
+  computed: {
+    ...mapGetters(['validationError'])
   },
+  
 };
 </script>

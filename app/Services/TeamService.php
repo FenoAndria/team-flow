@@ -23,7 +23,7 @@ class TeamService
         $this->invitationService = $invitationService;
     }
 
-    public function all()
+    public function getAllTeams()
     {
         return Team::all();
     }
@@ -36,46 +36,7 @@ class TeamService
         return $team;
     }
 
-    public function inviteLead(array $request)
-    {
-        $leadInvitation = LeadInvitation::create($request);
-        return $leadInvitation;
-    }
-
-    public function invite(array $request)
-    {
-        $teamInvitation = TeamInvitation::create([
-            'team_id' => $this->getTeam()->id,
-            'user_id' => $request['user_id'],
-        ]);
-        return $teamInvitation;
-    }
-
-    public function leave(Team $team)
-    {
-        $user = Auth::user();
-        $whereClause = [
-            'team_id' => $team->id,
-            'user_id' => $user->id,
-        ];
-        $teamInvitation = TeamInvitation::where($whereClause)->first();
-        $this->invitationService->delete($teamInvitation);
-        $delete = TeamMember::where($whereClause)->delete();
-        $this->subtaskService->unassignUser($team);
-        return $delete;
-    }
-
-    public function showInvitation()
-    {
-        return TeamInvitation::where('team_id', $this->getTeam()->id)->get();
-    }
-
-    public function showTask()
-    {
-        return $this->getTeam()->task;
-    }
-
-    public function showMember()
+    public function showTeamMember()
     {
         return $this->getTeam()->member;
     }
@@ -85,8 +46,4 @@ class TeamService
         return $this->getUsersInvitable();
     }
 
-    public function showInvitableLead()
-    {
-        return $this->getInvitableLead();
-    }
 }

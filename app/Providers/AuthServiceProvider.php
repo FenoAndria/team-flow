@@ -9,13 +9,11 @@ use App\Models\Subtask;
 use App\Models\Task;
 use App\Models\Team;
 use App\Models\TeamInvitation;
-use App\Models\Todo;
 use App\Policies\LeadInvitationPolicy;
 use App\Policies\MemberInvitationPolicy;
 use App\Policies\SubtaskPolicy;
 use App\Policies\TaskPolicy;
 use App\Policies\TeamMemberPolicy;
-use App\Policies\TodoPolicy;
 use Illuminate\Foundation\Support\Providers\AuthServiceProvider as ServiceProvider;
 
 class AuthServiceProvider extends ServiceProvider
@@ -27,7 +25,6 @@ class AuthServiceProvider extends ServiceProvider
      */
     protected $policies = [
         // 'App\Models\Model' => 'App\Policies\ModelPolicy',
-        Todo::class => TodoPolicy::class,
         Task::class => TaskPolicy::class,
         Subtask::class => SubtaskPolicy::class,
         TeamInvitation::class => MemberInvitationPolicy::class,

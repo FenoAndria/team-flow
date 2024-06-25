@@ -1,6 +1,9 @@
 <template>
   <UserLayout>
-    <Breadcumb :previousPage="[{ name: 'TeamIndex', tag: 'Team' }]" currentPage="Show"/>
+    <Breadcumb
+      :previousPage="[{ name: 'TeamIndex', tag: 'Team' }]"
+      currentPage="Show"
+    />
     <div>
       <div v-if="loadingMemberTeam">
         <Loading />
@@ -106,7 +109,7 @@
                 >
                   <img
                     src="./../../../../../public/assets/Avatar.png"
-                    class="h-8 rounded-full border border-neutral "
+                    class="h-8 rounded-full border border-neutral"
                   />
                   <p class="text-lg">{{ member.profil.name }}</p>
                 </div>
@@ -120,8 +123,7 @@
   </UserLayout>
 </template>
 <script>
-import { computed, onMounted } from "@vue/runtime-core";
-import { useStore } from "vuex";
+import { mapGetters } from "vuex";
 import UserLayout from "../../../Components/Layouts/UserLayout.vue";
 import Loading from "../../../Components/Layouts/Loading.vue";
 import StatusBadge from "../../../Components/Layouts/StatusBadge.vue";
@@ -129,25 +131,20 @@ import Breadcumb from "../../../Components/Layouts/Breadcumb.vue";
 import LeaveTeamModal from "../../../Components/Layouts/Modal/LeaveTeamModal.vue";
 import UserData from "../../../Services/UserData";
 import { getMemberTeam } from "../../../Services/Member/MemberTeamService";
-import dayjs from "dayjs";
 import { useRoute } from "vue-router";
 export default {
   components: { UserLayout, Loading, StatusBadge, LeaveTeamModal, Breadcumb },
-  setup(props) {
-    const store = useStore();
-    const route = useRoute();
-    const memberTeam = computed(() => store.getters.memberTeam);
-    const loadingMemberTeam = computed(() => store.getters.loadingMemberTeam);
-
-    onMounted(async () => {
-      await getMemberTeam(route.params.team);
-    });
+  data() {
     return {
-      memberTeam,
-      loadingMemberTeam,
-      dayjs,
+      route: useRoute(),
       UserData,
     };
+  },
+  computed: {
+    ...mapGetters(["memberTeam", "loadingMemberTeam"]),
+  },
+  mounted() {
+    getMemberTeam(this.route.params.team);
   },
 };
 </script>

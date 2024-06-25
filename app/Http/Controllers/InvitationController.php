@@ -19,12 +19,6 @@ class InvitationController extends Controller
         $this->invitationService = $invitationService;
     }
 
-    public function indexLeadInvitation()
-    {
-        $leadInvitation = $this->invitationService->indexLeadInvitation();
-        return response()->json(LeadInvitationResource::collection($leadInvitation));
-    }
-    
     public function show()
     {
         $invitation = $this->invitationService->show();
@@ -41,19 +35,6 @@ class InvitationController extends Controller
         try {
             $memberInvitation = $this->invitationService->update($teamInvitation, $request->validated());
             return response()->json($memberInvitation);
-        } catch (\Throwable $e) {
-            return response()->json([
-                'error' => $e->getMessage(),
-            ], 500);
-        }
-    }
-
-    public function updateLeadInvitation(UpdateLeadInvitationRequest $request, LeadInvitation $leadInvitation)
-    {
-        $this->authorize('update', $leadInvitation);
-        try {
-            $leadInvitation = $this->invitationService->updateLeadInvitation($leadInvitation, $request->validated());
-            return response()->json($leadInvitation);
         } catch (\Throwable $e) {
             return response()->json([
                 'error' => $e->getMessage(),

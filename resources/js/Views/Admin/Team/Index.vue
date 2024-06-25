@@ -29,14 +29,12 @@
             </p>
             <p class="text-sm space-x-1 font-semibold">
               <span class="bi bi-person-workspace"></span>
-              <span class="">{{
-                item.lead ? item.lead.name : "None"
-              }}</span>
+              <span class="">{{ item.lead ? item.lead.name : "None" }}</span>
             </p>
             <p class="text-sm space-x-1 font-semibold">
               <span class="bi bi-calendar-event"></span>
               <span class="">{{
-                dayjs(item.created_at).format("DD-MM-YYYY")
+                this.$dayjs(item.created_at).format("DD-MM-YYYY")
               }}</span>
             </p>
             <router-link
@@ -52,9 +50,7 @@
   </AdminLayout>
 </template>
 <script>
-import { computed, onMounted } from "@vue/runtime-core";
-import { useStore } from "vuex";
-import dayjs from "dayjs";
+import { mapGetters } from "vuex";
 import AdminLayout from "../../../Components/Layouts/AdminLayout.vue";
 import { getTeams } from "../../../Services/Admin/TeamService";
 import Loading from "../../../Components/Layouts/Loading.vue";
@@ -62,19 +58,14 @@ import StatusBadge from "../../../Components/Layouts/StatusBadge.vue";
 import NewTeamModal from "../../../Components/Layouts/Modal/NewTeamModal.vue";
 export default {
   components: { AdminLayout, Loading, StatusBadge, NewTeamModal },
-  setup(props) {
-    const store = useStore();
-    const teams = computed(() => store.getters.teams);
-    const loadingTeams = computed(() => store.getters.loadingTeams);
-
-    onMounted(async () => {
-      await getTeams();
-    });
-    return {
-      teams,
-      loadingTeams,
-      dayjs,
-    };
+  data() {
+    return {};
+  },
+  computed: {
+    ...mapGetters(["teams", "loadingTeams"]),
+  },
+  mounted() {
+    getTeams()
   },
 };
 </script>

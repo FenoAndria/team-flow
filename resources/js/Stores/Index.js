@@ -1,6 +1,5 @@
 import Vuex from 'vuex'
 import { VuexPersistence } from 'vuex-persist'
-import Todo from './Todo';
 import ValidationError from './ValidationError';
 import ModalEvent from './ModalEvent';
 import Auth from './Auth';
@@ -24,7 +23,6 @@ const vuexLocal = new VuexPersistence({
 })
 const store = new Vuex.Store({
     modules: {
-        Todo,
         ValidationError,
         ModalEvent,
         Auth,

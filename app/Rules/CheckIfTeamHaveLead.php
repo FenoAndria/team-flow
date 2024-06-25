@@ -17,7 +17,7 @@ class CheckIfTeamHaveLead implements ValidationRule
      */
     public function validate(string $attribute, mixed $value, Closure $fail): void
     {
-        if (Team::find($value)->lead_id) {
+        if (Team::find($value)?->lead_id) {
             $fail('Team selected have already a lead!');
         }
     }

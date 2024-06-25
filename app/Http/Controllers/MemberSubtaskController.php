@@ -18,7 +18,7 @@ class MemberSubtaskController extends Controller
 
     public function index()
     {
-        $memberSubtasks = $this->memberSubtaskService->all();
+        $memberSubtasks = $this->memberSubtaskService->index();
         return response()->json(GetMemberSubtaskResource::collection($memberSubtasks));
     }
 

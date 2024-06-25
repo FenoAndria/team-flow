@@ -2,7 +2,7 @@
   <LeadLayout>
     <div>
       <div v-if="loadingTeamMember">
-        <Loading/>
+        <Loading />
       </div>
       <div v-else>
         <div v-if="teamMember.length">
@@ -15,16 +15,16 @@
                       {{ item.profil.name }}
                     </p>
                     <p class="text-neutral text-sm">{{ item.email }}</p>
-                    <p class="text-neutral text-sm">
+                    <!-- <p class="text-neutral text-sm">
                       {{ dayjs().diff(item.profil.birth_date, "year") }} years
-                    </p>
+                    </p> -->
                     <p class="text-neutral text-sm">
                       {{ item.profil.bio }}
                     </p>
-                    <hr class="my-1">
-                    <p class="text-neutral text-sm">
+                    <hr class="my-1" />
+                    <!-- <p class="text-neutral text-sm">
                       Member since {{ dayjs(item.created_at).format('DD MMM YYYY') }}
-                    </p>
+                    </p> -->
                   </div>
                   <div>
                     <img
@@ -43,27 +43,17 @@
   </LeadLayout>
 </template>
 <script>
-import { computed, onMounted } from "@vue/runtime-core";
 import LeadLayout from "../../../Components/Layouts/LeadLayout.vue";
 import Loading from "../../../Components/Layouts/Loading.vue";
 import { getTeamMember } from "../../../Services/Lead/LeadTeamService";
-import { useStore } from "vuex";
-import dayjs from "dayjs";
+import { mapGetters } from "vuex";
 export default {
-  components: { LeadLayout,Loading },
-  setup(props) {
-    const store = useStore();
-    const teamMember = computed(() => store.getters.teamMember);
-    const loadingTeamMember = computed(() => store.getters.loadingTeamMember);
-
-    onMounted(async () => {
-      await getTeamMember();
-    });
-    return {
-      teamMember,
-      loadingTeamMember,
-      dayjs,
-    };
+  components: { LeadLayout, Loading },
+  computed: {
+    ...mapGetters(["teamMember", "loadingTeamMember"]),
+  },
+  mounted() {
+    getTeamMember();
   },
 };
 </script>

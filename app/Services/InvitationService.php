@@ -3,12 +3,10 @@
 namespace App\Services;
 
 use App\Models\LeadInvitation;
-use App\Models\Team;
 use App\Models\TeamInvitation;
 use App\Models\TeamMember;
 use App\Traits\TeamTrait;
 use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Facades\DB;
 
 class InvitationService
 {
@@ -18,12 +16,6 @@ class InvitationService
     {
         $user = Auth::user();
         return $user->invitation;
-    }
-
-    public function indexLeadInvitation()
-    {
-        return LeadInvitation::all();
-        // return Team::with('leadInvitations.user')->get();
     }
 
     public function showLeadInvitation()
@@ -44,22 +36,6 @@ class InvitationService
             }
         }
         return $teamInvitation;
-    }
-
-    public function updateLeadInvitation(LeadInvitation $leadInvitation, array $request)
-    {
-        $leadInvitation->status = $request['status'];
-        $leadInvitation->save();
-        if ($request['status'] === 'Accepted') {
-            $leadInvitation->team->lead_id = $leadInvitation->user_id;
-            $leadInvitation->team->save();
-            LeadInvitation::where('id', '!=', $leadInvitation->id)->where('status', '!=', 'Declined')->where(function ($query) use ($leadInvitation) {
-                $query->where('team_id', $leadInvitation->team_id)->orWhere('user_id', $leadInvitation->user_id);
-            })->update(['status' => 'Expired']);
-            TeamInvitation::where('user_id', $leadInvitation->user->id)->where('status', '!=', 'Declined')->update(['status' => 'Declined']);
-        }
-
-        return $leadInvitation;
     }
 
     public function delete(TeamInvitation $teamInvitation)

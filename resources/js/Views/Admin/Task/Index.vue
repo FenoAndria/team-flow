@@ -21,7 +21,7 @@
       >
         New task
       </label>
-      <NewTaskModal modalId="newTaskModal" :content="teams"/>
+      <NewTaskModal modalId="newTaskModal" :content="teams" />
       <div v-if="tasks.length" class="mt-2">
         <div class="my-card-container">
           <div class="my-card list-content my-card-3" v-for="item in tasks">
@@ -44,7 +44,7 @@
                 <p class="text-neutral">
                   Created at :
                   <span class="font-semibold">{{
-                    dayjs(item.created_at).format("DD-MM-YYYY")
+                    $dayjs(item.created_at).format("DD-MM-YYYY")
                   }}</span>
                 </p>
                 <!-- <router-link
@@ -62,35 +62,21 @@
   </AdminLayout>
 </template>
 <script>
-import { computed, onMounted } from "@vue/runtime-core";
-import { useStore } from "vuex";
-import dayjs from "dayjs";
+import { mapGetters } from "vuex";
 import AdminLayout from "../../../Components/Layouts/AdminLayout.vue";
 import { getTasks } from "../../../Services/Admin/TaskService";
 import Loading from "../../../Components/Layouts/Loading.vue";
 import StatusBadge from "../../../Components/Layouts/StatusBadge.vue";
 import NewTaskModal from "../../../Components/Layouts/Modal/NewTaskModal.vue";
-import { getTeams } from '../../../Services/Admin/TeamService';
+import { getTeams } from "../../../Services/Admin/TeamService";
 export default {
   components: { AdminLayout, Loading, StatusBadge, NewTaskModal },
-  setup(props) {
-    const store = useStore();
-    const tasks = computed(() => store.getters.tasks);
-    const loadingTasks = computed(() => store.getters.loadingTasks);
-    const teams = computed(() => store.getters.teams);
-    const loadingTeams = computed(() => store.getters.loadingTeams);
-
-    onMounted(async () => {
-      await getTasks();
-      await getTeams();
-    });
-    return {
-      tasks,
-      loadingTasks,
-      teams,
-      loadingTeams,
-      dayjs,
-    };
+  computed: {
+    ...mapGetters(["tasks", "loadingTasks", "teams", "loadingTeams"]),
+  },
+  mounted() {
+    getTasks();
+    getTeams();
   },
 };
 </script>
