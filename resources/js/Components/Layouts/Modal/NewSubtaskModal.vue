@@ -59,7 +59,9 @@ export default {
         document.querySelector("#" + this.modalId).checked = false; // hide modal
         await showTeamTask(this.content.id); // reload task list
         store.commit("setWithSuccess", ""); // reinitialize withSuccess state
-        this.subtask = ""; // reinitialize subtask :)
+        this.subtask.title = ""; 
+        this.subtask.description = ""; 
+        this.subtask.deadline = null; 
         store.commit("setValidationError", ""); // reinitialize validationError state
       }
     },
