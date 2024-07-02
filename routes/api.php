@@ -9,6 +9,8 @@ use App\Http\Controllers\Lead\TeamMemberInvitationController;
 use App\Http\Controllers\Lead\TeamTaskController;
 use App\Http\Controllers\MemberController;
 use App\Http\Controllers\MemberSubtaskController;
+use App\Http\Controllers\MessageController;
+use App\Http\Controllers\PollingController;
 use App\Http\Controllers\ProfilController;
 use App\Http\Controllers\SubtaskController;
 use App\Http\Controllers\TaskController;
@@ -67,6 +69,8 @@ Route::middleware('auth:sanctum')->group(function () {
 
         Route::get('/team-invitation', [TeamMemberInvitationController::class, 'show'])->name('team-member-invitation-show');
         Route::post('/team-invitation', [TeamMemberInvitationController::class, 'invite'])->name('team-member-invitation-send');
+
+        Route::get('lead-messages', [MessageController::class, 'showLeadMessages'])->name('lead-messages-show');
     });
 
     Route::middleware('isMember')->group(function () {
@@ -80,6 +84,10 @@ Route::middleware('auth:sanctum')->group(function () {
         Route::get('/subtask', [MemberSubtaskController::class, 'index'])->name('member-subtask-show');
         Route::put('/subtask/{subtask}', [MemberSubtaskController::class, 'update'])->name('member-subtask-update');
     });
+
+    //Messenger
+    Route::post('message/{team}', [MessageController::class, 'store'])->name('message-store');
+    Route::get('/long-polling', [PollingController::class, 'poll']);
 });
 
 // Authentication

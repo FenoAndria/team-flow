@@ -11,6 +11,7 @@ use App\Models\Team;
 use App\Models\TeamInvitation;
 use App\Policies\LeadInvitationPolicy;
 use App\Policies\MemberInvitationPolicy;
+use App\Policies\MessagePolicy;
 use App\Policies\SubtaskPolicy;
 use App\Policies\TaskPolicy;
 use App\Policies\TeamMemberPolicy;
@@ -30,6 +31,7 @@ class AuthServiceProvider extends ServiceProvider
         TeamInvitation::class => MemberInvitationPolicy::class,
         Team::class => TeamMemberPolicy::class,
         LeadInvitation::class => LeadInvitationPolicy::class,
+        Team::class => MessagePolicy::class,
     ];
 
     /**
