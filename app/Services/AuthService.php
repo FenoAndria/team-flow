@@ -18,6 +18,7 @@ class AuthService
             /** @var \App\Models\User $user  */
             $user = Auth::user();
             $authData['token'] = $user->createToken('LaravelSanctumAuth')->plainTextToken;
+            $authData['id'] = $user->id;
             $authData['email'] = $user->email;
             $authData['name'] = $user->profil->name;
             $authData['role'] = $user->role->name == 'Admin' ? $user->role->name : ($this->isLead($user->id) ? 'Lead' : 'User');

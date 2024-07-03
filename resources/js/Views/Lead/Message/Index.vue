@@ -2,23 +2,25 @@
   <LeadLayout>
     <div class="flex space-x-2">
       <div class="w-2/3">
-        <div class="p-4 bg-white rounded shadow border">
+        <div class="p-4 bg-white rounded shadow border" >
           <div class="message-container" ref="messageContainer">
             <div class="" v-for="message in leadMessages">
               <div class="flex">
                 <div
-                  :class="{ 'w-1/2': message.sender.name == UserData.name }"
+                  :class="{ 'w-1/2': message.sender.id == UserData.id }"
                 ></div>
                 <div
                   class="message-body"
                   :class="{
-                    'message-owner-you': message.sender.name == UserData.name,
+                    'message-owner-you': message.sender.id == UserData.id,
                   }"
                 >
                   <p class="message-sender">{{ message.sender.name }}</p>
                   <p class="message-content">{{ message.content }}</p>
                   <p class="message-sended-at">
-                    {{ $dayjs(message.created_at).format("DD-MM-YYYY H:m") }}
+                    {{
+                      $dayjs(message.created_at).format("DD-MM-YYYY HH:mm:ss")
+                    }}
                   </p>
                 </div>
               </div>
@@ -56,38 +58,6 @@ export default {
     return {
       message:
         "Qui velit est consequat dolor magna deserunt eiusmod elit enim elit deserunt elit anim eu.",
-      messagesTab: [],
-      getLeadMessages: [
-        {
-          content: "Qui pariatur id nisi elit aliquip.",
-          sender: "Others",
-          created_at: "2024-06-28T07:23:09.000000Z",
-        },
-        {
-          content:
-            "Laboris aliqua nostrud voluptate nulla incididunt cillum dolor dolor dolore reprehenderit anim cupidatat.",
-          sender: "You",
-          created_at: "2024-06-28T07:23:09.000000Z",
-        },
-        {
-          content:
-            "Qui pariatur id nisi elit aliquip.Do excepteur commodo elit proident enim ea. Eiusmod labore anim fugiat tempor amet cupidatat est cupidatat qui laborum non. Sit sunt nisi adipisicing tempor aute do consequat ea deserunt. ",
-          sender: "Others",
-          created_at: "2024-06-28T07:23:09.000000Z",
-        },
-        {
-          content:
-            "Ut sint consequat ex excepteur occaecat mollit in ullamco. Ut magna labore labore excepteur non aliqua qui minim id excepteur id esse eu consequat. Nulla cupidatat culpa nostrud veniam Lorem aute amet proident.",
-          sender: "Others",
-          created_at: "2024-06-28T07:23:09.000000Z",
-        },
-        {
-          content:
-            "Excepteur sunt voluptate pariatur nostrud amet quis in amet occaecat et ex cupidatat.Excepteur veniam cupidatat adipisicing cupidatat labore.",
-          sender: "You",
-          created_at: "2024-06-28T07:23:09.000000Z",
-        },
-      ],
       timeoutId: "",
       UserData,
     };
@@ -110,7 +80,6 @@ export default {
       store
         .dispatch("startPolling")
         .then((result) => {
-          this.messagesTab = result.data;
           if (result.data.updated) {
             getLeadMessages();
           }
