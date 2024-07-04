@@ -22,5 +22,11 @@ class TeamMemberPolicy
         return $this->isMember($team->id, $user->id) ? Response::allow() : throw new CustomForbiddenException();
     }
 
+    public function storeMessage(User $user, Team $team)
+    {
+        // Only Lead and members can send message 
+        return $this->isMember($team->id, $user->id) || ($this->isLead($user->id) && $team->lead_id == $user->id) ? Response::allow() : throw new CustomForbiddenException();
+    }
+
 }
  

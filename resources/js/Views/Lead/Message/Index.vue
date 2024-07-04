@@ -1,7 +1,7 @@
 <template>
   <LeadLayout>
-    <div class="flex space-x-2">
-      <div class="w-2/3">
+    <div class="flex space-x-2 justify-center">
+      <div class="w-3/4">
         <div class="p-4 bg-white rounded shadow border" >
           <div class="message-container" ref="messageContainer">
             <div class="" v-for="message in leadMessages">
@@ -25,7 +25,7 @@
                 </div>
               </div>
             </div>
-          </div>
+          </div> 
           <div>
             <form @submit="sendMessage" class="message-send-input">
               <input type="text" v-model="message" />
@@ -34,15 +34,7 @@
           </div>
         </div>
       </div>
-      <div class="w-1/3">
-        <div class="list-content">
-          <p>Team member</p>
-          <div v-if="loadingLeadMessages">Loading...</div>
-          <div v-else>
-            {{ leadMessages.length }}
-          </div>
-        </div>
-      </div>
+     
     </div>
   </LeadLayout>
 </template>
@@ -94,7 +86,7 @@ export default {
     },
     sendMessage(e) {
       e.preventDefault();
-      store.dispatch("sendMessage", { team_id: 1, content: this.message });
+      store.dispatch("sendLeadMessage", { content: this.message });
     },
     scrollToEnd() {
       const container = this.$refs.messageContainer;

@@ -22,9 +22,9 @@ const actions = {
     startPolling: async ({ commit }) => {
         return await API().get('long-polling')
     },
-    sendMessage: async ({ commit }, message) => {
-        const { team_id, content } = message
-        return await API().post('message/' + team_id, { content })
+    sendLeadMessage: async ({ commit }, message) => {
+        const { content } = message
+        return await API().post('lead-message', { content })
     },
 }
 

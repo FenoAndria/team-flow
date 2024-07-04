@@ -71,6 +71,7 @@ Route::middleware('auth:sanctum')->group(function () {
         Route::post('/team-invitation', [TeamMemberInvitationController::class, 'invite'])->name('team-member-invitation-send');
 
         Route::get('lead-messages', [MessageController::class, 'showLeadMessages'])->name('lead-messages-show');
+        Route::post('lead-message', [MessageController::class, 'storeLeadMessage'])->name('lead-message-store');
     });
 
     Route::middleware('isMember')->group(function () {
@@ -83,10 +84,13 @@ Route::middleware('auth:sanctum')->group(function () {
 
         Route::get('/subtask', [MemberSubtaskController::class, 'index'])->name('member-subtask-show');
         Route::put('/subtask/{subtask}', [MemberSubtaskController::class, 'update'])->name('member-subtask-update');
+
+
+        Route::get('team-messages/{team}', [MessageController::class, 'showTeamMessages'])->name('team-messages-show');
+        Route::post('team-message/{team}', [MessageController::class, 'storeTeamMessage'])->name('team-message-store');
     });
 
     //Messenger
-    Route::post('message/{team}', [MessageController::class, 'store'])->name('message-store');
     Route::get('/long-polling', [PollingController::class, 'poll']);
 });
 

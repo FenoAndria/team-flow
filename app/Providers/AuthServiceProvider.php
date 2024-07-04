@@ -31,7 +31,6 @@ class AuthServiceProvider extends ServiceProvider
         TeamInvitation::class => MemberInvitationPolicy::class,
         Team::class => TeamMemberPolicy::class,
         LeadInvitation::class => LeadInvitationPolicy::class,
-        Team::class => MessagePolicy::class,
     ];
 
     /**

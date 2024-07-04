@@ -32,6 +32,11 @@ export default {
         tag: "Invitations",
         activeClass: ["MemberInvitationIndex"],
       },
+      {
+        name: "MemberMessageIndex",
+        tag: "Messages",
+        activeClass: ["MemberMessageIndex"],
+      },
     ];
     return { links };
   },

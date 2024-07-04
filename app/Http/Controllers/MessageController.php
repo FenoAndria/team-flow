@@ -17,14 +17,28 @@ class MessageController extends Controller
         $this->messageService = $messageService;
     }
 
-    public function store(MessageRequest $request, Team $team)
+    public function storeLeadMessage(MessageRequest $request)
+    {
+        // $this->authorize('storeMessage', $team);
+        try {
+            $message = $this->messageService->storeLeadMessage($request->validated());
+            Cache::put('updated', true);
+            return response()->json(new MessageResource($message));
+        } catch (\Throwable $e) {
+            return response()->json([
+                'error' => $e->getMessage(),
+            ], 500);
+        }
+    }
+
+    public function storeTeamMessage(MessageRequest $request,Team $team)
     {
         $this->authorize('storeMessage', $team);
         try {
-            $message = $this->messageService->store($request->validated(), $team);
+            $message = $this->messageService->storeTeamMessage($request->validated(),$team);
             Cache::put('updated', true);
             return response()->json(new MessageResource($message));
-        } catch (\Throwable $e) { 
+        } catch (\Throwable $e) {
             return response()->json([
                 'error' => $e->getMessage(),
             ], 500);
@@ -34,6 +48,13 @@ class MessageController extends Controller
     public function showLeadMessages()
     {
         $message = $this->messageService->showLeadMessages();
+        return response()->json(MessageResource::collection($message));
+    }
+
+    public function showTeamMessages(Team $team)
+    {
+        $this->authorize('showTeam', $team);
+        $message = $this->messageService->showTeamMessages($team);
         return response()->json(MessageResource::collection($message));
     }
 }
