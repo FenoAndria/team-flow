@@ -2,39 +2,12 @@
   <LeadLayout>
     <div class="flex space-x-2 justify-center">
       <div class="w-3/4">
-        <div class="p-4 bg-white rounded shadow border" >
-          <div class="message-container" ref="messageContainer">
-            <div class="" v-for="message in leadMessages">
-              <div class="flex">
-                <div
-                  :class="{ 'w-1/2': message.sender.id == UserData.id }"
-                ></div>
-                <div
-                  class="message-body"
-                  :class="{
-                    'message-owner-you': message.sender.id == UserData.id,
-                  }"
-                >
-                  <p class="message-sender">{{ message.sender.name }}</p>
-                  <p class="message-content">{{ message.content }}</p>
-                  <p class="message-sended-at">
-                    {{
-                      $dayjs(message.created_at).format("DD-MM-YYYY HH:mm:ss")
-                    }}
-                  </p>
-                </div>
-              </div>
-            </div>
-          </div> 
-          <div>
-            <form @submit="sendMessage" class="message-send-input">
-              <input type="text" v-model="message" />
-              <button><span class="bi bi-send"></span></button>
-            </form>
-          </div>
-        </div>
+        <Message
+          :discussion="leadMessages"
+          @sendMessage="sendMessage"
+          v-if="leadMessages.length"
+        />
       </div>
-     
     </div>
   </LeadLayout>
 </template>
@@ -43,24 +16,20 @@ import { mapGetters } from "vuex";
 import LeadLayout from "../../../Components/Layouts/LeadLayout.vue";
 import { getLeadMessages } from "../../../Services/Lead/LeadMessageService";
 import store from "../../../Stores/Index";
-import UserData from "../../../Services/UserData";
+import Message from "../../../Components/Layouts/Message/Message.vue";
 export default {
-  components: { LeadLayout },
+  components: { LeadLayout, Message },
   data() {
     return {
-      message:
-        "Qui velit est consequat dolor magna deserunt eiusmod elit enim elit deserunt elit anim eu.",
       timeoutId: "",
-      UserData,
     };
   },
   computed: {
     ...mapGetters(["loadingLeadMessages", "leadMessages"]),
   },
-  mounted() {
-    getLeadMessages();
+  async mounted() {
+    await getLeadMessages();
     this.startPolling();
-    this.scrollToEnd();
   },
   beforeUnmount() {
     if (this.timeoutId) {
@@ -84,20 +53,8 @@ export default {
       this.poll();
       this.timeoutId = setInterval(this.poll, 2000);
     },
-    sendMessage(e) {
-      e.preventDefault();
-      store.dispatch("sendLeadMessage", { content: this.message });
-    },
-    scrollToEnd() {
-      const container = this.$refs.messageContainer;
-      container.scrollTop = container.scrollHeight;
-    },
-  },
-  watch: {
-    leadMessages() {
-      this.$nextTick(() => {
-        this.scrollToEnd();
-      });
+    sendMessage(content) {
+      store.dispatch("sendLeadMessage", { content });
     },
   },
 };

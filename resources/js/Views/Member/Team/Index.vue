@@ -12,11 +12,11 @@
           >
             <div class="">
               <p class="uppercase font-semibold text-primary text-lg">
-                {{ item.team.name }}
+                {{ item.name }}
               </p>
               <p class="text-sm space-x-1 font-semibold">
                 <span class="bi bi-person-workspace"></span>
-                <span class="">{{ item.team.lead.name }}</span>
+                <span class="">{{ item.lead.name }}</span>
               </p>
               <p class="text-sm space-x-1 font-semibold">
                 <span class="bi bi-calendar-event"></span>
@@ -25,7 +25,7 @@
                 }}</span>
               </p>
               <router-link
-                :to="{ name: 'TeamShow', params: { team: item.team.id } }"
+                :to="{ name: 'TeamShow', params: { team: item.id } }"
                 class="text-info hover:underline"
                 >More...</router-link
               >
