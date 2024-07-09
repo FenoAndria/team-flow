@@ -2,6 +2,7 @@ import LeadTaskIndex from './../Views/Lead/Task/Index.vue'
 import LeadTaskShow from './../Views/Lead/Task/Show.vue'
 import LeadTeamMember from './../Views/Lead/TeamMember/Index.vue'
 import LeadInvitationIndex from './../Views/Lead/Invitation/Index.vue'
+import LeadMessageIndex from './../Views/Lead/Message/Index.vue'
 const routes = [
     {
         path: 'task/',
@@ -38,6 +39,17 @@ const routes = [
                 path: '',
                 name: "LeadInvitationIndex",
                 component: LeadInvitationIndex,
+            },
+        ]
+    },
+    {
+        path: 'message/',
+        name: "LeadMessage",
+        children: [
+            {
+                path: '',
+                name: "LeadMessageIndex",
+                component: LeadMessageIndex,
             },
         ]
     },

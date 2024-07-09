@@ -16,7 +16,7 @@ trait TeamTrait
         return TeamMember::where([
             'team_id' => $teamId,
             'user_id' => $userId,
-        ])->first();
+        ])->exists();
     }
 
     public function isInvited($teamId, $userId)

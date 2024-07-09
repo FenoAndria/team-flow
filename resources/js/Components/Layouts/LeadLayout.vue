@@ -32,6 +32,11 @@ export default {
         tag: "Invitation",
         activeClass: ["LeadInvitationIndex"],
       },
+      {
+        name: "LeadMessageIndex",
+        tag: "Message",
+        activeClass: ["LeadMessageIndex"],
+      },
     ];
     return { links };
   },

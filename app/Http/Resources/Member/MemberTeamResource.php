@@ -16,7 +16,12 @@ class MemberTeamResource extends JsonResource
     public function toArray(Request $request): array
     {
         return [
-            'team' => new TeamResource($this->team),
+            'id' => $this->team->id,
+            'name' => $this->team->name,
+            'lead' => $this->team->lead && $this->team->lead->profil ? [
+                'name' => $this->team->lead->profil->name,
+                'email' => $this->team->lead->email,
+            ] : null,
             'created_at' => $this->created_at,
             'updated_at' => $this->updated_at,
         ];

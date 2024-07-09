@@ -2,6 +2,8 @@ import MemberInvitation from '../Views/Member/Invitation/Index.vue'
 import TaskIndex from '../Views/Member/Task/Index.vue'
 import TeamIndex from '../Views/Member/Team/Index.vue'
 import TeamShow from '../Views/Member/Team/Show.vue'
+import MemberMessageIndex from '../Views/Member/Message/Index.vue'
+
 export default [
     {
         path: 'invitation/',
@@ -35,6 +37,24 @@ export default [
 
                 }
             },
+        ],
+    },
+    {
+        path: 'message/',
+        name: "Message",
+        meta: {
+            requiresAuth: true
+        },
+        children: [
+            {
+                path: '',
+                name: "MemberMessageIndex",
+                component: MemberMessageIndex,
+                meta: {
+
+                }
+            },
+            
         ],
     },
     {
