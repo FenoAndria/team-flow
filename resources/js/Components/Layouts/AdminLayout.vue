@@ -28,6 +28,11 @@ export default {
         activeClass: ["AdminTeamIndex","AdminTeamShow"],
       }, 
       {
+        name: "MemberIndex",
+        tag: "Members",
+        activeClass: ["MemberIndex"],
+      }, 
+      {
         name: "AdminLeadInvitationIndex",
         tag: "Invitations",
         activeClass: ["AdminLeadInvitationIndex"],

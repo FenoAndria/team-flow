@@ -1,6 +1,7 @@
 import AdminTaskIndex from '../Views/Admin/Task/Index.vue'
 import AdminTeamIndex from '../Views/Admin/Team/Index.vue'
 import AdminTeamShow from '../Views/Admin/Team/Show.vue'
+import MemberIndex from '../Views/Admin/Member/Index.vue'
 
 import AdminLeadInvitationIndex from '../Views/Admin/LeadInvitation/Index.vue'
 
@@ -16,9 +17,6 @@ export default [
                 path: '',
                 name: "AdminTaskIndex",
                 component: AdminTaskIndex,
-                meta: {
-
-                }
             },
         ],
     },
@@ -33,17 +31,11 @@ export default [
                 path: '',
                 name: "AdminTeamIndex",
                 component: AdminTeamIndex,
-                meta: {
-
-                }
             },
             {
                 path: ':team',
                 name: "AdminTeamShow",
                 component: AdminTeamShow,
-                meta: {
-
-                }
             },
         ],
     },
@@ -58,9 +50,20 @@ export default [
                 path: '',
                 name: "AdminLeadInvitationIndex",
                 component: AdminLeadInvitationIndex,
-                meta: {
-
-                }
+            },
+        ],
+    },
+    {
+        path: 'members/',
+        name: "AdminMember",
+        meta: {
+            requiresAuth: true
+        },
+        children: [
+            {
+                path: '',
+                name: "MemberIndex",
+                component: MemberIndex,
             },
         ],
     },

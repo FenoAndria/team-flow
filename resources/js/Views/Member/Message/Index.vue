@@ -1,33 +1,37 @@
 <template>
   <UserLayout>
-    <div class="flex space-x-2">
-      <div class="w-1/4">
-        <div class="p-4 bg-white rounded shadow border">
-          <h3 class="text-xl text-primary font-semibold border-b mb-1">
-            Discussions
-          </h3>
-          <div id="discussions-container">
-            <div v-for="team in memberTeams">
-              <div
-                class="discussion-team"
-                :class="{ 'discussion-active': team == memberTeams[0] }"
-                @click="changeDiscussion(team)"
-                :id="'discussion-team-' + team.id"
-              >
-                {{ team.name }}
+    <Loading v-if="loadingMemberTeams" />
+    <div v-else>
+      <div class="flex space-x-2" v-if="memberTeams.length">
+        <div class="w-1/4">
+          <div class="p-4 bg-white rounded shadow border">
+            <h3 class="text-xl text-primary font-semibold border-b mb-1">
+              Discussions
+            </h3>
+            <div id="discussions-container">
+              <div v-for="team in memberTeams">
+                <div
+                  class="discussion-team"
+                  :class="{ 'discussion-active': team == memberTeams[0] }"
+                  @click="changeDiscussion(team)"
+                  :id="'discussion-team-' + team.id"
+                >
+                  {{ team.name }}
+                </div>
               </div>
             </div>
           </div>
         </div>
+        <div class="w-3/4">
+          <Loading v-if="loading" />
+          <Message
+            :discussion="discussion"
+            :loading="loading"
+            @sendMessage="sendTeamMessage"
+          />
+        </div>
       </div>
-      <div class="w-3/4">
-        <Loading v-if="loading" />
-        <Message
-          :discussion="discussion"
-          :loading="loading"
-          @sendMessage="sendTeamMessage"
-        />
-      </div>
+      <div v-else>EMPTY</div>
     </div>
   </UserLayout>
 </template>

@@ -48,6 +48,8 @@ Route::middleware('auth:sanctum')->group(function () {
         Route::get('/team/{team}', [TeamController::class, 'show'])->name('team-show');
         Route::post('/team', [TeamController::class, 'store'])->name('team-store');
 
+        Route::get('/member', [MemberController::class, 'index'])->name('member-index');
+
         Route::get('/task', [TaskController::class, 'index'])->name('task-index');
         Route::post('/task', [TaskController::class, 'store'])->name('task-store');
 
