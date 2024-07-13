@@ -13,7 +13,7 @@ class UpdateMemberInvitationRequest extends LayoutRequest
     public function rules(): array
     {
         return [
-            'status' => 'in:Pending,Accepted,Declined',
+            'status' => ['required', 'in:Pending,Accepted,Declined'],
         ];
     }
 }

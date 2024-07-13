@@ -2,6 +2,8 @@
 
 namespace App\Services;
 
+use App\Enum\TeamNotificationType;
+use App\Events\TeamNotificationEvent;
 use App\Models\LeadInvitation;
 use App\Models\TeamInvitation;
 use App\Models\TeamMember;
@@ -49,6 +51,11 @@ class InvitationService
             'team_id' => $teamInvitation->team_id,
             'user_id' => $teamInvitation->user_id,
         ]);
-        return $teamMember;
+        TeamNotificationEvent::dispatch([
+            'team_id' => $teamInvitation->team_id,
+            'type' => TeamNotificationType::INVITATION_ACCEPTED,
+            'user_id' => $teamInvitation->user_id,
+        ]); 
+        // return $teamMember;
     }
 }

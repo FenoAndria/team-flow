@@ -37,6 +37,11 @@ export default {
         tag: "Message",
         activeClass: ["LeadMessageIndex"],
       },
+      {
+        name: "LeadNotificationIndex",
+        tag: "Notification",
+        activeClass: ["LeadNotificationIndex"],
+      },
     ];
     return { links };
   },

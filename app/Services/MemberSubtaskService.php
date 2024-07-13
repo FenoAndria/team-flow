@@ -2,6 +2,8 @@
 
 namespace App\Services;
 
+use App\Enum\TeamNotificationType;
+use App\Events\TeamNotificationEvent;
 use App\Models\Subtask;
 use Illuminate\Support\Facades\Auth;
 
@@ -23,6 +25,15 @@ class MemberSubtaskService
                 $subtask->task->status = 'In Progress';
                 $subtask->task->save();
             }
+            TeamNotificationEvent::dispatch([
+                'team_id' => $subtask->task->team->id,
+                'user_id' => $subtask->assignedTo->id,
+                'type' => TeamNotificationType::SUBTASK_UPDATED,
+                'data' => json_encode([
+                    'subtask' => $subtask->title,
+                    'status' => $subtask->status,
+                ]),
+            ]);
         }
         return $subtask;
     }

@@ -3,6 +3,7 @@ import LeadTaskShow from './../Views/Lead/Task/Show.vue'
 import LeadTeamMember from './../Views/Lead/TeamMember/Index.vue'
 import LeadInvitationIndex from './../Views/Lead/Invitation/Index.vue'
 import LeadMessageIndex from './../Views/Lead/Message/Index.vue'
+import LeadNotificationIndex from './../Views/Lead/Notification/Index.vue'
 const routes = [
     {
         path: 'task/',
@@ -50,6 +51,17 @@ const routes = [
                 path: '',
                 name: "LeadMessageIndex",
                 component: LeadMessageIndex,
+            },
+        ]
+    },
+    {
+        path: 'notification/',
+        name: "LeadNotification",
+        children: [
+            {
+                path: '',
+                name: "LeadNotificationIndex",
+                component: LeadNotificationIndex,
             },
         ]
     },
