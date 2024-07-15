@@ -2,7 +2,9 @@
 
 namespace App\Services;
 
+use App\Enum\MemberNotificationType;
 use App\Models\LeadInvitation;
+use App\Models\MemberNotification;
 use App\Models\Team;
 use App\Models\TeamInvitation;
 use App\Models\TeamMember;
@@ -21,6 +23,11 @@ class LeadInvitationService
     public function store(array $request)
     {
         $leadInvitation = LeadInvitation::create($request);
+        MemberNotification::create([
+            'user_id' => $request['user_id'],
+            'team_id' => $request['team_id'],
+            'type' => MemberNotificationType::TEAM_LEAD_INVITATION,
+        ]);
         return $leadInvitation;
     }
 
@@ -36,7 +43,7 @@ class LeadInvitationService
             })->update(['status' => 'Expired']); // Todo : other user's lead_invitations will be 'Declined'
             TeamInvitation::where('user_id', $leadInvitation->user->id)->where('status', '!=', 'Declined')->update(['status' => 'Declined']);
         }
-
+ 
         return $leadInvitation;
     }
 

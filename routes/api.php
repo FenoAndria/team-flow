@@ -1,13 +1,13 @@
 <?php
 
 use App\Http\Controllers\Admin\LeadInvitationController;
-use App\Http\Controllers\TodoController;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\InvitationController;
 use App\Http\Controllers\Lead\TeamMemberController;
 use App\Http\Controllers\Lead\TeamMemberInvitationController;
 use App\Http\Controllers\Lead\TeamNotificationController;
 use App\Http\Controllers\Lead\TeamTaskController;
+use App\Http\Controllers\Member\MemberNotificationController;
 use App\Http\Controllers\MemberController;
 use App\Http\Controllers\MemberSubtaskController;
 use App\Http\Controllers\MessageController;
@@ -76,7 +76,7 @@ Route::middleware('auth:sanctum')->group(function () {
         Route::get('lead-messages', [MessageController::class, 'showLeadMessages'])->name('lead-messages-show');
         Route::post('lead-message', [MessageController::class, 'storeLeadMessage'])->name('lead-message-store');
 
-        Route::get('team-notification',[TeamNotificationController::class,'show'])->name('team-notification-show');
+        Route::get('team-notification', [TeamNotificationController::class, 'show'])->name('team-notification-show');
     });
 
     Route::middleware('isMember')->group(function () {
@@ -93,6 +93,8 @@ Route::middleware('auth:sanctum')->group(function () {
 
         Route::get('team-messages/{team}', [MessageController::class, 'showTeamMessages'])->name('team-messages-show');
         Route::post('team-message/{team}', [MessageController::class, 'storeTeamMessage'])->name('team-message-store');
+
+        Route::get('member-notification', [MemberNotificationController::class, 'show'])->name('member-notification-show');
     });
 
     //Messenger

@@ -2,6 +2,8 @@
 
 namespace App\Services;
 
+use App\Enum\MemberNotificationType;
+use App\Events\MemberNotificationEvent;
 use App\Models\Subtask;
 use App\Models\Task;
 use App\Models\Team;
@@ -31,6 +33,15 @@ class SubtaskService
         }
         $subtask->assigned_to = $request['user_id'];
         $subtask->save();
+        MemberNotificationEvent::dispatch([
+            'user_id' => $subtask->assigned_to,
+            'team_id' => $subtask->task->team->id,
+            'type' => MemberNotificationType::NEW_SUBTASK_ASSIGNED,
+            'data' => json_encode([
+                'task' => $subtask->task->title,
+                'subtask' => $subtask->title,
+            ]),
+        ]);
         return $subtask;
     }
 

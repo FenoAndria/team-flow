@@ -29,7 +29,7 @@ class LeadInvitationController extends Controller
     {
         try {
             $leadInvitation = $this->leadInvitationService->store($request->validated());
-            return response()->json($leadInvitation);
+            return response()->json(new LeadInvitationResource($leadInvitation));
         } catch (\Throwable $e) {
             return response()->json([
                 'error' => $e->getMessage(),

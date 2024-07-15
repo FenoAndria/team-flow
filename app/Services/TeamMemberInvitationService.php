@@ -2,6 +2,8 @@
 
 namespace App\Services;
 
+use App\Enum\MemberNotificationType;
+use App\Models\MemberNotification;
 use App\Models\TeamInvitation;
 use App\Traits\TeamTrait;
 
@@ -20,7 +22,12 @@ class TeamMemberInvitationService
             'team_id' => $this->getTeam()->id,
             'user_id' => $request['user_id'],
         ]);
-        return $teamInvitation;
+        MemberNotification::create([
+            'user_id' => $request['user_id'],
+            'team_id' => $this->getTeam()->id,
+            'type' => MemberNotificationType::TEAM_MEMBER_INVITATION,
+        ]);
+        return $teamInvitation; 
     }
 
 

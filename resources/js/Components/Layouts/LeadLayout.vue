@@ -40,7 +40,7 @@ export default {
       {
         name: "LeadNotificationIndex",
         tag: "Notification",
-        activeClass: ["LeadNotificationIndex"],
+        activeClass: ["LeadNotificationIndex"], 
       },
     ];
     return { links };

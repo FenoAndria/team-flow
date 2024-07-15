@@ -37,6 +37,11 @@ export default {
         tag: "Messages",
         activeClass: ["MemberMessageIndex"],
       },
+      {
+        name: "MemberNotificationIndex",
+        tag: "Notification",
+        activeClass: ["MemberNotificationIndex"], 
+      },
     ];
     return { links };
   },

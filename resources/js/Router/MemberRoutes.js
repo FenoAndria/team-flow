@@ -3,6 +3,7 @@ import TaskIndex from '../Views/Member/Task/Index.vue'
 import TeamIndex from '../Views/Member/Team/Index.vue'
 import TeamShow from '../Views/Member/Team/Show.vue'
 import MemberMessageIndex from '../Views/Member/Message/Index.vue'
+import MemberNotificationIndex from '../Views/Member/Notification/Index.vue'
 
 export default [
     {
@@ -81,5 +82,16 @@ export default [
                 }
             },
         ],
+    },
+    {
+        path: 'notification/',
+        name: "MemberNotification",
+        children: [
+            {
+                path: '',
+                name: "MemberNotificationIndex",
+                component: MemberNotificationIndex,
+            },
+        ]
     },
 ]
