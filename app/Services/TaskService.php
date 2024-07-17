@@ -2,9 +2,12 @@
 
 namespace App\Services;
 
+use App\Enum\AdminNotificationType;
 use App\Enum\TeamNotificationType;
 use App\Events\TeamNotificationEvent;
+use App\Models\AdminNotification;
 use App\Models\Task;
+use App\Models\TeamNotification;
 use App\Traits\TeamTrait;
 
 class TaskService
@@ -30,5 +33,23 @@ class TaskService
             'data' => $task->title,
         ]);
         return $task;
+    }
+
+    public function complete(Task $task)
+    {
+        if (count($task->subtask->filter(fn ($value) => $value->status == 'Completed')) === count($task->subtask)) {
+            $task->status = 'Completed';
+            $task->save();
+            TeamNotification::create([
+                'team_id' => $task->team->id,
+                'data' => json_encode(['task' => $task->title]),
+                'type' => TeamNotificationType::TASK_COMPLETED,
+            ]);
+            AdminNotification::create([
+                'team_id' => $task->team->id,
+                'data' => json_encode(['task' => $task->title]),
+                'type' => AdminNotificationType::TASK_COMPLETED,
+            ]);
+        }
     }
 }

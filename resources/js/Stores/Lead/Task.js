@@ -40,6 +40,9 @@ const actions = {
     assignUser: async ({ commit }, data) => {
         return await API().post('assign-user-subtask/' + data.subtaskId, { user_id: data.user_id })
     },
+    completeTask: async ({ commit }, data) => {
+        return await API().post('team-task-complete/' + data)
+    },
 }
 
 export default {

@@ -62,6 +62,28 @@
             </div>
             <div class="text-sm">
               <div v-if="teamTask.subtasks">
+                <div
+                  class="
+                    bg-green-200
+                    font-semibold
+                    rounded
+                    p-2
+                    text-neutral-700
+                  "
+                  v-if="
+                    teamTask.status != 'Completed' &&
+                    teamTask.subtasks.length &&
+                    isCompleted(teamTask)
+                  "
+                >
+                  <p>
+                    <span class="bi bi-info-circle"></span> All subtasks in this
+                    task are completed. You can declare it as 'Completed'
+                  </p>
+                  <button class="bg-primary" @click="handleCompleteTask">
+                    Complete
+                  </button>
+                </div>
                 <div class="my-card-container mt-2">
                   <div
                     class="my-card list-content my-card-3"
@@ -135,7 +157,10 @@
 import { computed, onMounted, reactive, toRefs } from "@vue/runtime-core";
 import LeadLayout from "../../../Components/Layouts/LeadLayout.vue";
 import AssignUserModal from "../../../Components/Layouts/Modal/AssignUserModal.vue";
-import { showTeamTask } from "../../../Services/Lead/LeadTaskService";
+import {
+  showTeamTask,
+  completeTask,
+} from "../../../Services/Lead/LeadTaskService";
 import { useStore } from "vuex";
 import { useRoute } from "vue-router";
 import Loading from "../../../Components/Layouts/Loading.vue";
@@ -166,6 +191,12 @@ export default {
     const setNewSubtaskModalData = (task) => {
       state.newSubtaskModalContent = task;
     };
+    const isCompleted = (task) => {
+      return task.subtasks.every((element) => element.status == "Completed");
+    };
+    const handleCompleteTask = async () => {
+      await completeTask(route.params.task);
+    };
     onMounted(async () => {
       await showTeamTask(route.params.task);
     });
@@ -175,6 +206,8 @@ export default {
       loadingTeamTask,
       setModalData,
       setNewSubtaskModalData,
+      isCompleted,
+      handleCompleteTask,
     };
   },
 };

@@ -25,7 +25,6 @@ class MemberSubtaskService
             $subtask->status = $request['status'];
             $subtask->save();
             $this->taskBegin($subtask);
-            $this->taskCompleted($subtask);
             TeamNotificationEvent::dispatch([
                 'team_id' => $subtask->task->team->id,
                 'user_id' => $subtask->assignedTo->id,
@@ -52,21 +51,4 @@ class MemberSubtaskService
         }
     }
 
-    private function taskCompleted(Subtask $subtask)
-    {
-        if ($subtask->status == 'Completed' && count($subtask->task->subtask->filter(fn ($value) => $value->status == 'Completed')) === count($subtask->task->subtask)) {
-            $subtask->task->status = 'Completed';
-            $subtask->task->save();
-            TeamNotification::create([
-                'team_id' => $subtask->task->team->id,
-                'data' => json_encode(['task' => $subtask->task->title]),
-                'type' => TeamNotificationType::TASK_COMPLETED,
-            ]);
-            AdminNotification::create([
-                'team_id' => $subtask->task->team->id,
-                'data' => json_encode(['task' => $subtask->task->title]),
-                'type' => AdminNotificationType::TASK_COMPLETED,
-            ]);
-        }
-    }
 }

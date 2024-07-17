@@ -45,3 +45,13 @@ export const assignUserSubtask = async (data) => {
         store.commit('setLoadingAssignUser', false)
     });
 }
+
+export const completeTask = async (data) => {
+    await store.dispatch('completeTask', data).then((result) => {
+        location.reload()
+    }).catch((err) => {
+        if (err && (err.response.status == 422)) {
+            store.commit('setValidationError', err.response.data)
+        }
+    });
+}

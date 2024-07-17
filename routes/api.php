@@ -72,6 +72,7 @@ Route::middleware('auth:sanctum')->group(function () {
         Route::get('/team-task/{task}', [TeamTaskController::class, 'show'])->name('team-task-show');
         Route::post('/subtask/{task}', [SubtaskController::class, 'store'])->name('subtask-store');
         Route::post('/assign-user-subtask/{subtask}', [SubtaskController::class, 'assignUser'])->name('subtask-assign-user');
+        Route::post('/team-task-complete/{task}', [TeamTaskController::class, 'complete'])->name('team-task-complete');
 
         Route::get('/team-invitation', [TeamMemberInvitationController::class, 'show'])->name('team-member-invitation-show');
         Route::post('/team-invitation', [TeamMemberInvitationController::class, 'invite'])->name('team-member-invitation-send');
