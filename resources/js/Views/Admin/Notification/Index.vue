@@ -36,6 +36,8 @@ export default {
         case "task_beginning":
           const { task } = JSON.parse(notif.data);
           return `'${task}' began in the '${notif.team.name}' Team`;
+        case "task_completed":
+          return `The task '${JSON.parse(notif.data).task}' in the ${notif.team.name} Team is completed`;
         default:
           break;
       }

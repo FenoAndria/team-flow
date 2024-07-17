@@ -12,18 +12,16 @@ class TaskPolicy
 {
     use TeamTrait;
 
-     /**
+    /**
      * Determine whether the user can create models.
      */
     public function createSubtask(User $user, Task $task): Response
     {
-        return $task->team_id == $this->getTeam()->id ? Response::allow() : throw new CustomForbiddenException();
+        return $task->team_id == $this->getTeam()->id && $task->status != 'Completed' ? Response::allow() : throw new CustomForbiddenException();
     }
 
     public function show(User $user, Task $task): Response
     {
         return $task->team_id == $this->getTeam()->id ? Response::allow() : throw new CustomForbiddenException();
     }
-
-    
 }

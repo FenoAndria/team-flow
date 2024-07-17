@@ -1,6 +1,9 @@
 <template>
   <LeadLayout>
-    <Breadcumb :previousPage="[{ name: 'LeadTaskIndex', tag: 'Tasks' }]" currentPage="Show"/>
+    <Breadcumb
+      :previousPage="[{ name: 'LeadTaskIndex', tag: 'Tasks' }]"
+      currentPage="Show"
+    />
     <div>
       <div v-if="loadingTeamTask">
         <Loading />
@@ -52,6 +55,7 @@
                 "
                 @click="setNewSubtaskModalData(teamTask)"
                 for="newSubtaskModal"
+                v-if="teamTask.status != 'Completed'"
               >
                 New subtask
               </label>

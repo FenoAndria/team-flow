@@ -44,6 +44,8 @@ export default {
           return `${notif.user.profil.name} ${
             status == "In Progress" ? "begin" : status
           } subtask '${subtask}' .`;
+        case "task_completed":
+          return `The task '${JSON.parse(notif.data).task}' is completed`;
         default:
           break;
       }
