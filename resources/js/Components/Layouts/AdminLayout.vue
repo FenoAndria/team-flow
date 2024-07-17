@@ -37,6 +37,11 @@ export default {
         tag: "Invitations",
         activeClass: ["AdminLeadInvitationIndex"],
       }, 
+      {
+        name: "AdminNotificationIndex",
+        tag: "Notifications",
+        activeClass: ["AdminNotificationIndex"],
+      }, 
     ];
     return {links}
   },

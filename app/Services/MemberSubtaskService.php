@@ -2,8 +2,10 @@
 
 namespace App\Services;
 
+use App\Enum\AdminNotificationType;
 use App\Enum\TeamNotificationType;
 use App\Events\TeamNotificationEvent;
+use App\Models\AdminNotification;
 use App\Models\Subtask;
 use Illuminate\Support\Facades\Auth;
 
@@ -24,6 +26,11 @@ class MemberSubtaskService
             if ($subtask->status == 'In Progress' && $subtask->task->status == 'Todo') {
                 $subtask->task->status = 'In Progress';
                 $subtask->task->save();
+                AdminNotification::create([
+                    'team_id' => $subtask->task->team->id,
+                    'data' => json_encode(['task' => $subtask->task->title]),
+                    'type' => AdminNotificationType::TASK_BEGINNING,
+                ]);
             }
             TeamNotificationEvent::dispatch([
                 'team_id' => $subtask->task->team->id,

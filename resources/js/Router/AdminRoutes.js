@@ -4,6 +4,7 @@ import AdminTeamShow from '../Views/Admin/Team/Show.vue'
 import MemberIndex from '../Views/Admin/Member/Index.vue'
 
 import AdminLeadInvitationIndex from '../Views/Admin/LeadInvitation/Index.vue'
+import AdminNotificationIndex from '../Views/Admin/Notification/Index.vue'
 
 export default [
     {
@@ -64,6 +65,20 @@ export default [
                 path: '',
                 name: "MemberIndex",
                 component: MemberIndex,
+            },
+        ],
+    },
+    {
+        path: 'notifications/',
+        name: "AdminNotification",
+        meta: {
+            requiresAuth: true
+        },
+        children: [
+            {
+                path: '',
+                name: "AdminNotificationIndex",
+                component: AdminNotificationIndex,
             },
         ],
     },

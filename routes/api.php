@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\Admin\AdminNotificationController;
 use App\Http\Controllers\Admin\LeadInvitationController;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\InvitationController;
@@ -59,6 +60,8 @@ Route::middleware('auth:sanctum')->group(function () {
         Route::get('/lead-invitation', [LeadInvitationController::class, 'index'])->name('lead-invitation-index');
         Route::post('/lead-invitation', [LeadInvitationController::class, 'store'])->name('lead-invitation-store');
         Route::get('/lead-invitable', [LeadInvitationController::class, 'showInvitableLead'])->name('lead-invitable-show');
+
+        Route::get('/admin-notification', [AdminNotificationController::class, 'show'])->name('admin-notification-show');
     });
 
     Route::middleware('isLead')->group(function () {
