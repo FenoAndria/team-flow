@@ -13,6 +13,6 @@ class MemberNotificationService
     public function show()
     {
         $user = Auth::user();
-        return MemberNotification::where('user_id', $user->id)->get();
+        return MemberNotification::where('user_id', $user->id)->latest()->get();
     }
 }

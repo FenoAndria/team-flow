@@ -12,6 +12,6 @@ class TeamNotificationService
     public function show()
     {
         $team = $this->getTeam();
-        return TeamNotification::where('team_id', $team->id)->get();
+        return TeamNotification::where('team_id', $team->id)->latest()->get();
     }
 }

@@ -12,6 +12,6 @@ class AdminNotificationService
     
     public function show()
     {
-        return AdminNotification::all();
+        return AdminNotification::latest()->get();
     }
 }
