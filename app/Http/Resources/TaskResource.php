@@ -23,8 +23,9 @@ class TaskResource extends JsonResource
             'description' => $this->description,
             'status' => $this->status,
             'deadline' => $this->deadline,
-            'team' => $this->when($request->routeIs('task-index'), $this->team->name),
-            'subtasks' => $this->when(!$this->assertRole('Admin'), SubtaskResource::collection($this->subtask)),
+            'team' => $this->when($request->routeIs(['task-index', 'task-show']), $this->team->name),
+            'subtasks' => SubtaskResource::collection($this->subtask),
+            // 'subtasks' => $this->when(!$this->assertRole('Admin'), SubtaskResource::collection($this->subtask)),
             'created_at' => $this->created_at,
             'updated_at' => $this->updated_at,
         ];

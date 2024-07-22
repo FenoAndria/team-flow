@@ -16,34 +16,34 @@ export default {
         name: "AppIndex",
         tag: "Home",
         activeClass: ["AppIndex"],
-      }, 
+      },
       {
         name: "AdminTaskIndex",
         tag: "Tasks",
-        activeClass: ["AdminTaskIndex"],
-      }, 
+        activeClass: ["AdminTaskIndex", "AdminTaskShow"],
+      },
       {
         name: "AdminTeamIndex",
         tag: "Teams",
-        activeClass: ["AdminTeamIndex","AdminTeamShow"],
-      }, 
+        activeClass: ["AdminTeamIndex", "AdminTeamShow"],
+      },
       {
         name: "MemberIndex",
         tag: "Members",
         activeClass: ["MemberIndex"],
-      }, 
+      },
       {
         name: "AdminLeadInvitationIndex",
         tag: "Invitations",
         activeClass: ["AdminLeadInvitationIndex"],
-      }, 
+      },
       {
         name: "AdminNotificationIndex",
         tag: "Notifications",
         activeClass: ["AdminNotificationIndex"],
-      }, 
+      },
     ];
-    return {links}
+    return { links };
   },
 };
 </script>

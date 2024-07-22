@@ -1,4 +1,5 @@
 import AdminTaskIndex from '../Views/Admin/Task/Index.vue'
+import AdminTaskShow from '../Views/Admin/Task/Show.vue'
 import AdminTeamIndex from '../Views/Admin/Team/Index.vue'
 import AdminTeamShow from '../Views/Admin/Team/Show.vue'
 import MemberIndex from '../Views/Admin/Member/Index.vue'
@@ -18,6 +19,11 @@ export default [
                 path: '',
                 name: "AdminTaskIndex",
                 component: AdminTaskIndex,
+            },
+            {
+                path: ':task',
+                name: "AdminTaskShow",
+                component: AdminTaskShow,
             },
         ],
     },

@@ -44,6 +44,11 @@
                 <p class="text-neutral font-semibold">
                   {{ $dayjs(item.created_at).format("DD-MM-YYYY") }}
                 </p>
+                <router-link
+                    :to="{ name: 'AdminTaskShow', params: { task: item.id } }"
+                    class="text-info hover:underline"
+                    >More...</router-link
+                  >
               </div>
             </div>
           </div>

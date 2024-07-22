@@ -95,7 +95,6 @@
 </template>
 <script>
 import { mapGetters } from "vuex";
-import { useRoute } from "vue-router";
 import AdminLayout from "../../../Components/Layouts/AdminLayout.vue";
 import Loading from "../../../Components/Layouts/Loading.vue";
 import StatusBadge from "../../../Components/Layouts/StatusBadge.vue";
@@ -110,16 +109,11 @@ export default {
     Breadcumb,
     InvitableLeadModal,
   },
-  data() {
-    return {
-      route: useRoute(),
-    };
-  },
   computed: {
     ...mapGetters(["team", "loadingTeam"]),
   },
   mounted() {
-    getTeam(this.route.params.team);
+    getTeam(this.$route.params.team);
   },
 };
 </script>

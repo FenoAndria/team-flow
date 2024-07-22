@@ -131,12 +131,10 @@ import Breadcumb from "../../../Components/Layouts/Breadcumb.vue";
 import LeaveTeamModal from "../../../Components/Layouts/Modal/LeaveTeamModal.vue";
 import UserData from "../../../Services/UserData";
 import { getMemberTeam } from "../../../Services/Member/MemberTeamService";
-import { useRoute } from "vue-router";
 export default {
   components: { UserLayout, Loading, StatusBadge, LeaveTeamModal, Breadcumb },
   data() {
     return {
-      route: useRoute(),
       UserData,
     };
   },
@@ -144,7 +142,7 @@ export default {
     ...mapGetters(["memberTeam", "loadingMemberTeam"]),
   },
   mounted() {
-    getMemberTeam(this.route.params.team);
+    getMemberTeam(this.$route.params.team);
   },
 };
 </script>

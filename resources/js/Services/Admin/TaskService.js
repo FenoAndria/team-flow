@@ -1,5 +1,15 @@
 import store from "../../Stores/Index";
 
+export const getTask = async (taskId) => {
+    store.commit('setLoadingTask', true)
+    await store.dispatch('getTask', taskId).then((result) => {
+        store.commit('setTask', result.data)
+        store.commit('setLoadingTask', false)
+    }).catch((err) => {
+        console.log(err.response);
+    });
+}
+
 export const getTasks = async () => {
     store.commit('setLoadingTasks', true)
     await store.dispatch('getTasks').then((result) => {
