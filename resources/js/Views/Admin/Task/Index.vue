@@ -41,17 +41,9 @@
                 {{ item.team }}
               </p>
               <div class="flex justify-between items-center text-sm">
-                <p class="text-neutral">
-                  Created at :
-                  <span class="font-semibold">{{
-                    $dayjs(item.created_at).format("DD-MM-YYYY")
-                  }}</span>
+                <p class="text-neutral font-semibold">
+                  {{ $dayjs(item.created_at).format("DD-MM-YYYY") }}
                 </p>
-                <!-- <router-link
-                  :to="{ name: 'LeadTaskShow', params: { task: item.id } }"
-                  class="text-info hover:underline"
-                  >More...</router-link
-                > -->
               </div>
             </div>
           </div>

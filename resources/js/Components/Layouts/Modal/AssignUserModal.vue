@@ -5,7 +5,7 @@
       <span class="loading"></span>
     </div>
     <div v-else class="mt-2">
-      <form @submit="assignUser" v-if="teamMember">
+      <form @submit="assignUser" v-if="teamMember.length">
         <ValidationError column="user_id" />
         <div v-for="item in teamMember" class="">
           <label class="flex items-center space-x-2 cursor-pointer">
@@ -25,6 +25,7 @@
           <button class="bg-info w-full mt-2" v-else>Assign</button>
         </div>
       </form>
+      <div class="" v-else>No member</div>
     </div>
   </Modal>
 </template>

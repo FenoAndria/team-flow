@@ -15,7 +15,11 @@
               :value="item.id"
               class="radio radio-xs radio-primary"
             />
+            <div class="flex justify-between w-full">
+
             <span class="text-lg text-dark">{{ item.profil.name }}</span>
+            <span class=" text-neutral">{{ item.email }}</span>
+            </div>
           </label>
         </div>
         <div class="">

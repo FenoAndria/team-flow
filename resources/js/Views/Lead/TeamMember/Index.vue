@@ -15,16 +15,10 @@
                       {{ item.profil.name }}
                     </p>
                     <p class="text-neutral text-sm">{{ item.email }}</p>
-                    <!-- <p class="text-neutral text-sm">
-                      {{ dayjs().diff(item.profil.birth_date, "year") }} years
-                    </p> -->
                     <p class="text-neutral text-sm">
                       {{ item.profil.bio }}
                     </p>
                     <hr class="my-1" />
-                    <!-- <p class="text-neutral text-sm">
-                      Member since {{ dayjs(item.created_at).format('DD MMM YYYY') }}
-                    </p> -->
                   </div>
                   <div>
                     <img

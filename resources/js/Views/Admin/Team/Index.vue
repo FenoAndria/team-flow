@@ -34,7 +34,7 @@
             <p class="text-sm space-x-1 font-semibold">
               <span class="bi bi-calendar-event"></span>
               <span class="">{{
-                this.$dayjs(item.created_at).format("DD-MM-YYYY")
+                $dayjs(item.created_at).format("DD-MM-YYYY")
               }}</span>
             </p>
             <router-link

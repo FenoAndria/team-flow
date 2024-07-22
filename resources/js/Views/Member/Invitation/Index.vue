@@ -30,7 +30,6 @@
                     <span class="">{{ memberInvitation.team.lead.name }}</span>
                   </p>
                   <p class="text-xs font-semibold text-neutral italic">
-                    On
                     {{
                       $dayjs(memberInvitation.created_at).format("DD-MM-YYYY")
                     }}
@@ -102,12 +101,10 @@
               </div>
               <div>
                 <div
-                  v-if="
-                    memberInvitation.status != 'Pending'
-                  "
+                  v-if="memberInvitation.status != 'Pending'"
                   class="font-semibold w-max"
                 >
-                  <StatusBadge :status="memberInvitation.status"/>
+                  <StatusBadge :status="memberInvitation.status" />
                 </div>
                 <div v-else class="flex justify-between">
                   <div></div>

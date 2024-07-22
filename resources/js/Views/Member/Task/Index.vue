@@ -2,11 +2,14 @@
   <UserLayout>
     <div>
       <div v-if="loadingMemberSubtasks">
-        <Loading/>
+        <Loading />
       </div>
       <div v-else>
         <div class="my-card-container" v-if="memberSubtasks.length">
-          <div class="my-card list-content my-card-3" v-for="item in memberSubtasks">
+          <div
+            class="my-card list-content my-card-3"
+            v-for="item in memberSubtasks"
+          >
             <div class="">
               <div>
                 <div class="flex justify-between border-b py-1">
@@ -51,9 +54,11 @@
                       Cancel
                     </button>
                   </div>
-                  <p class="italic text-xs" v-if="item.status == 'Completed'">
-                    On :
-                    {{ $dayjs(item.updated_at).format("DD-MM-YYYY") }}
+                  <p
+                    class="italic text-xs text-neutral"
+                    v-if="item.status == 'Completed'"
+                  >
+                    {{ $dayjs(item.updated_at).format("DD-MM-YYYY HH:mm") }}
                   </p>
                 </div>
               </div>
@@ -66,8 +71,7 @@
   </UserLayout>
 </template>
 <script>
-import { computed, onMounted } from "@vue/runtime-core";
-import { useStore } from "vuex";
+import { mapGetters } from "vuex";
 import UserLayout from "../../../Components/Layouts/UserLayout.vue";
 import Loading from "../../../Components/Layouts/Loading.vue";
 import {
@@ -77,25 +81,17 @@ import {
 import StatusBadge from "../../../Components/Layouts/StatusBadge.vue";
 export default {
   components: { UserLayout, StatusBadge, Loading },
-  setup(props) {
-    const store = useStore();
-    const memberSubtasks = computed(() => store.getters.memberSubtasks);
-    const loadingMemberSubtasks = computed(
-      () => store.getters.loadingMemberSubtasks
-    );
-
-    const changeStatus = async (subtaskId, status) => {
+  computed: {
+    ...mapGetters(["memberSubtasks", "loadingMemberSubtasks"]),
+  },
+  methods: {
+    async changeStatus(subtaskId, status) {
       await updateMemberSubtask({ id: subtaskId, status });
       getMemberSubtasks();
-    };
-    onMounted(async () => {
-      await getMemberSubtasks();
-    });
-    return {
-      memberSubtasks,
-      loadingMemberSubtasks,
-      changeStatus,
-    };
+    },
+  },
+  mounted() {
+    getMemberSubtasks();
   },
 };
 </script>
