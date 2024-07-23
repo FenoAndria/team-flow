@@ -1,5 +1,5 @@
 <template>
-  <LeadLayout>
+  <LeadLayout  pageTitle="Messages">
     <div class="flex space-x-2 justify-center">
       <div class="w-3/4">
         <Message

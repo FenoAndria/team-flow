@@ -1,6 +1,5 @@
 <template>
-  <AdminLayout>
-    <p class="text-lg text-primary font-semibold">Lead invitations</p>
+  <AdminLayout  pageTitle="Team Lead invitation">
     <div v-if="loadingLeadInvitation">
       <Loading />
     </div>

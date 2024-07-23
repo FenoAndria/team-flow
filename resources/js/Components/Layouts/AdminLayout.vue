@@ -1,6 +1,6 @@
 <template>
   <div>
-    <Menu :navbarLinks="navbarLinks" :sidebarLinks="sidebarLinks" />
+    <Menu :navbarLinks="navbarLinks" :sidebarLinks="sidebarLinks" :pageTitle="pageTitle"/>
     <div id="main">
       <slot></slot>
     </div>
@@ -9,6 +9,7 @@
 <script>
 import Menu from "../Layouts/Menu.vue";
 export default {
+  props: ["pageTitle"],
   components: { Menu },
   setup(props) {
     const navbarLinks = [
@@ -27,28 +28,27 @@ export default {
       {
         name: "AppIndex",
         tag: "Dashboard",
-        icon:"bi bi-clipboard-data",
+        icon: "bi bi-clipboard-data",
         activeClass: ["AppIndex"],
       },
       {
         name: "AdminTaskIndex",
         tag: "Tasks",
-        icon:"bi bi-kanban",
+        icon: "bi bi-kanban",
         activeClass: ["AdminTaskIndex", "AdminTaskShow"],
       },
       {
         name: "AdminTeamIndex",
         tag: "Teams",
-        icon:"bi bi-collection",
+        icon: "bi bi-collection",
         activeClass: ["AdminTeamIndex", "AdminTeamShow"],
       },
       {
         name: "MemberIndex",
         tag: "Members",
-        icon:"bi bi-people",
+        icon: "bi bi-people",
         activeClass: ["MemberIndex"],
       },
-      
     ];
     return { navbarLinks, sidebarLinks };
   },

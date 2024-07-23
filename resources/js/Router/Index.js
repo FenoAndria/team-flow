@@ -7,9 +7,9 @@ import UserEdit from "./../Views/User/Edit.vue"
 import Login from "./../Views/Auth/Login.vue"
 import Register from "./../Views/Auth/Register.vue"
 
-import AdminIndexPage from '../Components/Layouts/AdminIndex.vue'
-import UserIndexPage from '../Components/Layouts/UserIndex.vue'
-import LeadIndexPage from '../Components/Layouts/LeadIndex.vue'
+import AdminIndexPage from '../Views/Admin/AdminIndex.vue'
+import UserIndexPage from '../Views/Member/UserIndex.vue'
+import LeadIndexPage from '../Views/Lead/LeadIndex.vue'
 
 import RoleValidation from "../Middleware/RoleValidation";
 import MemberRoutes from "./MemberRoutes";

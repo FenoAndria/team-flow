@@ -1,5 +1,5 @@
 <template>
-  <UserLayout>
+  <UserLayout pageTitle="Task list">
     <div>
       <div v-if="loadingMemberSubtasks">
         <Loading />

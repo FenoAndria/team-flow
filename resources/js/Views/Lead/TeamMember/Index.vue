@@ -1,5 +1,5 @@
 <template>
-  <LeadLayout>
+  <LeadLayout  pageTitle="Team member list">
     <div>
       <div v-if="loadingTeamMember">
         <Loading />

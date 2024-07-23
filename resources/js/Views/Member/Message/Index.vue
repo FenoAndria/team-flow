@@ -1,5 +1,5 @@
 <template>
-  <UserLayout>
+  <UserLayout  pageTitle="Messages">
     <Loading v-if="loadingMemberTeams" />
     <div v-else>
       <div class="flex space-x-2" v-if="memberTeams.length">

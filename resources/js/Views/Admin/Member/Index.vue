@@ -1,5 +1,5 @@
 <template>
-  <AdminLayout>
+  <AdminLayout  pageTitle="Member list">
     <div v-if="loadingMembers">
       <Loading />
     </div>

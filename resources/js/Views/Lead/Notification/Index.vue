@@ -1,5 +1,5 @@
 <template>
-  <LeadLayout>
+  <LeadLayout  pageTitle="Notifications">
     <div v-if="loadingTeamNotification"><Loading /></div>
     <div v-else class="flex justify-center">
       <div class="w-2/3">

@@ -1,5 +1,5 @@
 <template>
-  <LeadLayout>
+  <LeadLayout pageTitle="Task list">
     <div>
       <div v-if="loadingTeamTasks">
         <Loading />

@@ -1,6 +1,6 @@
 <template>
   <div>
-    <Menu :sidebarLinks="sidebarLinks" :navbarLinks="navbarLinks" />
+    <Menu :sidebarLinks="sidebarLinks" :navbarLinks="navbarLinks" :pageTitle="pageTitle"/>
     <div id="main">
       <slot></slot>
     </div>
@@ -9,6 +9,7 @@
 <script>
 import Menu from "../Layouts/Menu.vue";
 export default {
+  props:['pageTitle'],
   components: { Menu },
   setup(props) {
     const navbarLinks = [

@@ -1,5 +1,5 @@
 <template>
-  <UserLayout>
+  <UserLayout  pageTitle="Team list">
     <div>
       <div v-if="loadingMemberTeams">
         <Loading />

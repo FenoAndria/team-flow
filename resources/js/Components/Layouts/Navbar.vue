@@ -3,7 +3,9 @@
     class="flex justify-between items-center px-4 py-2 shadow-md"
     id="navbar"
   >
-    <div class=""></div>
+    <div id="page-title">
+      <slot name="pageTitle"></slot>
+    </div>
     <div class="flex items-center space-x-12">
       <div class="flex space-x-2">
         <div v-for="link in navbarLinks">
@@ -56,5 +58,8 @@ export default {
   padding-left: 240px;
   height: 60px;
   @apply w-full fixed bg-white;
+}
+#page-title {
+  @apply text-neutral text-xl;
 }
 </style>

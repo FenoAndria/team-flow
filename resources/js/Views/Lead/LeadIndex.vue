@@ -1,5 +1,5 @@
 <template>
-  <LeadLayout>
+  <LeadLayout pageTitle="Dashboard">
     <div>Lead Dashboard - SOON...</div>
   </LeadLayout>
 </template>

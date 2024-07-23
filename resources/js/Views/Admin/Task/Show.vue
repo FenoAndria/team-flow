@@ -1,5 +1,5 @@
 <template>
-  <AdminLayout>
+  <AdminLayout pageTitle="Task show">
     <Breadcumb
       :previousPage="[{ name: 'AdminTaskIndex', tag: 'Tasks' }]"
       currentPage="Show"

@@ -1,5 +1,5 @@
 <template>
-  <AdminLayout>
+  <AdminLayout  pageTitle="Dashboard">
     <div>Admin dashboard - SOON...</div>
   </AdminLayout>
 </template>
