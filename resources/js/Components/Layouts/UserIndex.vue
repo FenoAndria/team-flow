@@ -1,6 +1,6 @@
 <template>
   <UserLayout>
-    <div>User index</div>
+    <div>User Dashboard - SOON...</div>
   </UserLayout>
 </template>
 <script>

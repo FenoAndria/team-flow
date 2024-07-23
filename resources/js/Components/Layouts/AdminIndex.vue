@@ -1,6 +1,6 @@
 <template>
   <AdminLayout>
-    <div>Admin index</div>
+    <div>Admin dashboard - SOON...</div>
   </AdminLayout>
 </template>
 <script>

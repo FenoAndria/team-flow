@@ -1,49 +1,56 @@
 <template>
   <div>
-    <Navbar :links="links" />
+    <Menu :navbarLinks="navbarLinks" :sidebarLinks="sidebarLinks" />
     <div id="main">
       <slot></slot>
     </div>
   </div>
 </template>
 <script>
-import Navbar from "../Layouts/Navbar.vue";
+import Menu from "../Layouts/Menu.vue";
 export default {
-  components: { Navbar },
+  components: { Menu },
   setup(props) {
-    const links = [
+    const navbarLinks = [
+      {
+        name: "AdminLeadInvitationIndex",
+        tag: "bi bi-people",
+        activeClass: ["AdminLeadInvitationIndex"],
+      },
+      {
+        name: "AdminNotificationIndex",
+        tag: "bi bi-bell",
+        activeClass: ["AdminNotificationIndex"],
+      },
+    ];
+    const sidebarLinks = [
       {
         name: "AppIndex",
-        tag: "Home",
+        tag: "Dashboard",
+        icon:"bi bi-clipboard-data",
         activeClass: ["AppIndex"],
       },
       {
         name: "AdminTaskIndex",
         tag: "Tasks",
+        icon:"bi bi-kanban",
         activeClass: ["AdminTaskIndex", "AdminTaskShow"],
       },
       {
         name: "AdminTeamIndex",
         tag: "Teams",
+        icon:"bi bi-collection",
         activeClass: ["AdminTeamIndex", "AdminTeamShow"],
       },
       {
         name: "MemberIndex",
         tag: "Members",
+        icon:"bi bi-people",
         activeClass: ["MemberIndex"],
       },
-      {
-        name: "AdminLeadInvitationIndex",
-        tag: "Invitations",
-        activeClass: ["AdminLeadInvitationIndex"],
-      },
-      {
-        name: "AdminNotificationIndex",
-        tag: "Notifications",
-        activeClass: ["AdminNotificationIndex"],
-      },
+      
     ];
-    return { links };
+    return { navbarLinks, sidebarLinks };
   },
 };
 </script>

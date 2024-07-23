@@ -1,6 +1,6 @@
 <template>
   <LeadLayout>
-    <div>Lead index</div>
+    <div>Lead Dashboard - SOON...</div>
   </LeadLayout>
 </template>
 <script>

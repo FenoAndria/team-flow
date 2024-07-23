@@ -1,49 +1,55 @@
 <template>
   <div>
-    <Navbar role="User" :links="links" />
+    <Menu :sidebarLinks="sidebarLinks" :navbarLinks="navbarLinks" />
     <div id="main">
       <slot></slot>
     </div>
   </div>
 </template>
 <script>
-import Navbar from "../Layouts/Navbar.vue";
+import Menu from "../Layouts/Menu.vue";
 export default {
-  components: { Navbar },
+  components: { Menu },
   setup(props) {
-    const links = [
+    const navbarLinks = [
+      {
+        name: "MemberMessageIndex",
+        tag: "bi bi-envelope",
+        activeClass: ["MemberMessageIndex"],
+      },
+
+      {
+        name: "MemberInvitationIndex",
+        tag: "bi bi-people",
+        activeClass: ["MemberInvitationIndex"],
+      },
+      {
+        name: "MemberNotificationIndex",
+        tag: "bi bi-bell",
+        activeClass: ["MemberNotificationIndex"],
+      },
+    ];
+    const sidebarLinks = [
       {
         name: "AppIndex",
-        tag: "Home",
+        tag: "Dashboard",
+        icon: "bi bi-clipboard-data",
         activeClass: ["AppIndex"],
       },
       {
         name: "TaskIndex",
         tag: "Task",
+        icon: "bi bi-kanban",
         activeClass: ["TaskIndex"],
       },
       {
         name: "TeamIndex",
         tag: "Team",
+        icon: "bi bi-collection",
         activeClass: ["TeamIndex", "TeamShow"],
       },
-      {
-        name: "MemberInvitationIndex",
-        tag: "Invitations",
-        activeClass: ["MemberInvitationIndex"],
-      },
-      {
-        name: "MemberMessageIndex",
-        tag: "Messages",
-        activeClass: ["MemberMessageIndex"],
-      },
-      {
-        name: "MemberNotificationIndex",
-        tag: "Notification",
-        activeClass: ["MemberNotificationIndex"], 
-      },
     ];
-    return { links };
+    return { navbarLinks, sidebarLinks };
   },
 };
 </script>
