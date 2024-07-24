@@ -1,27 +1,11 @@
 <template>
-  <LeadLayout  pageTitle="Team member invitation">
+  <LeadLayout pageTitle="Team member invitation">
     <div>
       <div v-if="loadingTeamInvitation">
         <Loading />
       </div>
       <div v-else class="pt-2">
-        <label
-          for="inviteModal"
-          class="
-            text-info
-            hover:underline
-            font-semibold
-            bg-neutral-100
-            px-4
-            py-2
-            rounded
-            border
-            hover:bg-neutral-200
-            cursor-pointer
-          "
-        >
-          <span class="bi bi-person-plus-fill"></span> Invite
-        </label>
+        <NewButton forLabel="inviteModal" tagLabel="Invite" />
         <InviteModal modalId="inviteModal" />
         <div v-if="teamInvitation && teamInvitation.length" class="mt-2">
           <div class="my-card-container">
@@ -70,8 +54,9 @@ import { mapGetters } from "vuex";
 import { getTeamInvitation } from "../../../Services/Lead/TeamInvitationService";
 import InviteModal from "../../../Components/Layouts/InviteModal.vue";
 import StatusBadge from "../../../Components/Layouts/StatusBadge.vue";
+import NewButton from "../../../Components/Layouts/NewButton.vue";
 export default {
-  components: { LeadLayout, InviteModal, Loading, StatusBadge },
+  components: { LeadLayout, InviteModal, Loading, StatusBadge, NewButton },
   computed: {
     ...mapGetters(["teamInvitation", "loadingTeamInvitation"]),
   },

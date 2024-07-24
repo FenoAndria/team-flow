@@ -1,26 +1,10 @@
 <template>
-  <AdminLayout  pageTitle="Task list">
+  <AdminLayout pageTitle="Task list">
     <div v-if="loadingTasks">
       <Loading />
     </div>
     <div v-else>
-      <div class="page-title">All tasks</div>
-      <label
-        class="
-          text-info
-          hover:underline
-          font-semibold
-          bg-neutral-100
-          px-4
-          rounded
-          border
-          hover:bg-neutral-200
-          cursor-pointer
-        "
-        for="newTaskModal"
-      >
-        New task
-      </label>
+      <NewButton forLabel="newTaskModal" tagLabel="New Task"/>
       <NewTaskModal modalId="newTaskModal" :content="teams" />
       <div v-if="tasks.length" class="mt-2">
         <div class="my-card-container">
@@ -45,10 +29,10 @@
                   {{ $dayjs(item.created_at).format("DD-MM-YYYY") }}
                 </p>
                 <router-link
-                    :to="{ name: 'AdminTaskShow', params: { task: item.id } }"
-                    class="text-info hover:underline"
-                    >More...</router-link
-                  >
+                  :to="{ name: 'AdminTaskShow', params: { task: item.id } }"
+                  class="text-info hover:underline"
+                  >More...</router-link
+                >
               </div>
             </div>
           </div>
@@ -61,13 +45,14 @@
 <script>
 import { mapGetters } from "vuex";
 import AdminLayout from "../../../Components/Layouts/AdminLayout.vue";
-import { getTasks } from "../../../Services/Admin/TaskService";
 import Loading from "../../../Components/Layouts/Loading.vue";
 import StatusBadge from "../../../Components/Layouts/StatusBadge.vue";
 import NewTaskModal from "../../../Components/Layouts/Modal/NewTaskModal.vue";
+import NewButton from "../../../Components/Layouts/NewButton.vue";
+import { getTasks } from "../../../Services/Admin/TaskService";
 import { getTeams } from "../../../Services/Admin/TeamService";
 export default {
-  components: { AdminLayout, Loading, StatusBadge, NewTaskModal },
+  components: { AdminLayout, Loading, StatusBadge, NewTaskModal, NewButton },
   computed: {
     ...mapGetters(["tasks", "loadingTasks", "teams", "loadingTeams"]),
   },

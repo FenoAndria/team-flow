@@ -1,5 +1,5 @@
 <template>
-  <LeadLayout  pageTitle="Task show">
+  <LeadLayout pageTitle="Task show">
     <Breadcumb
       :previousPage="[{ name: 'LeadTaskIndex', tag: 'Tasks' }]"
       currentPage="Show"
@@ -41,24 +41,12 @@
             </p>
             <div class="flex justify-between items-center border-b">
               <p class="font-semibold text-lg">Subtasks :</p>
-              <label
-                class="
-                  text-info
-                  hover:underline
-                  font-semibold
-                  bg-neutral-100
-                  px-4
-                  rounded
-                  border
-                  hover:bg-neutral-200
-                  cursor-pointer
-                "
-                @click="setNewSubtaskModalData(teamTask)"
-                for="newSubtaskModal"
+              <NewButton
+                forLabel="newSubtaskModal"
+                tagLabel="New Subtask"
                 v-if="teamTask.status != 'Completed'"
-              >
-                New subtask
-              </label>
+                @click="setNewSubtaskModalData(teamTask)"
+              />
             </div>
             <div class="text-sm">
               <div v-if="teamTask.subtasks">
@@ -167,6 +155,7 @@ import Loading from "../../../Components/Layouts/Loading.vue";
 import StatusBadge from "../../../Components/Layouts/StatusBadge.vue";
 import NewSubtaskModal from "../../../Components/Layouts/Modal/NewSubtaskModal.vue";
 import Breadcumb from "../../../Components/Layouts/Breadcumb.vue";
+import NewButton from "../../../Components/Layouts/NewButton.vue";
 export default {
   components: {
     LeadLayout,
@@ -175,6 +164,7 @@ export default {
     Loading,
     NewSubtaskModal,
     Breadcumb,
+    NewButton,
   },
   setup(props) {
     const route = useRoute();

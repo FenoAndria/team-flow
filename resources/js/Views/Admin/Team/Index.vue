@@ -4,22 +4,8 @@
       <Loading />
     </div>
     <div v-else>
-      <label
-        class="
-          text-info
-          hover:underline
-          font-semibold
-          bg-neutral-100
-          px-4
-          rounded
-          border
-          hover:bg-neutral-200
-          cursor-pointer
-        "
-        for="newTeamModal"
-      >
-        New team
-      </label>
+      <NewButton forLabel="newTeamModal" tagLabel="New Team" />
+
       <NewTeamModal modalId="newTeamModal" />
       <div class="my-card-container mt-2" v-if="teams.length">
         <div class="my-card list-content my-card-3" v-for="item in teams">
@@ -56,8 +42,9 @@ import { getTeams } from "../../../Services/Admin/TeamService";
 import Loading from "../../../Components/Layouts/Loading.vue";
 import StatusBadge from "../../../Components/Layouts/StatusBadge.vue";
 import NewTeamModal from "../../../Components/Layouts/Modal/NewTeamModal.vue";
+import NewButton from "../../../Components/Layouts/NewButton.vue";
 export default {
-  components: { AdminLayout, Loading, StatusBadge, NewTeamModal },
+  components: { AdminLayout, Loading, StatusBadge, NewTeamModal, NewButton },
   data() {
     return {};
   },
@@ -65,7 +52,7 @@ export default {
     ...mapGetters(["teams", "loadingTeams"]),
   },
   mounted() {
-    getTeams()
+    getTeams();
   },
 };
 </script>
