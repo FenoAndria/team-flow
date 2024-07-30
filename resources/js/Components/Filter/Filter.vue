@@ -1,7 +1,7 @@
 <template>
   <div class="flex space-x-4 items-center font-semibold">
     <div class="filter-container">
-      <div class="filter-button" :class="statusColor(filterStatus)">
+      <div class="filter-button" :class="statusColor(filterStatus.tag)">
         <span class="bi bi-filter text-xl font-bold"></span>
         {{ filterStatus.tag }} ({{ count }})
         <div class="filter-content">

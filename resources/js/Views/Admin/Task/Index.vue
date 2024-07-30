@@ -57,7 +57,6 @@ import Loading from "../../../Components/Layouts/Loading.vue";
 import StatusBadge from "../../../Components/Layouts/StatusBadge.vue";
 import NewTaskModal from "../../../Components/Layouts/Modal/NewTaskModal.vue";
 import NewButton from "../../../Components/Layouts/NewButton.vue";
-import FilterStatus from "../../../Components/Filter/FilterStatus.vue";
 import Filter from "../../../Components/Filter/Filter.vue";
 import { getTasks } from "../../../Services/Admin/TaskService";
 import { getTeams } from "../../../Services/Admin/TeamService";
@@ -70,7 +69,6 @@ export default {
     StatusBadge,
     NewTaskModal,
     NewButton,
-    FilterStatus,
     Filter,
   },
   data() {

@@ -51,11 +51,10 @@ import { mapGetters } from "vuex";
 import AdminLayout from "../../../Components/Layouts/AdminLayout.vue";
 import Loading from "../../../Components/Layouts/Loading.vue";
 import { getMembers } from "../../../Services/Admin/MemberService";
-import FilterMember from "../../../Components/Filter/FilterMember.vue";
 import Filter from "../../../Components/Filter/Filter.vue";
 import { memberFilter } from "../../../Services/Filter/AdminFilter";
 export default {
-  components: { AdminLayout, Loading, FilterMember,Filter },
+  components: { AdminLayout, Loading, Filter },
   data() {
     return {
       filteredMember: [],

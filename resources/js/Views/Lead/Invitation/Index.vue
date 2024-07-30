@@ -7,11 +7,16 @@
       <div v-else class="pt-2">
         <NewButton forLabel="inviteModal" tagLabel="Invite" />
         <InviteModal modalId="inviteModal" />
-        <div v-if="teamInvitation && teamInvitation.length" class="mt-2">
+        <Filter
+          :filterTab="teamMemberInvitationFilter"
+          @filterItem="handleFilterInvitation"
+          :count="teamInvitationFiltered.length"
+        />
+        <div v-if="teamInvitationFiltered && teamInvitationFiltered.length" class="mt-2">
           <div class="my-card-container">
             <div
               class="my-card list-content my-card-3"
-              v-for="item in teamInvitation"
+              v-for="item in teamInvitationFiltered"
             >
               <div class="flex justify-between">
                 <div>
@@ -55,10 +60,27 @@ import { getTeamInvitation } from "../../../Services/Lead/TeamInvitationService"
 import InviteModal from "../../../Components/Layouts/InviteModal.vue";
 import StatusBadge from "../../../Components/Layouts/StatusBadge.vue";
 import NewButton from "../../../Components/Layouts/NewButton.vue";
+import Filter from "../../../Components/Filter/Filter.vue";
+import { teamMemberInvitationFilter } from "../../../Services/Filter/LeadFilter";
 export default {
-  components: { LeadLayout, InviteModal, Loading, StatusBadge, NewButton },
+  components: { LeadLayout, InviteModal, Loading, StatusBadge, NewButton,Filter },
+  data() {
+    return {
+      teamInvitationFiltered: [],
+      teamMemberInvitationFilter,
+    };
+  },
   computed: {
     ...mapGetters(["teamInvitation", "loadingTeamInvitation"]),
+  },
+  methods: {
+    handleFilterInvitation(e) {
+      if (e.name === "All") {
+        this.teamInvitationFiltered = this.teamInvitation;
+      } else {
+        this.teamInvitationFiltered = this.teamInvitation.filter((item) => item.status == e.name);
+      }
+    },
   },
   mounted() {
     getTeamInvitation();

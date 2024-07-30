@@ -5,12 +5,16 @@
         <Loading />
       </div>
       <div v-else>
-        <div class="page-title">All tasks</div>
-        <div v-if="teamTasks.length">
+        <Filter
+          :filterTab="taskFilter"
+          @filterItem="handleFilterTask"
+          :count="filteredTask.length"
+        />
+        <div v-if="filteredTask.length">
           <div class="my-card-container">
             <div
               class="my-card list-content my-card-3"
-              v-for="item in teamTasks"
+              v-for="item in filteredTask"
             >
               <div class="">
                 <div class="flex justify-between">
@@ -53,13 +57,33 @@ import { getTeamTasks } from "../../../Services/Lead/LeadTaskService";
 import { mapGetters } from "vuex";
 import Loading from "../../../Components/Layouts/Loading.vue";
 import StatusBadge from "../../../Components/Layouts/StatusBadge.vue";
+import Filter from "../../../Components/Filter/Filter.vue";
+import { taskFilter } from "../../../Services/Filter/LeadFilter";
 export default {
-  components: { LeadLayout, Loading, StatusBadge },
+  components: { LeadLayout, Loading, StatusBadge, Filter },
+  data() {
+    return {
+      filteredTask: [],
+      taskFilter,
+    };
+  },
   computed: {
     ...mapGetters(["teamTasks", "loadingTeamTasks"]),
   },
+  methods: {
+    handleFilterTask(e) {
+      if (e.name === "All") {
+        this.filteredTask = this.teamTasks;
+      } else {
+        this.filteredTask = this.teamTasks.filter(
+          (item) => item.status == e.name
+        );
+      }
+    },
+  },
   mounted() {
     getTeamTasks();
+    this.filteredTask = this.teamTasks;
   },
 };
 </script>

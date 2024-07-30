@@ -51,7 +51,6 @@ import Loading from "../../../Components/Layouts/Loading.vue";
 import StatusBadge from "../../../Components/Layouts/StatusBadge.vue";
 import NewTeamModal from "../../../Components/Layouts/Modal/NewTeamModal.vue";
 import NewButton from "../../../Components/Layouts/NewButton.vue";
-import FilterTeam from "../../../Components/Filter/FilterTeam.vue";
 import Filter from "../../../Components/Filter/Filter.vue";
 import { teamFilter } from "../../../Services/Filter/AdminFilter";
 export default {
@@ -61,7 +60,6 @@ export default {
     StatusBadge,
     NewTeamModal,
     NewButton,
-    FilterTeam,
     Filter,
   },
   data() {

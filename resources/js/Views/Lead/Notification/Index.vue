@@ -1,14 +1,21 @@
 <template>
-  <LeadLayout  pageTitle="Notifications">
+  <LeadLayout pageTitle="Notifications">
     <div v-if="loadingTeamNotification"><Loading /></div>
-    <div v-else class="flex justify-center">
-      <div class="w-2/3">
-        <div v-for="notif in teamNotification">
-          <div class="notification-content">
-            <p>{{ notificationText(notif) }}</p>
-            <p class="notification-date">
-              {{ $dayjs(notif.created_at).format("DD-MM-YYYY HH:mm") }}
-            </p>
+    <div v-else>
+      <Filter
+        :filterTab="notificationFilter"
+        @filterItem="handleFilterNotification"
+        :count="filteredNotification.length"
+      />
+      <div class="flex justify-center">
+        <div class="w-2/3">
+          <div v-for="notif in filteredNotification">
+            <div class="notification-content">
+              <p>{{ notificationText(notif) }}</p>
+              <p class="notification-date">
+                {{ $dayjs(notif.created_at).format("DD-MM-YYYY HH:mm") }}
+              </p>
+            </div>
           </div>
         </div>
       </div>
@@ -20,8 +27,16 @@ import { mapGetters } from "vuex";
 import LeadLayout from "../../../Components/Layouts/LeadLayout.vue";
 import Loading from "../../../Components/Layouts/Loading.vue";
 import { getTeamNotification } from "../../../Services/Lead/TeamNotification";
+import { notificationFilter } from "../../../Services/Filter/LeadFilter";
+import Filter from "../../../Components/Filter/Filter.vue";
 export default {
-  components: { LeadLayout, Loading },
+  components: { LeadLayout, Loading,Filter },
+  data() {
+    return {
+      filteredNotification: [],
+      notificationFilter
+    };
+  },
   computed: {
     ...mapGetters(["loadingTeamNotification", "teamNotification"]),
   },
@@ -29,6 +44,34 @@ export default {
     getTeamNotification();
   },
   methods: {
+     handleFilterNotification(e) {
+      switch (e.tag) {
+        case "Invitation accepted":
+          this.filteredNotification = this.teamNotification.filter(
+            (item) => item.type === "invitation_accepted"
+          );
+          break;
+        case "New task assigned":
+          this.filteredNotification = this.teamNotification.filter(
+            (item) => item.type === "task_assigned"
+          );
+          break;
+        case "Task completed":
+          this.filteredNotification = this.teamNotification.filter(
+            (item) => item.type === "task_completed"
+          );
+          break;
+        case "Subtask updated":
+          this.filteredNotification = this.teamNotification.filter(
+            (item) => item.type === "subtask_updated"
+          );
+          break;
+        
+        default:
+          this.filteredNotification = this.teamNotification;
+          break;
+      }
+    },
     notificationText(notif) {
       switch (notif.type) {
         case "task_assigned":

@@ -20,18 +20,17 @@
         </div>
       </div>
     </div>
-  </AdminLayout>
+  </AdminLayout> 
 </template>
 <script>
 import { mapGetters } from "vuex";
 import AdminLayout from "../../../Components/Layouts/AdminLayout.vue";
 import Loading from "../../../Components/Layouts/Loading.vue";
 import { getAdminNotification } from "../../../Services/Admin/AdminNotification";
-import FilterNotification from "../../../Components/Filter/FilterNotification.vue";
 import Filter from "../../../Components/Filter/Filter.vue";
 import { notificationFilter } from "../../../Services/Filter/AdminFilter";
 export default {
-  components: { AdminLayout, Loading, FilterNotification, Filter },
+  components: { AdminLayout, Loading, Filter },
   data() {
     return {
       filteredNotification: [],
