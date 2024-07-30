@@ -3,12 +3,20 @@
     <div v-if="loadingTasks">
       <Loading />
     </div>
-    <div v-else>
-      <NewButton forLabel="newTaskModal" tagLabel="New Task"/>
+    <div v-else class="">
+      <NewButton forLabel="newTaskModal" tagLabel="New Task" />
       <NewTaskModal modalId="newTaskModal" :content="teams" />
-      <div v-if="tasks.length" class="mt-2">
+      <Filter
+        :filterTab="taskFilter"
+        @filterItem="handleFilterTask"
+        :count="filteredTask.length"
+      />
+      <div v-if="filteredTask.length" class="mt-2">
         <div class="my-card-container">
-          <div class="my-card list-content my-card-3" v-for="item in tasks">
+          <div
+            class="my-card list-content my-card-3"
+            v-for="item in filteredTask"
+          >
             <div class="">
               <div class="flex justify-between">
                 <div>
@@ -49,16 +57,49 @@ import Loading from "../../../Components/Layouts/Loading.vue";
 import StatusBadge from "../../../Components/Layouts/StatusBadge.vue";
 import NewTaskModal from "../../../Components/Layouts/Modal/NewTaskModal.vue";
 import NewButton from "../../../Components/Layouts/NewButton.vue";
+import FilterStatus from "../../../Components/Filter/FilterStatus.vue";
+import Filter from "../../../Components/Filter/Filter.vue";
 import { getTasks } from "../../../Services/Admin/TaskService";
 import { getTeams } from "../../../Services/Admin/TeamService";
+import { taskFilter } from "../../../Services/Filter/AdminFilter";
+
 export default {
-  components: { AdminLayout, Loading, StatusBadge, NewTaskModal, NewButton },
+  components: {
+    AdminLayout,
+    Loading,
+    StatusBadge,
+    NewTaskModal,
+    NewButton,
+    FilterStatus,
+    Filter,
+  },
+  data() {
+    return {
+      filteredTask: [],
+      taskFilter,
+    };
+  },
   computed: {
     ...mapGetters(["tasks", "loadingTasks", "teams", "loadingTeams"]),
   },
-  mounted() {
-    getTasks();
+  methods: {
+    handleFilterTask(e) {
+      if (e.name === "All") {
+        this.filteredTask = this.tasks;
+      } else {
+        this.filteredTask = this.tasks.filter((item) => item.status == e.name);
+      }
+    },
+  },
+  async mounted() {
+    await getTasks();
     getTeams();
+    this.filteredTask = this.tasks;
+  },
+  watch: {
+    tasks() {
+      this.filteredTask = this.tasks;
+    },
   },
 };
 </script>

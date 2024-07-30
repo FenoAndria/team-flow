@@ -5,10 +5,18 @@
     </div>
     <div v-else>
       <NewButton forLabel="newTeamModal" tagLabel="New Team" />
+      <Filter
+        :filterTab="teamFilter"
+        @filterItem="handleFilterTeam"
+        :count="filteredTeam.length"
+      />
 
       <NewTeamModal modalId="newTeamModal" />
-      <div class="my-card-container mt-2" v-if="teams.length">
-        <div class="my-card list-content my-card-3" v-for="item in teams">
+      <div class="my-card-container mt-2" v-if="filteredTeam.length">
+        <div
+          class="my-card list-content my-card-3"
+          v-for="item in filteredTeam"
+        >
           <div class="">
             <p class="uppercase font-semibold text-primary text-lg">
               {{ item.name }}
@@ -43,13 +51,43 @@ import Loading from "../../../Components/Layouts/Loading.vue";
 import StatusBadge from "../../../Components/Layouts/StatusBadge.vue";
 import NewTeamModal from "../../../Components/Layouts/Modal/NewTeamModal.vue";
 import NewButton from "../../../Components/Layouts/NewButton.vue";
+import FilterTeam from "../../../Components/Filter/FilterTeam.vue";
+import Filter from "../../../Components/Filter/Filter.vue";
+import { teamFilter } from "../../../Services/Filter/AdminFilter";
 export default {
-  components: { AdminLayout, Loading, StatusBadge, NewTeamModal, NewButton },
+  components: {
+    AdminLayout,
+    Loading,
+    StatusBadge,
+    NewTeamModal,
+    NewButton,
+    FilterTeam,
+    Filter,
+  },
   data() {
-    return {};
+    return {
+      filteredTeam: [],
+      teamFilter,
+    };
   },
   computed: {
     ...mapGetters(["teams", "loadingTeams"]),
+  },
+  methods: {
+    handleFilterTeam(e) {
+      switch (e.tag) {
+        case "Have Lead":
+          this.filteredTeam = this.teams.filter((item) => item.lead);
+          break;
+        case "No Lead":
+          this.filteredTeam = this.teams.filter((item) => !item.lead);
+          break;
+        default:
+          this.filteredTeam = this.teams;
+          break;
+      }
+      
+    },
   },
   mounted() {
     getTeams();
