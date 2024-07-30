@@ -5,10 +5,15 @@
         <Loading />
       </div>
       <div v-else>
-        <div class="my-card-container" v-if="memberSubtasks.length">
+        <Filter
+          :filterTab="subtaskFilter"
+          @filterItem="handleFilterTask"
+          :count="filteredSubtask.length"
+        />
+        <div class="my-card-container" v-if="filteredSubtask.length">
           <div
             class="my-card list-content my-card-3"
-            v-for="item in memberSubtasks"
+            v-for="item in filteredSubtask"
           >
             <div class="">
               <div>
@@ -79,8 +84,16 @@ import {
   updateMemberSubtask,
 } from "../../../Services/Member/MemberSubtaskService";
 import StatusBadge from "../../../Components/Layouts/StatusBadge.vue";
+import Filter from "../../../Components/Filter/Filter.vue";
+import { subtaskFilter } from "../../../Services/Filter/TeamMemberFilter";
 export default {
-  components: { UserLayout, StatusBadge, Loading },
+  components: { UserLayout, StatusBadge, Loading,Filter },
+  data() {
+    return {
+      filteredSubtask: [],
+      subtaskFilter,
+    };
+  },
   computed: {
     ...mapGetters(["memberSubtasks", "loadingMemberSubtasks"]),
   },
@@ -88,6 +101,15 @@ export default {
     async changeStatus(subtaskId, status) {
       await updateMemberSubtask({ id: subtaskId, status });
       getMemberSubtasks();
+    },
+     handleFilterTask(e) {
+      if (e.name === "All") {
+        this.filteredSubtask = this.memberSubtasks;
+      } else {
+        this.filteredSubtask = this.memberSubtasks.filter(
+          (item) => item.status == e.name
+        );
+      }
     },
   },
   mounted() {
