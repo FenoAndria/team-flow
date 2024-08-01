@@ -50,5 +50,17 @@ trait TeamTrait
         return $usersInvitable;
     }
 
-    
+    protected function getTeamsGrouped()
+    {
+        $teams = Team::all();
+        return [
+            'all' => count($teams),
+            'have_leader' => count($teams->filter(
+                fn ($team) => $team->lead
+            )->values()),
+            'no_leader' => count($teams->filter(
+                fn ($team) => !$team->lead
+            )->values()),
+        ];
+    }    
 }
