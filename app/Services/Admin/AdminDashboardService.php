@@ -24,9 +24,11 @@ class AdminDashboardService
             ],
             // Particular stat
             'particular_stat' => [
+                'team_member_subtasks' => $this->teamMemberSubtasks(),
                 'team_member_appearance' => $this->teamMemberAppearance(),
                 'team_member_completed_subtasks' => $this->teamMemberCompletedSubtasks(),
-                'team_completed_tasks' => $this->teamCompletedTasks()
+                'team_completed_tasks' => $this->teamCompletedTasks(),
+                'team_have_tasks' => $this->teamHaveTasks(),
             ]
         ];
     }
@@ -40,6 +42,19 @@ class AdminDashboardService
             if ($value > $teamCount[$max]) $max = $key;
         }
         return [$max => $teamCount[$max]];
+    }
+
+    private function teamMemberSubtasks()
+    {
+        $subtasksGrouped = Subtask::with('assignedTo')->where('assigned_to', '!=', null)->get()->groupBy('assignedTo.profil.name');
+        $subtaskCount = array_map(function ($subtasks) {
+            return collect($subtasks)->count();
+        }, $subtasksGrouped->toArray());
+        $max = array_key_first($subtaskCount);
+        foreach ($subtaskCount as $key => $value) {
+            if ($value > $subtaskCount[$max]) $max = $key;
+        }
+        return [$max => $subtaskCount[$max]];
     }
 
     private function teamMemberCompletedSubtasks()
@@ -80,5 +95,16 @@ class AdminDashboardService
             'percentage' => ($taskCount[$max]['completed'] * 100) / $taskCount[$max]['all'],
             'tasks' => $taskCount
         ];
+    }
+
+    private function teamHaveTasks()
+    {
+        $taskGrouped = Task::with('team')->get()->groupBy('team.name');
+        $taskCount = array_map(fn ($tasks) => collect($tasks)->count(), $taskGrouped->toArray());
+        $max = array_key_first($taskCount);
+        foreach ($taskCount as $key => $value) {
+            if ($value > $taskCount[$max]) $max = $key;
+        }
+        return [$max => $taskCount[$max]];
     }
 }
