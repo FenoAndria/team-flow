@@ -2,6 +2,7 @@
 
 namespace App\Services\Admin;
 
+use App\Models\AdminNotification;
 use App\Models\Subtask;
 use App\Models\Task;
 use App\Models\TeamMember;
@@ -24,13 +25,29 @@ class AdminDashboardService
             ],
             // Particular stat
             'particular_stat' => [
-                'team_member_subtasks' => $this->teamMemberSubtasks(),
-                'team_member_appearance' => $this->teamMemberAppearance(),
-                'team_member_completed_subtasks' => $this->teamMemberCompletedSubtasks(),
-                'team_completed_tasks' => $this->teamCompletedTasks(),
-                'team_have_tasks' => $this->teamHaveTasks(),
-            ]
+                'team_member_subtasks' => $this->teamMemberSubtasks(), // Team member with the most subtasks
+                'team_member_appearance' => $this->teamMemberAppearance(), // Team member who appears most in teams
+                'team_member_completed_subtasks' => $this->teamMemberCompletedSubtasks(), // Team member that has completed the most subtasks
+                'team_completed_tasks' => $this->teamCompletedTasks(), // Team that has completed the most tasks
+                'team_have_tasks' => $this->teamHaveTasks(), // Team with the most tasks
+            ],
+            // Latest tasks
+            'latest_tasks' => $this->latestTasks(),
+            // Latest notif
+            'latest_notifications' => $this->latestNotifications(),
         ];
+    }
+
+    private function latestTasks()
+    {
+        $tasks = Task::take(3)->with('team')->orderByDesc('created_at')->get();
+        return $tasks;
+    }
+
+    private function latestNotifications()
+    {
+        $notifications = AdminNotification::take(3)->with('user.profil')->with('team')->orderByDesc('created_at')->get();
+        return $notifications;
     }
 
     private function teamMemberAppearance()
@@ -41,7 +58,10 @@ class AdminDashboardService
         foreach ($teamCount as $key => $value) {
             if ($value > $teamCount[$max]) $max = $key;
         }
-        return [$max => $teamCount[$max]];
+        return [
+            'team_member' => $max,
+            'count' => $teamCount[$max]
+        ];
     }
 
     private function teamMemberSubtasks()
@@ -54,7 +74,10 @@ class AdminDashboardService
         foreach ($subtaskCount as $key => $value) {
             if ($value > $subtaskCount[$max]) $max = $key;
         }
-        return [$max => $subtaskCount[$max]];
+        return [
+            'team_member' => $max,
+            'count' => $subtaskCount[$max]
+        ];
     }
 
     private function teamMemberCompletedSubtasks()
@@ -71,7 +94,8 @@ class AdminDashboardService
             if (($value['all'] - $value['completed']) > ($subtaskCount[$max]['all'] - $subtaskCount[$max]['completed'])) $max = $key;
         }
         return [
-            $max => $subtaskCount[$max],
+            'team_member' => $max,
+            'count' => $subtaskCount[$max],
             'percentage' => ($subtaskCount[$max]['completed'] * 100) / $subtaskCount[$max]['all'],
             'subtasks' => $subtaskCount
         ];
@@ -91,7 +115,8 @@ class AdminDashboardService
             if (($value['all'] - $value['completed']) > ($taskCount[$max]['all'] - $taskCount[$max]['completed'])) $max = $key;
         }
         return [
-            $max => $taskCount[$max],
+            'team' => $max,
+            'count' => $taskCount[$max],
             'percentage' => ($taskCount[$max]['completed'] * 100) / $taskCount[$max]['all'],
             'tasks' => $taskCount
         ];
@@ -105,6 +130,14 @@ class AdminDashboardService
         foreach ($taskCount as $key => $value) {
             if ($value > $taskCount[$max]) $max = $key;
         }
-        return [$max => $taskCount[$max]];
+        return [
+            'team' => $max,
+            'count' => $taskCount[$max]
+        ];
+    }
+
+    public function formatNumber($number)
+    {
+        return str_pad($number, 2, '0', 'STR_PAD_LEFT');
     }
 }
