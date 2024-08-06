@@ -60,7 +60,7 @@ class AdminDashboardService
         }
         return [
             'team_member' => $max,
-            'count' => $teamCount[$max]
+            'count' => $this->getFormattedNumber($teamCount[$max])
         ];
     }
 
@@ -76,7 +76,7 @@ class AdminDashboardService
         }
         return [
             'team_member' => $max,
-            'count' => $subtaskCount[$max]
+            'count' => $this->getFormattedNumber($subtaskCount[$max])
         ];
     }
 
@@ -85,8 +85,8 @@ class AdminDashboardService
         $subtasksGrouped = Subtask::with('assignedTo')->where('assigned_to', '!=', null)->get()->groupBy('assignedTo.profil.name');
         $subtaskCount = array_map(function ($subtasks) {
             return [
-                'all' => collect($subtasks)->count(),
-                'completed' => collect($subtasks)->filter(fn ($subtask) => $subtask['status'] === 'Completed')->values()->count()
+                'all' => $this->getFormattedNumber(collect($subtasks)->count()),
+                'completed' => $this->getFormattedNumber(collect($subtasks)->filter(fn ($subtask) => $subtask['status'] === 'Completed')->values()->count())
             ];
         }, $subtasksGrouped->toArray());
         $max = array_key_first($subtaskCount);
@@ -95,7 +95,7 @@ class AdminDashboardService
         }
         return [
             'team_member' => $max,
-            'count' => $subtaskCount[$max],
+            'count' => ($subtaskCount[$max]),
             'percentage' => ($subtaskCount[$max]['completed'] * 100) / $subtaskCount[$max]['all'],
             'subtasks' => $subtaskCount
         ];
@@ -106,8 +106,8 @@ class AdminDashboardService
         $taskGrouped = Task::with('team')->get()->groupBy('team.name');
         $taskCount = array_map(function ($tasks) {
             return [
-                'all' => collect($tasks)->count(),
-                'completed' => collect($tasks)->filter(fn ($task) => $task['status'] === 'Completed')->values()->count()
+                'all' => $this->getFormattedNumber(collect($tasks)->count()),
+                'completed' => $this->getFormattedNumber(collect($tasks)->filter(fn ($task) => $task['status'] === 'Completed')->values()->count())
             ];
         }, $taskGrouped->toArray());
         $max = array_key_first($taskCount);
@@ -132,7 +132,7 @@ class AdminDashboardService
         }
         return [
             'team' => $max,
-            'count' => $taskCount[$max]
+            'count' => $this->getFormattedNumber($taskCount[$max])
         ];
     }
 

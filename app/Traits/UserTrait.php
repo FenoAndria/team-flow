@@ -9,6 +9,8 @@ use Illuminate\Support\Facades\Auth;
 
 trait UserTrait
 {
+    use NumberFormatTrait;
+
     protected function assertRole(String $roleName)
     {
         $user = Auth::user();
@@ -29,16 +31,16 @@ trait UserTrait
     {
         $allUsers = $this->getAllUsers();
         return [
-            'all' => count($allUsers),
-            'team_lead' => count($allUsers->filter(
+            'all' => $this->getFormattedNumber(count($allUsers)),
+            'team_lead' =>$this->getFormattedNumber(count($allUsers->filter(
                 fn ($user) => Team::where('lead_id', $user->id)->exists()
-            )->values()),
-            'team_member' => count($allUsers->filter(
+            )->values())),
+            'team_member' => $this->getFormattedNumber(count($allUsers->filter(
                 fn ($user) => TeamMember::where('user_id', $user->id)->exists()
-            )->values()),
-            'others' => count($allUsers->filter(
+            )->values())),
+            'others' => $this->getFormattedNumber(count($allUsers->filter(
                 fn ($user) => !Team::where('lead_id', $user->id)->exists() && !TeamMember::where('user_id', $user->id)->exists()
-            )->values()),
+            )->values())),
 
         ];
     }

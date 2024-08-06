@@ -10,6 +10,7 @@ use Illuminate\Support\Facades\Auth;
 
 trait TeamTrait
 {
+    use NumberFormatTrait;
 
     public function isMember($teamId, $userId)
     {
@@ -54,13 +55,13 @@ trait TeamTrait
     {
         $teams = Team::all();
         return [
-            'all' => count($teams),
-            'have_leader' => count($teams->filter(
+            'all' => $this->getFormattedNumber(count($teams)),
+            'have_leader' => $this->getFormattedNumber(count($teams->filter(
                 fn ($team) => $team->lead
-            )->values()),
-            'no_leader' => count($teams->filter(
+            )->values())),
+            'no_leader' => $this->getFormattedNumber(count($teams->filter(
                 fn ($team) => !$team->lead
-            )->values()),
+            )->values())),
         ];
     }    
 }

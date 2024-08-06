@@ -10,6 +10,8 @@ use App\Models\Task;
  */
 trait TaskTrait
 {
+    use NumberFormatTrait;
+
     protected function getTasksGroupedCounted()
     {
         $tasks = Task::all();
@@ -17,11 +19,11 @@ trait TaskTrait
         $taskStatus = StatusTab::TASK_STATUS;
         $tasksGrouped = collect($taskStatus)->mapWithKeys(function ($status) use ($tasksGroupedByStatus) {
             return [
-                $status => $tasksGroupedByStatus->get($status, collect())->count()
+                $status => $this->getFormattedNumber($tasksGroupedByStatus->get($status, collect())->count())
             ];
         });
         return [
-            'all' => count($tasks),
+            'all' => $this->getFormattedNumber(count($tasks)),
             ...$tasksGrouped,
         ];
     }
