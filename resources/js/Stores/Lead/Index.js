@@ -3,6 +3,7 @@ import Team from "./Team";
 import Invitation from "./Invitation";
 import Message from "./Message";
 import TeamNotification from "./TeamNotification";
+import LeadDashboard from "./Dashboard";
 
 export default {
     LeadTask: Task,
@@ -10,4 +11,5 @@ export default {
     LeadInvitation: Invitation,
     LeadMessage: Message,
     TeamNotification,
+    LeadDashboard
 }

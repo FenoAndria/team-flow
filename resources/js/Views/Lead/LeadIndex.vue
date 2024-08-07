@@ -1,13 +1,12 @@
 <template>
   <LeadLayout pageTitle="Dashboard">
-    <div>Lead Dashboard - SOON...</div>
+    <LeadDashboard />
   </LeadLayout>
 </template>
 <script>
 import LeadLayout from "../../Components/Layouts/LeadLayout.vue";
+import LeadDashboard from "../Lead/Dashboard/Index.vue";
 export default {
-  components: { LeadLayout },
-  setup(props) {
-  },
+  components: { LeadLayout, LeadDashboard },
 };
 </script>
