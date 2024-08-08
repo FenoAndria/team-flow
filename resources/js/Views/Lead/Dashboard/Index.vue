@@ -92,7 +92,7 @@
             </div>
           </div>
         </div>
-        <!-- <div class="flex mb-2 space-x-2">
+        <div class="flex mb-2 space-x-2">
           <div class="w-1/2" v-if="leadDashboard.particular_stat">
             <p class="text-xl text-primary font-semibold border-b">
               Particular statistic
@@ -115,20 +115,20 @@
                 </div>
                 <div class="particular-stat-container">
                   <div class="particular-stat-label">
-                    Team member who appears most in teams
+                    Team member that has completed the most subtasks
                   </div>
                   <div class="particular-stat">
                     <span>{{
-                      leadDashboard.particular_stat.team_member_appearance
+                      leadDashboard.particular_stat.team_member_completed_subtasks
                         .team_member
                     }}</span>
                     <span class="particular-stat-count">{{
-                      leadDashboard.particular_stat.team_member_appearance
-                        .count
-                    }}</span>
+                      leadDashboard.particular_stat.team_member_completed_subtasks
+                        .count.percentage
+                    }} %</span>
                   </div>
                 </div>
-                <div class="particular-stat-container">
+               <!--  <div class="particular-stat-container">
                   <div class="particular-stat-label">
                     Team member that has completed the most subtasks
                   </div>
@@ -175,11 +175,11 @@
                       leadDashboard.particular_stat.team_have_tasks.count
                     }}</span>
                   </div>
-                </div>
+                </div> -->
               </div>
             </div>
           </div>
-          <div class="w-1/2" v-if="leadDashboard.latest_tasks">
+          <!-- <div class="w-1/2" v-if="leadDashboard.latest_tasks">
             <p class="text-xl text-primary font-semibold border-b">
               Latest tasks
             </p>
@@ -215,8 +215,8 @@
                 </div>
               </div>
             </div>
-          </div>
-        </div> -->
+          </div> -->
+        </div>
       </div>
     </div>
   </div>

@@ -19,7 +19,57 @@ class LeadDashboardService
                 'team_member_stat' => $this->teamMemberStat(),
                 'task_stat' => $this->taskStat(),
                 'subtask_stat' => $this->subtaskStat(),
+            ],
+            'particular_stat' => [
+                'team_member_subtasks' => $this->teamMemberSubtasks(), // Team member with the most subtasks in the team
+                'team_member_completed_subtasks' => $this->teamMemberCompletedSubtasks() // Team member that has completed the most subtasks
             ]
+        ];
+    }
+
+    private function teamMemberCompletedSubtasks()
+    {
+        $team = $this->getTeam();
+        $subtasksGrouped = Subtask::with('assignedTo')->whereHas('task', function ($query) use ($team) {
+            return $query->where('team_id', $team->id);
+        })->where('assigned_to', '!=', null)->get()->groupBy('assignedTo.profil.name');
+        $subtaskCount = array_map(function ($subtasks) {
+            $all = $this->getFormattedNumber(collect($subtasks)->count());
+            $completed = $this->getFormattedNumber(collect($subtasks)->filter(fn ($subtask) => $subtask['status'] === 'Completed')->values()->count());
+            return [
+                'all' => $all,
+                'completed' => $completed,
+                'percentage' => round(($completed * 100) / $all, 2)
+            ];
+        }, $subtasksGrouped->toArray());
+        $max = array_key_first($subtaskCount);
+
+        foreach ($subtaskCount as $key => $value) {
+            if ($value['percentage'] > $subtaskCount[$max]['percentage']) $max = $key;
+        }
+        return [
+            'team_member' => $max,
+            'count' => ($subtaskCount[$max]),
+            // 'subtasks' => $subtaskCount
+        ];
+    }
+
+    private function teamMemberSubtasks()
+    {
+        $team = $this->getTeam();
+        $subtasksGrouped = Subtask::with('assignedTo')->whereHas('task', function ($query) use ($team) {
+            return $query->where('team_id', $team->id);
+        })->where('assigned_to', '!=', null)->get()->groupBy('assignedTo.profil.name');
+        $subtaskCount = array_map(function ($subtasks) {
+            return collect($subtasks)->count();
+        }, $subtasksGrouped->toArray());
+        $max = array_key_first($subtaskCount);
+        foreach ($subtaskCount as $key => $value) {
+            if ($value > $subtaskCount[$max]) $max = $key;
+        }
+        return [
+            'team_member' => $max,
+            'count' => $this->getFormattedNumber($subtaskCount[$max])
         ];
     }
 
