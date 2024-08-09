@@ -5,7 +5,9 @@ namespace App\Services\Lead;
 use App\Enum\StatusTab;
 use App\Models\Subtask;
 use App\Models\Task;
+use App\Models\TeamInvitation;
 use App\Models\TeamMember;
+use App\Models\TeamNotification;
 use App\Traits\TeamTrait;
 
 class LeadDashboardService
@@ -22,9 +24,33 @@ class LeadDashboardService
             ],
             'particular_stat' => [
                 'team_member_subtasks' => $this->teamMemberSubtasks(), // Team member with the most subtasks in the team
-                'team_member_completed_subtasks' => $this->teamMemberCompletedSubtasks() // Team member that has completed the most subtasks
-            ]
+                'team_member_completed_subtasks' => $this->teamMemberCompletedSubtasks(), // Team member that has completed the most subtasks
+            ],
+            'recent_completed_tasks' => $this->recentCompletedTasks(), // 3 recent completed tasks
+            // Latest notif
+            'latest_notifications' => $this->latestNotifications(),
+            // New member
+            'new_member' => $this->newMember()
         ];
+    }
+
+    private function newMember()
+    {
+        $team = $this->getTeam();
+        return TeamInvitation::with('user.profil')->where('team_id', $team->id)->where('status', 'Accepted')->orderByDesc('updated_at')->get()->take(3);
+    }
+
+    private function latestNotifications()
+    {
+        $team = $this->getTeam();
+        $notifications = TeamNotification::with('user.profil')->where('team_id', $team->id)->take(3)->orderByDesc('created_at')->get();
+        return $notifications;
+    }
+
+    private function recentCompletedTasks()
+    {
+        $team = $this->getTeam();
+        return collect($team->task)->filter(fn ($task) => $task->status === 'Completed')->take(3)->sortByDesc('updated_at')->values();
     }
 
     private function teamMemberCompletedSubtasks()
