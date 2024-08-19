@@ -10,6 +10,7 @@ use App\Http\Controllers\Lead\TeamMemberController;
 use App\Http\Controllers\Lead\TeamMemberInvitationController;
 use App\Http\Controllers\Lead\TeamNotificationController;
 use App\Http\Controllers\Lead\TeamTaskController;
+use App\Http\Controllers\Member\MemberDashboardController;
 use App\Http\Controllers\Member\MemberNotificationController;
 use App\Http\Controllers\MemberController;
 use App\Http\Controllers\MemberSubtaskController;
@@ -106,6 +107,8 @@ Route::middleware('auth:sanctum')->group(function () {
         Route::post('team-message/{team}', [MessageController::class, 'storeTeamMessage'])->name('team-message-store');
 
         Route::get('member-notification', [MemberNotificationController::class, 'show'])->name('member-notification-show');
+       
+        Route::get('/member-dashboard', [MemberDashboardController::class, 'index'])->name('member-dashboard');
     });
 
     //Messenger
