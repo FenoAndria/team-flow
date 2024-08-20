@@ -1,13 +1,13 @@
 <template>
   <UserLayout pageTitle="Dashboard">
-    <div>User Dashboard - SOON...</div>
+    <MemberDashboard />
   </UserLayout>
 </template>
 <script>
 import UserLayout from "../../Components/Layouts/UserLayout.vue";
+import MemberDashboard from "../Member/Dashboard/Index.vue";
 export default {
-  components: { UserLayout },
-  setup(props) {
-  },
+  components: { UserLayout, MemberDashboard },
+  setup(props) {},
 };
 </script>
