@@ -1,13 +1,16 @@
 <?php
 
+use App\Http\Controllers\Admin\AdminDashboardController;
 use App\Http\Controllers\Admin\AdminNotificationController;
 use App\Http\Controllers\Admin\LeadInvitationController;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\InvitationController;
+use App\Http\Controllers\Lead\LeadDashboardController;
 use App\Http\Controllers\Lead\TeamMemberController;
 use App\Http\Controllers\Lead\TeamMemberInvitationController;
 use App\Http\Controllers\Lead\TeamNotificationController;
 use App\Http\Controllers\Lead\TeamTaskController;
+use App\Http\Controllers\Member\MemberDashboardController;
 use App\Http\Controllers\Member\MemberNotificationController;
 use App\Http\Controllers\MemberController;
 use App\Http\Controllers\MemberSubtaskController;
@@ -63,6 +66,8 @@ Route::middleware('auth:sanctum')->group(function () {
         Route::get('/lead-invitable', [LeadInvitationController::class, 'showInvitableLead'])->name('lead-invitable-show');
 
         Route::get('/admin-notification', [AdminNotificationController::class, 'show'])->name('admin-notification-show');
+
+        Route::get('/admin-dashboard', [AdminDashboardController::class, 'index'])->name('admin-dashboard');
     });
 
     Route::middleware('isLead')->group(function () {
@@ -82,6 +87,8 @@ Route::middleware('auth:sanctum')->group(function () {
         Route::post('lead-message', [MessageController::class, 'storeLeadMessage'])->name('lead-message-store');
 
         Route::get('team-notification', [TeamNotificationController::class, 'show'])->name('team-notification-show');
+       
+        Route::get('/lead-dashboard', [LeadDashboardController::class, 'index'])->name('lead-dashboard');
     });
 
     Route::middleware('isMember')->group(function () {
@@ -100,6 +107,8 @@ Route::middleware('auth:sanctum')->group(function () {
         Route::post('team-message/{team}', [MessageController::class, 'storeTeamMessage'])->name('team-message-store');
 
         Route::get('member-notification', [MemberNotificationController::class, 'show'])->name('member-notification-show');
+       
+        Route::get('/member-dashboard', [MemberDashboardController::class, 'index'])->name('member-dashboard');
     });
 
     //Messenger
