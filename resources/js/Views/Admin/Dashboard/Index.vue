@@ -88,7 +88,10 @@
             </p>
             <div class="my-card-container mt-2">
               <div class="my-card list-content my-card-1 space-y-2">
-                <div class="particular-stat-container">
+                <div
+                  class="particular-stat-container"
+                  v-if="adminDashboard.particular_stat.team_member_subtasks"
+                >
                   <div class="particular-stat-label">
                     Team member with the most subtasks
                   </div>
@@ -102,7 +105,10 @@
                     }}</span>
                   </div>
                 </div>
-                <div class="particular-stat-container">
+                <div
+                  class="particular-stat-container"
+                  v-if="adminDashboard.particular_stat.team_member_appearance"
+                >
                   <div class="particular-stat-label">
                     Team member who appears most in teams
                   </div>
@@ -117,7 +123,13 @@
                     }}</span>
                   </div>
                 </div>
-                <div class="particular-stat-container">
+                <div
+                  class="particular-stat-container"
+                  v-if="
+                    adminDashboard.particular_stat
+                      .team_member_completed_subtasks
+                  "
+                >
                   <div class="particular-stat-label">
                     Team member that has completed the most subtasks
                   </div>
@@ -135,7 +147,10 @@
                     >
                   </div>
                 </div>
-                <div class="particular-stat-container">
+                <div
+                  class="particular-stat-container"
+                  v-if="adminDashboard.particular_stat.team_completed_tasks"
+                >
                   <div class="particular-stat-label">
                     Team that has completed the most tasks
                   </div>
@@ -152,7 +167,10 @@
                     >
                   </div>
                 </div>
-                <div class="particular-stat-container">
+                <div
+                  class="particular-stat-container"
+                  v-if="adminDashboard.particular_stat.team_have_tasks"
+                >
                   <div class="particular-stat-label">
                     Team with the most tasks
                   </div>

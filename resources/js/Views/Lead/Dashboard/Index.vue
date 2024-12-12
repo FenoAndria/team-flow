@@ -100,7 +100,10 @@
               </p>
               <div class="my-card-container mt-2">
                 <div class="my-card list-content my-card-1 space-y-2">
-                  <div class="particular-stat-container">
+                  <div
+                    class="particular-stat-container"
+                    v-if="leadDashboard.particular_stat.team_member_subtasks"
+                  >
                     <div class="particular-stat-label">
                       Team member with the most subtasks
                     </div>
@@ -114,7 +117,13 @@
                       }}</span>
                     </div>
                   </div>
-                  <div class="particular-stat-container">
+                  <div
+                    class="particular-stat-container"
+                    v-if="
+                      leadDashboard.particular_stat
+                        .team_member_completed_subtasks
+                    "
+                  >
                     <div class="particular-stat-label">
                       Team member that has completed the most subtasks
                     </div>
@@ -146,13 +155,7 @@
                     v-for="task in leadDashboard.recent_completed_tasks"
                   >
                     <div
-                      class="
-                        particular-stat-label
-                        flex
-                        justify-between
-                        items-center
-                        w-full
-                      "
+                      class="particular-stat-label flex justify-between items-center w-full"
                     >
                       <span>{{ task.title }}</span>
                       <span class="text-neutral text-sm">{{
@@ -193,13 +196,7 @@
                     v-for="invitation in leadDashboard.new_member"
                   >
                     <div
-                      class="
-                        particular-stat-label
-                        flex
-                        justify-between
-                        items-center
-                        w-full
-                      "
+                      class="particular-stat-label flex justify-between items-center w-full"
                     >
                       <span>{{ invitation.user.profil.name }}</span>
                       <!-- <span class="text-neutral text-sm">{{
